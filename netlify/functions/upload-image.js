@@ -9,7 +9,6 @@ function supabaseRequest(hostname, path, method, body, headers) {
     const data = body ? (Buffer.isBuffer(body) ? body : JSON.stringify(body)) : null;
     const options = { hostname, path, method, headers };
     if (data) options.headers['Content-Length'] = Buffer.byteLength(data);
-
     const req = https.request(options, (res) => {
       const chunks = [];
       res.on('data', (chunk) => chunks.push(chunk));
@@ -25,8 +24,17 @@ function supabaseRequest(hostname, path, method, body, headers) {
   });
 }
 
-const ALLOWED_CONTENT_KEYS = ['story_image_url', 'menu_image_url'];
-const ALLOWED_TYPES = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
+// All valid content keys for image uploads
+// gallery_image_1 through gallery_image_20 for the slideshow
+const LEGACY_KEYS = ['story_image_url', 'menu_image_url', 'staff_image_url'];
+const GALLERY_KEYS = Array.from({length: 20}, (_, i) => 'gallery_image_' + (i + 1));
+const ALLOWED_CONTENT_KEYS = LEGACY_KEYS.concat(GALLERY_KEYS);
+
+const ALLOWED_TYPES = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp'
+};
 
 exports.handler = async function(event) {
   const headers = {
@@ -50,14 +58,12 @@ exports.handler = async function(event) {
   try { payload = JSON.parse(event.body); }
   catch (e) { return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) }; }
 
-  // Auth check
   if (!payload.password || payload.password !== ADMIN_PASSWORD) {
     return { statusCode: 401, headers, body: JSON.stringify({ error: 'Unauthorized' }) };
   }
 
   const { contentKey, imageData, mimeType } = payload;
 
-  // Validate inputs
   if (!ALLOWED_CONTENT_KEYS.includes(contentKey)) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid content key' }) };
   }
@@ -68,7 +74,6 @@ exports.handler = async function(event) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'No image data provided' }) };
   }
 
-  // Decode base64 image
   const imageBuffer = Buffer.from(imageData, 'base64');
   const ext = ALLOWED_TYPES[mimeType];
   const filename = contentKey + '-' + Date.now() + '.' + ext;
@@ -93,7 +98,6 @@ exports.handler = async function(event) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Image upload failed', details: uploadResult.body }) };
   }
 
-  // Build the public URL
   const publicUrl = SUPABASE_URL + '/storage/v1/object/public/site-images/' + filename;
 
   // Save the URL to site_content
@@ -115,9 +119,5 @@ exports.handler = async function(event) {
     return { statusCode: 500, headers, body: JSON.stringify({ error: 'Failed to save image URL' }) };
   }
 
-  return {
-    statusCode: 200,
-    headers,
-    body: JSON.stringify({ success: true, url: publicUrl })
-  };
+  return { statusCode: 200, headers, body: JSON.stringify({ success: true, url: publicUrl }) };
 };

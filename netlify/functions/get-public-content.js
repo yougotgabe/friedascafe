@@ -47,14 +47,14 @@ exports.handler = async function(event) {
   }
 
   // Only expose the keys that are safe to be public
-  const allowedKeys = [
-    'hours_weekday',
-    'hours_saturday',
-    'hours_sunday',
-    'holiday_notice_active',
-    'holiday_notice_text',
-    'payment_note'
+  // Base keys + up to 20 gallery image slots
+  const baseKeys = [
+    'hours_weekday', 'hours_saturday', 'hours_sunday',
+    'holiday_notice_active', 'holiday_notice_text', 'payment_note',
+    'story_image_url', 'menu_image_url', 'staff_image_url'
   ];
+  const galleryKeys = Array.from({length: 20}, (_, i) => 'gallery_image_' + (i + 1));
+  const allowedKeys = baseKeys.concat(galleryKeys);
 
   const keyFilter = allowedKeys.map(k => `key.eq.${k}`).join(',');
   const result = await supabaseRequest(
