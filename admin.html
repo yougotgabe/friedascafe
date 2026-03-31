@@ -451,7 +451,7 @@
         + '<p style="margin-bottom:0.5rem;">' + (existingUrl ? 'Photo uploaded ✓' : 'No photo yet') + '</p>'
         + '<input type="file" id="gallery-file-' + n + '" accept="image/jpeg,image/png,image/webp" style="display:none" />'
         + '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;">'
-          + '<button class="btn btn-sm btn-outline" onclick="document.getElementById('gallery-file-' + n + '').click()">Choose Photo</button>'
+          + '<button class="btn btn-sm btn-outline" onclick="document.getElementById(&quot;gallery-file-' + n + '&quot;).click()">Choose Photo</button>'
           + (n > 1 ? '<button class="btn btn-sm" style="background:none;border:1px solid var(--cream-dark);color:var(--red);" onclick="removeGallerySlot(' + n + ')">Remove</button>' : '')
         + '</div>'
         + '<div class="upload-progress" id="gallery-progress-' + n + '"></div>'
@@ -497,7 +497,11 @@
     fetch('/.netlify/functions/update-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: adminPassword, updates: { ['gallery_image_' + n]: '' } })
+      body: (function() {
+          var u = {};
+          u['gallery_image_' + n] = '';
+          return JSON.stringify({ password: adminPassword, updates: u });
+        }())
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
