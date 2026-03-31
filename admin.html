@@ -300,7 +300,7 @@
     loginError.style.display = 'none';
     loginBtn.disabled = true;
     loginBtn.innerHTML = '<span class="spinner"></span>Signing in&hellip;';
-    fetch('/.netlify/functions/get-content', {
+    fetch('/api/get-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: pw })
@@ -385,7 +385,7 @@
       var reader = new FileReader();
       reader.onload = function(e) {
         var base64 = e.target.result.split(',')[1];
-        fetch('/.netlify/functions/upload-image', {
+        fetch('/api/upload-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: adminPassword, contentKey: contentKey, imageData: base64, mimeType: file.type })
@@ -472,7 +472,7 @@
       var reader = new FileReader();
       reader.onload = function(e) {
         var base64 = e.target.result.split(',')[1];
-        fetch('/.netlify/functions/upload-image', {
+        fetch('/api/upload-image', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ password: adminPassword, contentKey: 'gallery_image_' + n, imageData: base64, mimeType: file.type })
@@ -495,7 +495,7 @@
   function removeGallerySlot(n) {
     if (!confirm('Remove Photo ' + n + ' from the slideshow?')) return;
     // Clear from site_content by setting empty value
-    fetch('/.netlify/functions/update-content', {
+    fetch('/api/update-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: (function() {
@@ -543,7 +543,7 @@
       var stars = parseInt(document.getElementById('review_' + n + '_stars').value, 10);
       updates['review_' + n] = JSON.stringify({ name: name, text: text, stars: stars });
     });
-    fetch('/.netlify/functions/update-content', {
+    fetch('/api/update-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: adminPassword, updates: updates })
@@ -593,7 +593,7 @@
 
   function loadMenuItems() {
     document.getElementById('menu-items-list').innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;"><span class="spinner spinner-dark"></span> Loading...</div>';
-    fetch('/.netlify/functions/update-menu', {
+    fetch('/api/update-menu', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: adminPassword, action: 'list' })
@@ -642,7 +642,7 @@
     var btn = document.getElementById('add-item-btn');
     btn.disabled = true;
     btn.innerHTML = '<span class="spinner"></span>Adding&hellip;';
-    fetch('/.netlify/functions/update-menu', {
+    fetch('/api/update-menu', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: adminPassword, action: 'add', item: { name: name, price: price, category: category, description: desc } })
@@ -673,7 +673,7 @@
     if (newPrice === null) return;
     var newDesc = prompt('Description (optional):', item.description || '');
     if (newDesc === null) return;
-    fetch('/.netlify/functions/update-menu', {
+    fetch('/api/update-menu', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: adminPassword, action: 'update', item: { id: id, name: newName.trim(), price: newPrice.trim(), description: newDesc.trim() } })
@@ -687,7 +687,7 @@
 
   function deleteMenuItem(id, name) {
     if (!confirm('Delete "' + name + '" from the menu?\nThis cannot be undone.')) return;
-    fetch('/.netlify/functions/update-menu', {
+    fetch('/api/update-menu', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: adminPassword, action: 'delete', item: { id: id } })
@@ -704,7 +704,7 @@
     var saved = sessionStorage.getItem('fc_admin_pw');
     if (!saved) return;
     pwInput.value = saved;
-    fetch('/.netlify/functions/get-content', {
+    fetch('/api/get-content', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password: saved })
