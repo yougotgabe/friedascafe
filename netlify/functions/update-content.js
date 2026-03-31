@@ -52,7 +52,12 @@ const ALLOWED_KEYS = [
   'holiday_notice_active',
   'holiday_notice_text',
   'hero_photo_url',
-  'payment_note'
+  'payment_note',
+  'story_image_url',
+  'menu_image_url',
+  'review_1',
+  'review_2',
+  'review_3'
 ];
 
 exports.handler = async function(event, context) {
