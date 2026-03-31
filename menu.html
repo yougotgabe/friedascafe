@@ -369,6 +369,114 @@
       .category-nav-inner { padding: 0 1.25rem; }
       .specials-box { flex-direction: column; gap: 0.5rem; }
     }
+
+    /* ── MENU IMAGES ── */
+    .menu-images-section {
+      margin-bottom: 3rem;
+    }
+    .menu-images-label {
+      font-family: 'Abril Fatface', cursive;
+      font-size: 1.1rem;
+      color: var(--mahogany);
+      margin-bottom: 1rem;
+      text-align: center;
+      opacity: 0.6;
+      font-style: italic;
+      font-family: 'Lora', serif;
+      font-weight: 400;
+    }
+    .menu-images-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .menu-image-wrap {
+      position: relative;
+      cursor: zoom-in;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(59,26,14,0.15);
+      border: 2px solid var(--cream-dark);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .menu-image-wrap:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(59,26,14,0.22);
+    }
+    .menu-image-wrap img {
+      width: 100%;
+      display: block;
+    }
+    .menu-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(59,26,14,0);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 1rem;
+      transition: background 0.2s;
+    }
+    .menu-image-overlay span {
+      color: var(--cream);
+      font-size: 0.8rem;
+      font-style: italic;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transition: opacity 0.2s;
+      background: rgba(59,26,14,0.7);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+    }
+    .menu-image-wrap:hover .menu-image-overlay {
+      background: rgba(59,26,14,0.1);
+    }
+    .menu-image-wrap:hover .menu-image-overlay span {
+      opacity: 1;
+    }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,4,2,0.92);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+    @media (max-width: 600px) {
+      .menu-images-grid { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -413,6 +521,31 @@
   </nav>
 
   <main>
+
+    <!-- MENU IMAGES -->
+    <div class="menu-images-section">
+      <p class="menu-images-label">Our In-Store Menu</p>
+      <div class="menu-images-grid">
+        <div class="menu-image-wrap" onclick="openLightbox('menu-p1.png')">
+          <img src="menu-p1.png" alt="Frieda's Cafe menu — breakfast, pancakes & sandwiches" />
+          <div class="menu-image-overlay">
+            <span>Click to enlarge</span>
+          </div>
+        </div>
+        <div class="menu-image-wrap" onclick="openLightbox('menu-p2.jpg')">
+          <img src="menu-p2.jpg" alt="Frieda's Cafe menu — dinners, sides, dessert & beverages" />
+          <div class="menu-image-overlay">
+            <span>Click to enlarge</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <img id="lightbox-img" src="" alt="Menu" />
+    </div>
 
     <!-- NOON SPECIALS -->
     <div class="specials-box">
@@ -800,6 +933,18 @@
       }, { rootMargin: '-30% 0px -60% 0px' });
       sections.forEach(s => observer.observe(s));
     }
+
+
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
     loadSiteContent();
     initCategoryNav();
