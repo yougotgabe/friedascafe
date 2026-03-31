@@ -13,6 +13,7 @@
       --red: #c0392b;
       --red-dark: #96281b;
       --gold: #c9a84c;
+      --green: #27ae60;
       --text: #2c1a0e;
       --muted: #7a5c3e;
     }
@@ -27,37 +28,43 @@
       justify-content: center;
       padding: 2rem;
     }
-    #login-screen {
-      background: var(--cream);
-      border-radius: 4px;
-      padding: 3rem 2.5rem;
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      border-top: 5px solid var(--red);
-    }
+
+    /* LOGIN */
+    #login-screen { background: var(--cream); border-radius: 4px; padding: 3rem 2.5rem; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-top: 5px solid var(--red); }
     #login-screen .logo { font-family: 'Abril Fatface', serif; font-size: 2rem; color: var(--mahogany); line-height: 1.1; margin-bottom: 0.25rem; }
     #login-screen .subtitle { font-size: 0.85rem; color: var(--muted); font-style: italic; letter-spacing: 0.05em; margin-bottom: 2rem; }
     #login-screen label { display: block; text-align: left; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
     #login-screen input { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 1rem; color: var(--text); background: white; margin-bottom: 1.25rem; transition: border-color 0.2s; }
     #login-screen input:focus { outline: none; border-color: var(--red); }
+    #login-error { color: var(--red); font-size: 0.875rem; margin-top: -0.75rem; margin-bottom: 1rem; display: none; }
+
+    /* BUTTONS */
     .btn { display: inline-block; width: 100%; padding: 0.85rem 1.5rem; background: var(--red); color: white; font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s, transform 0.1s; }
     .btn:hover { background: var(--red-dark); }
     .btn:active { transform: translateY(1px); }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    #login-error { color: var(--red); font-size: 0.875rem; margin-top: -0.75rem; margin-bottom: 1rem; display: none; }
-    #admin-panel { display: none; width: 100%; max-width: 680px; }
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; width: auto; }
+    .btn-outline { background: transparent; color: var(--red); border: 2px solid var(--red); }
+    .btn-outline:hover { background: var(--red); color: white; }
+
+    /* ADMIN PANEL */
+    #admin-panel { display: none; width: 100%; max-width: 700px; }
     .admin-header { text-align: center; margin-bottom: 2rem; }
-    .admin-header .logo { font-family: 'Abril Fatface', serif; font-size: 2.2rem; color: var(--cream); line-height: 1.1; }
+    .admin-header .logo { font-family: 'Abril Fatface', serif; font-size: 2.2rem; color: var(--cream); }
     .admin-header .subtitle { font-size: 0.85rem; color: var(--gold); font-style: italic; letter-spacing: 0.08em; margin-top: 0.25rem; }
+
+    /* CARDS */
     .card { background: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--gold); }
     .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+
+    /* FIELDS */
     .field-group { margin-bottom: 1.25rem; }
     .field-group:last-child { margin-bottom: 0; }
     .field-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
-    .field-group input[type="text"], .field-group textarea { width: 100%; padding: 0.7rem 0.9rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 0.95rem; color: var(--text); background: white; transition: border-color 0.2s; resize: vertical; }
-    .field-group input:focus, .field-group textarea:focus { outline: none; border-color: var(--red); }
+    .field-group input[type="text"], .field-group textarea, .field-group select { width: 100%; padding: 0.7rem 0.9rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 0.95rem; color: var(--text); background: white; transition: border-color 0.2s; resize: vertical; }
+    .field-group input:focus, .field-group textarea:focus, .field-group select:focus { outline: none; border-color: var(--red); }
+
+    /* TOGGLE */
     .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
     .toggle-label { font-size: 0.95rem; color: var(--text); font-weight: 600; }
     .toggle-label small { display: block; font-size: 0.8rem; color: var(--muted); font-weight: 400; font-style: italic; margin-top: 0.1rem; }
@@ -67,22 +74,55 @@
     .toggle-slider:before { content: ''; position: absolute; height: 20px; width: 20px; left: 4px; top: 4px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
     .toggle input:checked + .toggle-slider { background: var(--red); }
     .toggle input:checked + .toggle-slider:before { transform: translateX(24px); }
+
+    /* HOURS GRID */
     .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* IMAGE UPLOAD */
+    .image-upload-block { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--cream-dark); }
+    .image-upload-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .image-preview { width: 100px; height: 80px; border-radius: 4px; object-fit: cover; background: var(--cream-dark); border: 2px solid var(--cream-dark); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.75rem; text-align: center; overflow: hidden; }
+    .image-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .image-upload-info { flex: 1; }
+    .image-upload-info strong { display: block; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
+    .image-upload-info p { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-bottom: 0.6rem; }
+    .upload-progress { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; display: none; }
+    .upload-success { color: var(--green); }
+    .upload-error { color: var(--red); }
+
+    /* REVIEWS */
+    .review-block { background: white; border-radius: 4px; border: 2px solid var(--cream-dark); padding: 1.25rem; margin-bottom: 1rem; }
+    .review-block:last-child { margin-bottom: 0; }
+    .review-block h3 { font-family: 'Abril Fatface', serif; font-size: 1rem; color: var(--mahogany); margin-bottom: 1rem; }
+    .review-row { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; align-items: start; margin-bottom: 0.75rem; }
+    .stars-select { width: 90px; }
+
+    /* STATUS BAR */
     #status-bar { background: var(--cream); border-radius: 4px; padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: none; align-items: center; gap: 0.75rem; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-    #status-bar.success { border-left: 4px solid #27ae60; color: #1e8449; }
+    #status-bar.success { border-left: 4px solid var(--green); color: #1e8449; }
     #status-bar.error { border-left: 4px solid var(--red); color: var(--red); }
+
     .save-row { display: flex; gap: 1rem; align-items: center; }
     .save-row .btn { width: auto; flex: 1; }
     .logout-btn { background: none; border: none; color: var(--gold); font-family: 'Lora', serif; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.05em; padding: 0.25rem; opacity: 0.8; transition: opacity 0.2s; }
     .logout-btn:hover { opacity: 1; }
     .admin-footer { text-align: center; margin-top: 1rem; }
+
     .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 0.4rem; vertical-align: middle; }
+    .spinner-dark { border-color: rgba(0,0,0,0.2); border-top-color: var(--muted); }
     @keyframes spin { to { transform: rotate(360deg); } }
-    @media (max-width: 500px) { .hours-grid { grid-template-columns: 1fr; } body { padding: 1rem; } }
+
+    @media (max-width: 540px) {
+      .hours-grid { grid-template-columns: 1fr; }
+      .image-upload-block { flex-direction: column; }
+      .review-row { grid-template-columns: 1fr; }
+      body { padding: 1rem; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- LOGIN -->
   <div id="login-screen">
     <div class="logo">Frieda's Cafe</div>
     <div class="subtitle">Site Admin Panel</div>
@@ -92,12 +132,16 @@
     <button class="btn" id="login-btn">Sign In</button>
   </div>
 
+  <!-- ADMIN PANEL -->
   <div id="admin-panel">
     <div class="admin-header">
       <div class="logo">Frieda's Cafe</div>
       <div class="subtitle">Site Admin Panel</div>
     </div>
+
     <div id="status-bar"></div>
+
+    <!-- HOURS -->
     <div class="card">
       <h2>☕ Cafe Hours</h2>
       <div class="hours-grid">
@@ -119,6 +163,8 @@
         </div>
       </div>
     </div>
+
+    <!-- HOLIDAY NOTICE -->
     <div class="card">
       <h2>📢 Holiday Notice</h2>
       <div class="toggle-row">
@@ -136,6 +182,111 @@
         <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday!"></textarea>
       </div>
     </div>
+
+    <!-- IMAGES -->
+    <div class="card">
+      <h2>🖼️ Site Images</h2>
+
+      <div class="image-upload-block">
+        <div class="image-preview" id="preview-story">
+          <span>No image</span>
+        </div>
+        <div class="image-upload-info">
+          <strong>Our Story Photo</strong>
+          <p>The photo shown in the "Our Story" section of the homepage</p>
+          <input type="file" id="file-story" accept="image/jpeg,image/png,image/webp" style="display:none" />
+          <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-story').click()">Choose Photo</button>
+          <div class="upload-progress" id="progress-story"></div>
+        </div>
+      </div>
+
+      <div class="image-upload-block">
+        <div class="image-preview" id="preview-menu">
+          <span>No image</span>
+        </div>
+        <div class="image-upload-info">
+          <strong>Menu Hero Photo</strong>
+          <p>The banner photo shown at the top of the Menu page</p>
+          <input type="file" id="file-menu" accept="image/jpeg,image/png,image/webp" style="display:none" />
+          <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-menu').click()">Choose Photo</button>
+          <div class="upload-progress" id="progress-menu"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div class="card">
+      <h2>⭐ Loved by Willmar — Reviews</h2>
+      <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;">Copy your favorite Google reviews here. These show up in the "Loved by Willmar" section of the homepage.</p>
+
+      <div class="review-block">
+        <h3>Review 1</h3>
+        <div class="review-row">
+          <div class="field-group" style="margin-bottom:0">
+            <label>Reviewer Name</label>
+            <input type="text" id="review_1_name" placeholder="e.g. Sarah M." />
+          </div>
+          <div class="field-group" style="margin-bottom:0">
+            <label>Stars</label>
+            <select id="review_1_stars" class="stars-select">
+              <option value="5">⭐⭐⭐⭐⭐</option>
+              <option value="4">⭐⭐⭐⭐</option>
+              <option value="3">⭐⭐⭐</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Review Text</label>
+          <textarea id="review_1_text" rows="3" placeholder="Paste the review text here..."></textarea>
+        </div>
+      </div>
+
+      <div class="review-block">
+        <h3>Review 2</h3>
+        <div class="review-row">
+          <div class="field-group" style="margin-bottom:0">
+            <label>Reviewer Name</label>
+            <input type="text" id="review_2_name" placeholder="e.g. Tom K." />
+          </div>
+          <div class="field-group" style="margin-bottom:0">
+            <label>Stars</label>
+            <select id="review_2_stars" class="stars-select">
+              <option value="5">⭐⭐⭐⭐⭐</option>
+              <option value="4">⭐⭐⭐⭐</option>
+              <option value="3">⭐⭐⭐</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Review Text</label>
+          <textarea id="review_2_text" rows="3" placeholder="Paste the review text here..."></textarea>
+        </div>
+      </div>
+
+      <div class="review-block">
+        <h3>Review 3</h3>
+        <div class="review-row">
+          <div class="field-group" style="margin-bottom:0">
+            <label>Reviewer Name</label>
+            <input type="text" id="review_3_name" placeholder="e.g. Linda R." />
+          </div>
+          <div class="field-group" style="margin-bottom:0">
+            <label>Stars</label>
+            <select id="review_3_stars" class="stars-select">
+              <option value="5">⭐⭐⭐⭐⭐</option>
+              <option value="4">⭐⭐⭐⭐</option>
+              <option value="3">⭐⭐⭐</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Review Text</label>
+          <textarea id="review_3_text" rows="3" placeholder="Paste the review text here..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVE -->
     <div class="save-row">
       <button class="btn" id="save-btn">Save Changes</button>
     </div>
@@ -155,6 +306,7 @@
     var loginError  = document.getElementById('login-error');
     var statusBar   = document.getElementById('status-bar');
 
+    // ─── LOGIN ───────────────────────────────────
     function doLogin() {
       var pw = pwInput.value.trim();
       if (!pw) return;
@@ -166,7 +318,7 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: pw })
       })
-      .then(function(res) { return res.json(); })
+      .then(function(r) { return r.json(); })
       .then(function(data) {
         loginBtn.disabled = false;
         loginBtn.textContent = 'Sign In';
@@ -193,19 +345,103 @@
     loginBtn.addEventListener('click', doLogin);
     pwInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
 
+    // ─── PREFILL ─────────────────────────────────
     function prefillFields(content) {
-      Object.keys(content).forEach(function(key) {
-        var el = document.getElementById(key);
-        if (!el) return;
-        if (el.type === 'checkbox') { el.checked = (content[key] === 'true'); }
-        else { el.value = content[key]; }
+      // Simple text fields
+      ['hours_weekday','hours_saturday','hours_sunday','payment_note','holiday_notice_text'].forEach(function(k) {
+        var el = document.getElementById(k);
+        if (el && content[k] !== undefined) el.value = content[k];
+      });
+      // Toggle
+      var toggle = document.getElementById('holiday_notice_active');
+      if (toggle && content.holiday_notice_active !== undefined) toggle.checked = (content.holiday_notice_active === 'true');
+      // Images
+      ['story','menu'].forEach(function(type) {
+        var key = type + '_image_url';
+        if (content[key] && content[key] !== '') {
+          var preview = document.getElementById('preview-' + type);
+          preview.innerHTML = '<img src="' + content[key] + '" alt="Current image" />';
+        }
+      });
+      // Reviews
+      [1,2,3].forEach(function(n) {
+        var key = 'review_' + n;
+        if (content[key]) {
+          try {
+            var r = JSON.parse(content[key]);
+            var nameEl = document.getElementById(key + '_name');
+            var textEl = document.getElementById(key + '_text');
+            var starsEl = document.getElementById(key + '_stars');
+            if (nameEl) nameEl.value = r.name || '';
+            if (textEl) textEl.value = r.text || '';
+            if (starsEl) starsEl.value = String(r.stars || 5);
+          } catch(e) {}
+        }
       });
     }
 
+    // ─── IMAGE UPLOAD ─────────────────────────────
+    function setupImageUpload(type, contentKey) {
+      var fileInput = document.getElementById('file-' + type);
+      var preview   = document.getElementById('preview-' + type);
+      var progress  = document.getElementById('progress-' + type);
+
+      fileInput.addEventListener('change', function() {
+        var file = fileInput.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) {
+          progress.textContent = 'File too large. Max 5MB.';
+          progress.className = 'upload-progress upload-error';
+          progress.style.display = 'block';
+          return;
+        }
+
+        progress.innerHTML = '<span class="spinner spinner-dark"></span>Uploading\u2026';
+        progress.className = 'upload-progress';
+        progress.style.display = 'block';
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          var base64 = e.target.result.split(',')[1];
+          fetch('/.netlify/functions/upload-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              password: adminPassword,
+              contentKey: contentKey,
+              imageData: base64,
+              mimeType: file.type
+            })
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.success) {
+              preview.innerHTML = '<img src="' + data.url + '" alt="Uploaded image" />';
+              progress.textContent = '\u2713 Uploaded successfully!';
+              progress.className = 'upload-progress upload-success';
+            } else {
+              progress.textContent = '\u2717 Upload failed: ' + (data.error || 'Unknown error');
+              progress.className = 'upload-progress upload-error';
+            }
+          })
+          .catch(function() {
+            progress.textContent = '\u2717 Network error. Try again.';
+            progress.className = 'upload-progress upload-error';
+          });
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    setupImageUpload('story', 'story_image_url');
+    setupImageUpload('menu', 'menu_image_url');
+
+    // ─── SAVE ────────────────────────────────────
     saveBtn.addEventListener('click', function() {
       saveBtn.disabled = true;
       saveBtn.innerHTML = '<span class="spinner"></span>Saving\u2026';
       statusBar.style.display = 'none';
+
       var updates = {
         hours_weekday:         document.getElementById('hours_weekday').value.trim(),
         hours_saturday:        document.getElementById('hours_saturday').value.trim(),
@@ -214,13 +450,26 @@
         holiday_notice_active: document.getElementById('holiday_notice_active').checked ? 'true' : 'false',
         holiday_notice_text:   document.getElementById('holiday_notice_text').value.trim()
       };
-      Object.keys(updates).forEach(function(k) { if (updates[k] === '' && k !== 'holiday_notice_text') delete updates[k]; });
+
+      // Package reviews as JSON strings
+      [1,2,3].forEach(function(n) {
+        var name  = document.getElementById('review_' + n + '_name').value.trim();
+        var text  = document.getElementById('review_' + n + '_text').value.trim();
+        var stars = parseInt(document.getElementById('review_' + n + '_stars').value, 10);
+        updates['review_' + n] = JSON.stringify({ name: name, text: text, stars: stars });
+      });
+
+      // Remove blank non-essential fields
+      ['hours_weekday','hours_saturday','hours_sunday','payment_note'].forEach(function(k) {
+        if (updates[k] === '') delete updates[k];
+      });
+
       fetch('/.netlify/functions/update-content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: adminPassword, updates: updates })
       })
-      .then(function(res) { return res.json(); })
+      .then(function(r) { return r.json(); })
       .then(function(data) {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save Changes';
@@ -231,13 +480,13 @@
       .catch(function() {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save Changes';
-        showStatus('error', '\u2717 Network error. Check your connection and try again.');
+        showStatus('error', '\u2717 Network error. Check your connection.');
       });
     });
 
-    function showStatus(type, message) {
+    function showStatus(type, msg) {
       statusBar.className = type;
-      statusBar.textContent = message;
+      statusBar.textContent = msg;
       statusBar.style.display = 'flex';
       if (type === 'success') { setTimeout(function() { statusBar.style.display = 'none'; }, 5000); }
     }
