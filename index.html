@@ -32,7 +32,6 @@
     font-size:18px;
   }
 
-  /* ── GRAIN OVERLAY ────────────────────────────── */
   body::before {
     content:'';
     position:fixed; inset:0; z-index:0; pointer-events:none;
@@ -84,47 +83,31 @@
     background:var(--brown);
     overflow:hidden;
   }
-
-  /* Decorative diner-tile checker border top/bottom */
   .hero::before {
     content:'';
     position:absolute; top:64px; left:0; right:0; height:10px;
-    background:repeating-linear-gradient(
-      90deg,
-      var(--red) 0px, var(--red) 20px,
-      var(--cream) 20px, var(--cream) 40px
-    );
+    background:repeating-linear-gradient(90deg,var(--red) 0px,var(--red) 20px,var(--cream) 20px,var(--cream) 40px);
     opacity:0.6;
   }
   .hero::after {
     content:'';
     position:absolute; bottom:0; left:0; right:0; height:10px;
-    background:repeating-linear-gradient(
-      90deg,
-      var(--cream) 0px, var(--cream) 20px,
-      var(--red) 20px, var(--red) 40px
-    );
+    background:repeating-linear-gradient(90deg,var(--cream) 0px,var(--cream) 20px,var(--red) 20px,var(--red) 40px);
     opacity:0.6;
   }
-
-  /* Radial warm glow */
   .hero-glow {
     position:absolute; inset:0; pointer-events:none;
     background:
       radial-gradient(ellipse 70% 60% at 50% 40%, rgba(201,147,10,0.12) 0%, transparent 65%),
       radial-gradient(ellipse 50% 40% at 50% 80%, rgba(192,57,43,0.1) 0%, transparent 60%);
   }
-
   .hero-content { position:relative; z-index:2; }
-
   .hero-est {
     font-family:'Oswald', sans-serif; font-size:0.7rem;
     letter-spacing:0.5em; text-transform:uppercase;
     color:var(--gold-lt); margin-bottom:1.5rem;
     animation:fadeUp 0.8s ease both;
   }
-
-  /* Big badge-style logo area */
   .hero-badge {
     display:inline-block; position:relative; margin-bottom:2rem;
     animation:fadeUp 0.8s 0.15s ease both;
@@ -152,7 +135,6 @@
     font-family:'Oswald', sans-serif; font-size:0.6rem;
     letter-spacing:0.3em; color:var(--muted); text-transform:uppercase;
   }
-  /* Stars decorating the badge */
   .hero-badge-star {
     position:absolute; color:var(--gold); font-size:0.7rem; opacity:0.7;
   }
@@ -162,7 +144,6 @@
   .hero-badge-star:nth-child(4) { bottom:-8px; left:50%; transform:translateX(-50%); }
   .hero-badge-star:nth-child(5) { bottom:15%; left:-8px; }
   .hero-badge-star:nth-child(6) { top:15%; left:-8px; }
-
   .hero-tagline {
     font-family:'Playfair Display', serif;
     font-size:clamp(2rem, 5vw, 3.5rem);
@@ -171,20 +152,17 @@
     animation:fadeUp 0.8s 0.25s ease both;
   }
   .hero-tagline em { color:var(--gold-lt); font-style:italic; }
-
   .hero-rule {
     width:100px; height:2px; margin:1.25rem auto;
     background:linear-gradient(to right, transparent, var(--gold), transparent);
     animation:fadeUp 0.8s 0.35s ease both;
   }
-
   .hero-sub {
     font-size:1.05rem; color:rgba(245,239,226,0.7);
     font-style:italic; max-width:480px; margin:0 auto 2rem;
     line-height:1.7;
     animation:fadeUp 0.8s 0.4s ease both;
   }
-
   .hero-cta-group {
     display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
     animation:fadeUp 0.8s 0.5s ease both;
@@ -199,7 +177,6 @@
   .btn-primary:hover { background:var(--red-dim); border-color:var(--red-dim); }
   .btn-outline { background:transparent; color:var(--cream); border:2px solid rgba(245,239,226,0.4); }
   .btn-outline:hover { border-color:var(--gold-lt); color:var(--gold-lt); }
-
   .hero-hours {
     margin-top:2.5rem; padding-top:2rem;
     border-top:1px solid rgba(245,239,226,0.12);
@@ -213,7 +190,6 @@
     display:block; margin-bottom:0.2rem;
   }
   .hero-hours-val { font-size:0.95rem; color:rgba(245,239,226,0.75); }
-
   @keyframes fadeUp {
     from { opacity:0; transform:translateY(22px); }
     to   { opacity:1; transform:translateY(0); }
@@ -231,97 +207,44 @@
     font-family:'Abril Fatface', serif;
     font-size:clamp(1.8rem, 4vw, 2.8rem); color:var(--dark); line-height:1.15;
   }
-  .section-rule {
-    width:60px; height:3px; background:var(--red);
-    margin:1rem 0 1.5rem;
-  }
+  .section-rule { width:60px; height:3px; background:var(--red); margin:1rem 0 1.5rem; }
   .section-rule.centered { margin:1rem auto 1.5rem; }
 
-  /* ── ABOUT STRIP ──────────────────────────────── */
-  .about-strip {
-    background:var(--parchment);
-    border-top:3px solid var(--border);
-    border-bottom:3px solid var(--border);
-  }
-  .about-grid {
-    display:grid; grid-template-columns:1fr 1fr;
-    gap:4rem; align-items:center;
-  }
-  .about-text p {
-    color:var(--brown); line-height:1.85; margin-bottom:1rem; font-size:1rem;
-  }
+  /* ── ABOUT ────────────────────────────────────── */
+  .about-strip { background:var(--parchment); border-top:3px solid var(--border); border-bottom:3px solid var(--border); }
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+  .about-text p { color:var(--brown); line-height:1.85; margin-bottom:1rem; font-size:1rem; }
   .about-text p:last-child { margin-bottom:0; }
   .about-text .quote {
-    font-family:'Playfair Display', serif;
-    font-size:1.2rem; font-style:italic;
-    color:var(--red); border-left:3px solid var(--red);
-    padding-left:1rem; margin:1.5rem 0;
-    line-height:1.5;
+    font-family:'Playfair Display', serif; font-size:1.2rem; font-style:italic;
+    color:var(--red); border-left:3px solid var(--red); padding-left:1rem; margin:1.5rem 0; line-height:1.5;
   }
-  .about-img-grid {
-    display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;
-  }
-  .about-img-box {
-    aspect-ratio:1; overflow:hidden; background:var(--brown);
-    display:flex; align-items:center; justify-content:center;
-  }
+  .about-img-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; }
+  .about-img-box { aspect-ratio:1; overflow:hidden; background:var(--brown); display:flex; align-items:center; justify-content:center; }
   .about-img-box:first-child { grid-column:1/-1; aspect-ratio:16/9; }
   .about-img-placeholder { font-size:3rem; opacity:0.3; }
 
-  /* ── STATS BAR ────────────────────────────────── */
-  .stats-bar {
-    background:var(--red);
-  }
-  .stats-inner {
-    max-width:1100px; margin:0 auto; padding:2.5rem 2rem;
-    display:flex; gap:0; justify-content:center;
-  }
-  .stat {
-    text-align:center; padding:0 3rem;
-    border-right:1px solid rgba(255,255,255,0.2);
-  }
+  /* ── STATS ────────────────────────────────────── */
+  .stats-bar { background:var(--red); }
+  .stats-inner { max-width:1100px; margin:0 auto; padding:2.5rem 2rem; display:flex; gap:0; justify-content:center; }
+  .stat { text-align:center; padding:0 3rem; border-right:1px solid rgba(255,255,255,0.2); }
   .stat:last-child { border-right:none; }
-  .stat-num {
-    font-family:'Abril Fatface', serif; font-size:2.4rem;
-    color:var(--white); display:block; line-height:1;
-  }
-  .stat-label {
-    font-family:'Oswald', sans-serif; font-size:0.65rem;
-    letter-spacing:0.25em; text-transform:uppercase;
-    color:rgba(255,249,240,0.75); margin-top:0.3rem; display:block;
-  }
+  .stat-num { font-family:'Abril Fatface', serif; font-size:2.4rem; color:var(--white); display:block; line-height:1; }
+  .stat-label { font-family:'Oswald', sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,249,240,0.75); margin-top:0.3rem; display:block; }
 
   /* ── MENU SECTION ─────────────────────────────── */
   .menu-section { background:var(--cream); }
   .menu-section .section-inner { text-align:center; }
-  .menu-grid {
-    display:grid; grid-template-columns:repeat(3,1fr);
-    gap:1.5rem; margin-top:2.5rem; text-align:left;
-  }
-  .menu-card {
-    background:var(--white); border:2px solid var(--border);
-    padding:1.5rem; transition:border-color 0.2s, transform 0.2s;
-  }
+  .menu-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:2.5rem; text-align:left; }
+  .menu-card { background:var(--white); border:2px solid var(--border); padding:1.5rem; transition:border-color 0.2s, transform 0.2s; }
   .menu-card:hover { border-color:var(--red); transform:translateY(-3px); }
   .menu-card-icon { font-size:1.8rem; margin-bottom:0.75rem; }
-  .menu-card-title {
-    font-family:'Oswald', sans-serif; font-size:1rem;
-    letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--brown); margin-bottom:0.5rem;
-  }
+  .menu-card-title { font-family:'Oswald', sans-serif; font-size:1rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--brown); margin-bottom:0.5rem; }
   .menu-card-items { list-style:none; }
-  .menu-card-items li {
-    font-size:0.9rem; color:var(--muted); padding:0.2rem 0;
-    border-bottom:1px dashed var(--border);
-    display:flex; justify-content:space-between; align-items:center;
-  }
+  .menu-card-items li { font-size:0.9rem; color:var(--muted); padding:0.2rem 0; border-bottom:1px dashed var(--border); display:flex; justify-content:space-between; align-items:center; }
   .menu-card-items li:last-child { border-bottom:none; }
-  .menu-price {
-    font-family:'Oswald', sans-serif; color:var(--red); font-size:0.85rem;
-  }
-  .menu-note {
-    margin-top:2rem; font-style:italic; color:var(--muted); font-size:0.95rem;
-  }
+  .menu-price { font-family:'Oswald', sans-serif; color:var(--red); font-size:0.85rem; }
+  .menu-note { margin-top:2rem; font-style:italic; color:var(--muted); font-size:0.95rem; }
   .menu-note strong { color:var(--brown); }
 
   /* ── TESTIMONIALS ─────────────────────────────── */
@@ -329,154 +252,66 @@
   .testimonials-section .section-label { color:var(--gold-lt); }
   .testimonials-section .section-title { color:var(--cream); }
   .testimonials-section .section-rule { background:var(--gold-lt); }
-  .testi-grid {
-    display:grid; grid-template-columns:repeat(3,1fr);
-    gap:1.5rem; margin-top:2.5rem;
-  }
-  .testi-card {
-    background:rgba(255,249,240,0.06); border:1px solid rgba(245,239,226,0.12);
-    padding:1.5rem; transition:background 0.2s;
-  }
+  .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:2.5rem; }
+  .testi-card { background:rgba(255,249,240,0.06); border:1px solid rgba(245,239,226,0.12); padding:1.5rem; transition:background 0.2s; }
   .testi-card:hover { background:rgba(255,249,240,0.1); }
   .testi-stars { color:var(--gold-lt); font-size:0.85rem; margin-bottom:0.75rem; }
-  .testi-text {
-    font-style:italic; color:rgba(245,239,226,0.8);
-    line-height:1.7; font-size:0.95rem; margin-bottom:1rem;
-  }
-  .testi-author {
-    font-family:'Oswald', sans-serif; font-size:0.65rem;
-    letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-lt);
-  }
-  .testi-award {
-    margin-top:3rem; text-align:center;
-    padding-top:2rem; border-top:1px solid rgba(245,239,226,0.12);
-    display:flex; align-items:center; justify-content:center; gap:1.5rem;
-  }
-  .testi-award-badge {
-    width:80px; height:80px; border-radius:50%;
-    border:3px solid var(--gold); display:flex; flex-direction:column;
-    align-items:center; justify-content:center;
-    background:rgba(201,147,10,0.12);
-  }
+  .testi-text { font-style:italic; color:rgba(245,239,226,0.8); line-height:1.7; font-size:0.95rem; margin-bottom:1rem; }
+  .testi-author { font-family:'Oswald', sans-serif; font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold-lt); }
+  .testi-award { margin-top:3rem; text-align:center; padding-top:2rem; border-top:1px solid rgba(245,239,226,0.12); display:flex; align-items:center; justify-content:center; gap:1.5rem; }
+  .testi-award-badge { width:80px; height:80px; border-radius:50%; border:3px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(201,147,10,0.12); }
   .testi-award-badge span:first-child { font-size:0.5rem; letter-spacing:0.15em; font-family:'Oswald',sans-serif; text-transform:uppercase; color:var(--gold-lt); }
   .testi-award-badge span:last-child { font-family:'Abril Fatface',serif; font-size:1.2rem; color:var(--gold-lt); }
   .testi-award p { color:rgba(245,239,226,0.65); font-size:0.9rem; font-style:italic; max-width:300px; }
 
-  /* ── MERCH SECTION ────────────────────────────── */
+  /* ── MERCH ────────────────────────────────────── */
   .merch-section { background:var(--parchment); }
   .merch-section .section-inner { text-align:center; }
-  .merch-grid {
-    display:grid; grid-template-columns:repeat(4,1fr);
-    gap:1rem; margin-top:2.5rem;
-  }
-  .merch-card {
-    background:var(--white); border:2px solid var(--border);
-    overflow:hidden; text-align:left; transition:all 0.25s;
-  }
+  .merch-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:2.5rem; }
+  .merch-card { background:var(--white); border:2px solid var(--border); overflow:hidden; text-align:left; transition:all 0.25s; }
   .merch-card:hover { border-color:var(--red); transform:translateY(-3px); box-shadow:0 8px 30px rgba(59,36,16,0.12); }
-  .merch-img {
-    aspect-ratio:1; background:var(--parchment);
-    display:flex; align-items:center; justify-content:center;
-    font-size:3.5rem; border-bottom:2px solid var(--border);
-  }
+  .merch-img { aspect-ratio:1; background:var(--parchment); display:flex; align-items:center; justify-content:center; font-size:3.5rem; border-bottom:2px solid var(--border); }
   .merch-body { padding:1rem; }
-  .merch-name {
-    font-family:'Oswald', sans-serif; font-size:0.8rem;
-    letter-spacing:0.05em; text-transform:uppercase;
-    color:var(--brown); margin-bottom:0.25rem;
-  }
+  .merch-name { font-family:'Oswald', sans-serif; font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--brown); margin-bottom:0.25rem; }
   .merch-price { font-family:'Abril Fatface',serif; font-size:1rem; color:var(--red); }
-  .merch-cta {
-    display:block; margin-top:2rem;
-    font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.2em;
-    text-transform:uppercase; color:var(--red); text-decoration:none;
-    border:2px solid var(--red); padding:0.75rem 2rem; display:inline-block;
-    transition:all 0.25s;
-  }
+  .merch-cta { display:block; margin-top:2rem; font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); text-decoration:none; border:2px solid var(--red); padding:0.75rem 2rem; display:inline-block; transition:all 0.25s; }
   .merch-cta:hover { background:var(--red); color:var(--white); }
 
-  /* ── VISIT / MAP ──────────────────────────────── */
+  /* ── VISIT ────────────────────────────────────── */
   .visit-section { background:var(--cream); }
   .visit-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
   .visit-detail { display:flex; gap:1rem; margin-bottom:1.5rem; align-items:flex-start; }
   .visit-detail-icon { font-size:1.3rem; flex-shrink:0; margin-top:0.1rem; }
-  .visit-detail-text h4 {
-    font-family:'Oswald',sans-serif; font-size:0.7rem;
-    letter-spacing:0.2em; text-transform:uppercase;
-    color:var(--red); margin-bottom:0.2rem;
-  }
+  .visit-detail-text h4 { font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); margin-bottom:0.2rem; }
   .visit-detail-text p { color:var(--brown); font-size:0.95rem; line-height:1.6; }
-  .visit-map {
-    background:var(--parchment); border:2px solid var(--border);
-    height:320px; display:flex; align-items:center; justify-content:center;
-    position:relative; overflow:hidden;
-  }
-  .visit-map-placeholder {
-    text-align:center; color:var(--muted);
-  }
+  .visit-map { background:var(--parchment); border:2px solid var(--border); height:320px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+  .visit-map-placeholder { text-align:center; color:var(--muted); }
   .visit-map-placeholder span { font-size:2.5rem; display:block; margin-bottom:0.5rem; }
   .visit-map-placeholder p { font-size:0.85rem; font-style:italic; }
-  .visit-cash-note {
-    margin-top:2rem; padding:1rem 1.25rem;
-    background:rgba(192,57,43,0.06); border-left:3px solid var(--red);
-  }
-  .visit-cash-note p {
-    font-size:0.9rem; color:var(--brown); font-style:italic; line-height:1.5;
-  }
+  .visit-cash-note { margin-top:2rem; padding:1rem 1.25rem; background:rgba(192,57,43,0.06); border-left:3px solid var(--red); }
+  .visit-cash-note p { font-size:0.9rem; color:var(--brown); font-style:italic; line-height:1.5; }
 
   /* ── FOOTER ───────────────────────────────────── */
-  footer {
-    background:var(--dark);
-    border-top:3px solid var(--red);
-  }
-  .footer-inner {
-    max-width:1100px; margin:0 auto; padding:3rem 2rem;
-    display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem;
-  }
-  .footer-brand-name {
-    font-family:'Abril Fatface',serif; font-size:1.6rem; color:var(--cream);
-    margin-bottom:0.25rem;
-  }
+  footer { background:var(--dark); border-top:3px solid var(--red); }
+  .footer-inner { max-width:1100px; margin:0 auto; padding:3rem 2rem; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; }
+  .footer-brand-name { font-family:'Abril Fatface',serif; font-size:1.6rem; color:var(--cream); margin-bottom:0.25rem; }
   .footer-brand-name span { color:var(--gold-lt); }
-  .footer-brand-est {
-    font-family:'Oswald',sans-serif; font-size:0.6rem;
-    letter-spacing:0.3em; text-transform:uppercase; color:var(--muted);
-    margin-bottom:1rem; display:block;
-  }
+  .footer-brand-est { font-family:'Oswald',sans-serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); margin-bottom:1rem; display:block; }
   .footer-brand-desc { color:rgba(245,239,226,0.5); font-size:0.9rem; line-height:1.7; font-style:italic; }
-  .footer-col-title {
-    font-family:'Oswald',sans-serif; font-size:0.65rem;
-    letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-lt);
-    margin-bottom:1rem; display:block;
-  }
+  .footer-col-title { font-family:'Oswald',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-lt); margin-bottom:1rem; display:block; }
   .footer-col ul { list-style:none; }
   .footer-col ul li { margin-bottom:0.5rem; }
-  .footer-col ul li a {
-    color:rgba(245,239,226,0.55); text-decoration:none; font-size:0.9rem;
-    transition:color 0.2s;
-  }
+  .footer-col ul li a { color:rgba(245,239,226,0.55); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
   .footer-col ul li a:hover { color:var(--gold-lt); }
   .footer-col p { color:rgba(245,239,226,0.55); font-size:0.9rem; line-height:1.7; }
-  .footer-bottom {
-    border-top:1px solid rgba(245,239,226,0.08);
-    padding:1.25rem 2rem; text-align:center;
-    display:flex; justify-content:space-between; align-items:center;
-    max-width:1100px; margin:0 auto;
-  }
+  .footer-bottom { border-top:1px solid rgba(245,239,226,0.08); padding:1.25rem 2rem; text-align:center; display:flex; justify-content:space-between; align-items:center; max-width:1100px; margin:0 auto; }
   .footer-bottom p { font-size:0.78rem; color:rgba(245,239,226,0.3); font-family:'Oswald',sans-serif; letter-spacing:0.1em; }
   .footer-bottom a { color:rgba(245,239,226,0.3); text-decoration:none; transition:color 0.2s; }
   .footer-bottom a:hover { color:var(--gold-lt); }
 
-  /* ── DIVIDER ORNAMENT ─────────────────────────── */
-  .ornament {
-    text-align:center; font-size:1.4rem; color:var(--red);
-    opacity:0.5; margin:0; line-height:1;
-    display:flex; align-items:center; gap:0.75rem; justify-content:center;
-  }
-  .ornament::before, .ornament::after {
-    content:''; flex:1; height:1px;
-    background:linear-gradient(to right, transparent, var(--border));
-  }
+  /* ── ORNAMENT ─────────────────────────────────── */
+  .ornament { text-align:center; font-size:1.4rem; color:var(--red); opacity:0.5; margin:0; line-height:1; display:flex; align-items:center; gap:0.75rem; justify-content:center; }
+  .ornament::before, .ornament::after { content:''; flex:1; height:1px; background:linear-gradient(to right, transparent, var(--border)); }
   .ornament::after { background:linear-gradient(to left, transparent, var(--border)); }
 
   /* ── RESPONSIVE ───────────────────────────────── */
@@ -505,11 +340,11 @@
   <a href="#" class="nav-brand">Frieda's <span>Cafe</span></a>
   <ul class="nav-links">
     <li><a href="#about">Our Story</a></li>
-    <li><a href="#menu">Menu</a></li>
+    <li><a href="/menu.html">Menu</a></li>
     <li><a href="#testimonials">Reviews</a></li>
-    <li><a href="#merch">Merch</a></li>
+    <li><a href="/merch.html">Merch</a></li>
     <li><a href="#visit">Find Us</a></li>
-    <li><a href="#merch" class="nav-cta">Shop Now</a></li>
+    <li><a href="/merch.html" class="nav-cta">Shop Now</a></li>
   </ul>
   <button class="nav-hamburger" aria-label="Menu">☰</button>
 </nav>
@@ -518,9 +353,7 @@
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-content">
-
     <p class="hero-est">&#11088; Serving Willmar, Minnesota since 1970 &#11088;</p>
-
     <div class="hero-badge">
       <div class="hero-badge-ring">
         <span class="hero-badge-top">Est. 1970</span>
@@ -534,16 +367,13 @@
       <span class="hero-badge-star">&#9733;</span>
       <span class="hero-badge-star">&#9733;</span>
     </div>
-
     <h1 class="hero-tagline">There's no place<br>like <em>Frieda's.</em></h1>
     <div class="hero-rule"></div>
     <p class="hero-sub">Come in as a guest and leave as family. Homemade food, cheap coffee, and friendly faces — right in the heart of downtown Willmar.</p>
-
     <div class="hero-cta-group">
-      <a href="#menu" class="btn btn-primary">See the Menu</a>
-      <a href="#merch" class="btn btn-outline">Shop Merch</a>
+      <a href="/menu.html" class="btn btn-primary">See the Menu</a>
+      <a href="/merch.html" class="btn btn-outline">Shop Merch</a>
     </div>
-
     <div class="hero-hours">
       <div class="hero-hours-item">
         <span class="hero-hours-label">Mon – Fri</span>
@@ -562,29 +392,16 @@
         <span class="hero-hours-val">Cash &amp; Check</span>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stats-inner">
-    <div class="stat">
-      <span class="stat-num">55+</span>
-      <span class="stat-label">Years Serving Willmar</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">4.8★</span>
-      <span class="stat-label">Google Rating</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">657+</span>
-      <span class="stat-label">Five-Star Reviews</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">$4</span>
-      <span class="stat-label">Breakfast Starting At</span>
-    </div>
+    <div class="stat"><span class="stat-num">55+</span><span class="stat-label">Years Serving Willmar</span></div>
+    <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Google Rating</span></div>
+    <div class="stat"><span class="stat-num">657+</span><span class="stat-label">Five-Star Reviews</span></div>
+    <div class="stat"><span class="stat-num">$2.95</span><span class="stat-label">Breakfast Starting At</span></div>
   </div>
 </div>
 
@@ -602,18 +419,9 @@
         <p style="margin-top:1rem;"><em>— Steve and Amy</em></p>
       </div>
       <div class="about-img-grid">
-        <div class="about-img-box">
-          <span class="about-img-placeholder">☕</span>
-          <!-- Replace with: <img src="interior-photo.jpg" alt="Inside Frieda's Cafe"> -->
-        </div>
-        <div class="about-img-box">
-          <span class="about-img-placeholder">🥞</span>
-          <!-- Replace with actual food photo -->
-        </div>
-        <div class="about-img-box">
-          <span class="about-img-placeholder">👨‍👩‍👦</span>
-          <!-- Replace with family/staff photo -->
-        </div>
+        <div class="about-img-box"><span class="about-img-placeholder">☕</span></div>
+        <div class="about-img-box"><span class="about-img-placeholder">🥞</span></div>
+        <div class="about-img-box"><span class="about-img-placeholder">👨‍👩‍👦</span></div>
       </div>
     </div>
   </div>
@@ -625,58 +433,51 @@
     <span class="section-label" style="text-align:center;display:block;">What We Serve</span>
     <h2 class="section-title" style="text-align:center;">The Good Stuff</h2>
     <div class="section-rule centered"></div>
-
     <div class="menu-grid">
-
       <div class="menu-card">
         <div class="menu-card-icon">🍳</div>
         <h3 class="menu-card-title">Breakfast</h3>
         <ul class="menu-card-items">
-          <li>Ham &amp; Eggs <span class="menu-price">~$4</span></li>
-          <li>Short Stack Pancakes <span class="menu-price">~$4</span></li>
-          <li>French Toast <span class="menu-price">~$4</span></li>
-          <li>Bacon &amp; Eggs <span class="menu-price">~$4</span></li>
-          <li>Hashbrowns <span class="menu-price">~$2</span></li>
-          <li>Hot Cereal <span class="menu-price">~$2</span></li>
+          <li>Ham &amp; Eggs <span class="menu-price">$5.50</span></li>
+          <li>Short Stack Pancakes <span class="menu-price">$4.00</span></li>
+          <li>French Toast (3) <span class="menu-price">$4.50</span></li>
+          <li>Bacon &amp; Eggs <span class="menu-price">$5.50</span></li>
+          <li>Hash Browns <span class="menu-price">$3.39</span></li>
+          <li>Oatmeal <span class="menu-price">$2.89</span></li>
         </ul>
       </div>
-
       <div class="menu-card">
         <div class="menu-card-icon">🥪</div>
         <h3 class="menu-card-title">Lunch</h3>
         <ul class="menu-card-items">
-          <li>Grilled Cheese <span class="menu-price">~$4</span></li>
-          <li>Tuna Melt <span class="menu-price">~$5</span></li>
-          <li>Burger &amp; Fries <span class="menu-price">~$6</span></li>
-          <li>BLT <span class="menu-price">~$5</span></li>
-          <li>Pork Tenderloin <span class="menu-price">~$6</span></li>
-          <li>Soup of the Day <span class="menu-price">~$3</span></li>
+          <li>Grilled Cheese <span class="menu-price">$2.25</span></li>
+          <li>Tuna Fish Sandwich <span class="menu-price">$2.99</span></li>
+          <li>Cheeseburger <span class="menu-price">$2.25</span></li>
+          <li>BLT Sandwich <span class="menu-price">$4.25</span></li>
+          <li>Pork Tenderloin <span class="menu-price">$4.25</span></li>
+          <li>Bowl of Soup <span class="menu-price">$2.50</span></li>
         </ul>
       </div>
-
       <div class="menu-card">
         <div class="menu-card-icon">🥧</div>
-        <h3 class="menu-card-title">Homemade Pastries</h3>
+        <h3 class="menu-card-title">Dessert</h3>
         <ul class="menu-card-items">
-          <li>Caramel Rolls <span class="menu-price">~$2</span></li>
-          <li>Eclair Dessert <span class="menu-price">~$2</span></li>
-          <li>Brownies <span class="menu-price">~$2</span></li>
-          <li>Oatmeal Raisin Cookies <span class="menu-price">~$1</span></li>
-          <li>Rhubarb Crisp <span class="menu-price">~$2</span></li>
-          <li>Pie (rotating) <span class="menu-price">~$3</span></li>
+          <li>Caramel Roll <span class="menu-price">$1.99</span></li>
+          <li>Pie <span class="menu-price">$2.25</span></li>
+          <li>Pie Alamode <span class="menu-price">$3.00</span></li>
+          <li>Shake or Malt <span class="menu-price">$4.99</span></li>
+          <li>Sundae <span class="menu-price">$2.89</span></li>
+          <li>Cookies <span class="menu-price">$0.70</span></li>
         </ul>
       </div>
-
     </div>
-
     <p class="menu-note">
-      <strong>Noon Special</strong> available daily. Menu rotates — ask your server what's fresh today.
+      <strong>Noon Special</strong> available daily — $7.50. Ask your server what's fresh today.
       We also do <strong>takeout</strong>! Call ahead: (320) 235-2865.<br>
       <strong>Cash or check only</strong> for food orders.
     </p>
-
     <div style="text-align:center;margin-top:2rem;">
-      <a href="https://friedascafe.shop/pages/menu" target="_blank" class="btn btn-primary" style="display:inline-block;">View Full Menu &amp; Specials ↗</a>
+      <a href="/menu.html" class="btn btn-primary" style="display:inline-block;">View Full Menu ↗</a>
     </div>
   </div>
 </section>
@@ -692,7 +493,6 @@
     <span class="section-label">What People Are Saying</span>
     <h2 class="section-title">Loved by Willmar</h2>
     <div class="section-rule"></div>
-
     <div class="testi-grid">
       <div class="testi-card">
         <div class="testi-stars">★★★★★</div>
@@ -725,7 +525,6 @@
         <span class="testi-author">— Kate</span>
       </div>
     </div>
-
     <div class="testi-award">
       <div class="testi-award-badge">
         <span>Readers</span>
@@ -743,40 +542,26 @@
     <h2 class="section-title" style="text-align:center;">Wear the Colors</h2>
     <div class="section-rule centered"></div>
     <p style="text-align:center;color:var(--muted);font-style:italic;max-width:480px;margin:0 auto;">Official Frieda's Cafe merch — shipped straight to your door. Cards accepted online.</p>
-
     <div class="merch-grid">
       <div class="merch-card">
         <div class="merch-img">☕</div>
-        <div class="merch-body">
-          <p class="merch-name">Coffee Stop Tee</p>
-          <p class="merch-price">From $22.98</p>
-        </div>
+        <div class="merch-body"><p class="merch-name">Coffee Stop Tee</p><p class="merch-price">From $22.98</p></div>
       </div>
       <div class="merch-card">
         <div class="merch-img">🧢</div>
-        <div class="merch-body">
-          <p class="merch-name">Cuffed Beanie</p>
-          <p class="merch-price">$19.99</p>
-        </div>
+        <div class="merch-body"><p class="merch-name">Cuffed Beanie</p><p class="merch-price">$19.99</p></div>
       </div>
       <div class="merch-card">
         <div class="merch-img">🧥</div>
-        <div class="merch-body">
-          <p class="merch-name">Coffee Stop Sweatshirt</p>
-          <p class="merch-price">$30.00</p>
-        </div>
+        <div class="merch-body"><p class="merch-name">Coffee Stop Sweatshirt</p><p class="merch-price">$30.00</p></div>
       </div>
       <div class="merch-card">
         <div class="merch-img">🗺️</div>
-        <div class="merch-body">
-          <p class="merch-name">Coordinates Tee</p>
-          <p class="merch-price">$20.00</p>
-        </div>
+        <div class="merch-body"><p class="merch-name">Coordinates Tee</p><p class="merch-price">$20.00</p></div>
       </div>
     </div>
-
     <div style="text-align:center;margin-top:2rem;">
-      <a href="https://friedascafe.shop/collections/all" target="_blank" class="merch-cta">Shop All 53 Items ↗</a>
+      <a href="/merch.html" class="merch-cta">Shop All Items ↗</a>
     </div>
   </div>
 </section>
@@ -789,7 +574,6 @@
         <span class="section-label">Find Us</span>
         <h2 class="section-title">Come Find<br>Your Table</h2>
         <div class="section-rule"></div>
-
         <div class="visit-detail">
           <span class="visit-detail-icon">📍</span>
           <div class="visit-detail-text">
@@ -797,7 +581,6 @@
             <p>511 Benson Ave SW<br>Willmar, MN 56201<br><em style="font-size:0.85rem;color:var(--muted);">Downtown, around the corner from Ray Peterson Shoes</em></p>
           </div>
         </div>
-
         <div class="visit-detail">
           <span class="visit-detail-icon">📞</span>
           <div class="visit-detail-text">
@@ -805,7 +588,6 @@
             <p><a href="tel:3202352865" style="color:var(--brown);text-decoration:none;">(320) 235-2865</a></p>
           </div>
         </div>
-
         <div class="visit-detail">
           <span class="visit-detail-icon">🕐</span>
           <div class="visit-detail-text">
@@ -813,14 +595,11 @@
             <p>Monday – Friday: 6am – 4pm<br>Saturday: 6am – 11am<br>Sunday: Closed</p>
           </div>
         </div>
-
         <div class="visit-cash-note">
           <p>&#9888; We're <strong>cash and check only</strong> for food — no cards in the cafe. ATM nearby on Benson Ave. Cards accepted online for merch orders only.</p>
         </div>
-
         <p style="margin-top:1.5rem;color:var(--muted);font-size:0.9rem;font-style:italic;">Family is important to us — we occasionally close for school holidays and vacation. Follow us on Facebook for updates.</p>
       </div>
-
       <div>
         <div class="visit-map">
           <div class="visit-map-placeholder">
@@ -828,7 +607,6 @@
             <p>511 Benson Ave SW<br>Willmar, MN 56201</p>
             <a href="https://maps.google.com/?q=511+Benson+Ave+SW+Willmar+MN+56201" target="_blank" class="btn btn-primary" style="display:inline-block;margin-top:1rem;font-size:0.65rem;">Open in Google Maps ↗</a>
           </div>
-          <!-- Replace with embedded Google Map iframe -->
         </div>
       </div>
     </div>
@@ -847,9 +625,9 @@
       <span class="footer-col-title">Navigate</span>
       <ul>
         <li><a href="#about">Our Story</a></li>
-        <li><a href="#menu">Menu</a></li>
+        <li><a href="/menu.html">Menu</a></li>
         <li><a href="#testimonials">Reviews</a></li>
-        <li><a href="#merch">Merch Shop</a></li>
+        <li><a href="/merch.html">Merch Shop</a></li>
         <li><a href="#visit">Find Us</a></li>
       </ul>
     </div>
