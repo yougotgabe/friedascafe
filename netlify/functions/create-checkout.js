@@ -33,9 +33,6 @@ function stripeRequest(path, method, body, secretKey) {
   });
 }
 
-// Flatten nested objects for Stripe's form encoding
-// e.g. { line_items: [{ price_data: { currency: 'usd' } }] }
-// becomes { 'line_items[0][price_data][currency]': 'usd' }
 function flattenForStripe(obj, prefix, result) {
   result = result || {};
   for (var key in obj) {
@@ -65,7 +62,7 @@ exports.handler = async function(event) {
   if (event.httpMethod !== 'POST') return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
 
   const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
-  const STRIPE_CONNECTED_ACCOUNT = process.env.STRIPE_CONNECTED_ACCOUNT_FRIEDAS; // Set per client
+  const STRIPE_CONNECTED_ACCOUNT = process.env.STRIPE_CONNECTED_ACCOUNT_FRIEDAS;
   const SITE_URL = process.env.URL || 'https://chimerical-gingersnap-f01a5c.netlify.app';
 
   if (!STRIPE_SECRET_KEY) {
@@ -82,8 +79,6 @@ exports.handler = async function(event) {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Cart is empty' }) };
   }
 
-  // Build line items from cart
-  // Each cart item: { name, price_cents, quantity, image_url, variant_id, product_id }
   const lineItems = cart.map(function(item) {
     return {
       price_data: {
@@ -98,7 +93,6 @@ exports.handler = async function(event) {
     };
   });
 
-  // Store cart metadata so stripe-webhook.js can fire the Printify order
   const cartMeta = JSON.stringify(cart.map(function(item) {
     return {
       product_id: item.product_id,
@@ -107,33 +101,18 @@ exports.handler = async function(event) {
     };
   }));
 
-  // Build checkout session params
-  const sessionParams = {
-    mode: 'payment',
-    'line_items': lineItems,
-    'success_url': SITE_URL + '/shop?success=true',
-    'cancel_url': SITE_URL + '/shop?cancelled=true',
-    'shipping_address_collection[allowed_countries][0]': 'US',
-    'metadata[cart]': cartMeta
-  };
-
-  // If client has a connected Stripe account, use it
-  // Platform fee: $1 per transaction (adjust as needed)
   const sessionBody = flattenForStripe({
     mode: 'payment',
     line_items: lineItems,
-    success_url: SITE_URL + '/shop?success=true',
-    cancel_url: SITE_URL + '/shop?cancelled=true',
+    success_url: SITE_URL + '/merch.html?checkout=success',
+    cancel_url: SITE_URL + '/merch.html?checkout=cancelled',
     shipping_address_collection: { allowed_countries: ['US'] },
     metadata: { cart: cartMeta }
   });
 
-  // Add Connect params if we have a connected account
-  let extraHeaders = {};
   if (STRIPE_CONNECTED_ACCOUNT) {
-    sessionBody['payment_intent_data[application_fee_amount]'] = 100; // $1.00 platform fee in cents
+    sessionBody['payment_intent_data[application_fee_amount]'] = 100;
     sessionBody['payment_intent_data[on_behalf_of]'] = STRIPE_CONNECTED_ACCOUNT;
-    extraHeaders['Stripe-Account'] = STRIPE_CONNECTED_ACCOUNT;
   }
 
   const result = await stripeRequest('/v1/checkout/sessions', 'POST', sessionBody, STRIPE_SECRET_KEY);
