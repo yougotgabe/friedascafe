@@ -8,7 +8,6 @@
   <style>
     :root {
       --mahogany: #3b1a0e;
-      --mahogany-light: #5c2d1a;
       --cream: #f5f0e8;
       --cream-dark: #e8dfd0;
       --red: #c0392b;
@@ -17,23 +16,17 @@
       --text: #2c1a0e;
       --muted: #7a5c3e;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Lora', Georgia, serif;
       background-color: var(--mahogany);
-      background-image:
-        radial-gradient(ellipse at top left, #5c2d1a 0%, transparent 60%),
-        radial-gradient(ellipse at bottom right, #1a0a05 0%, transparent 60%);
+      background-image: radial-gradient(ellipse at top left, #5c2d1a 0%, transparent 60%), radial-gradient(ellipse at bottom right, #1a0a05 0%, transparent 60%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 2rem;
     }
-
-    /* ─── LOGIN SCREEN ─────────────────────────── */
     #login-screen {
       background: var(--cream);
       border-radius: 4px;
@@ -44,299 +37,52 @@
       box-shadow: 0 20px 60px rgba(0,0,0,0.5);
       border-top: 5px solid var(--red);
     }
-
-    #login-screen .logo {
-      font-family: 'Abril Fatface', serif;
-      font-size: 2rem;
-      color: var(--mahogany);
-      line-height: 1.1;
-      margin-bottom: 0.25rem;
-    }
-
-    #login-screen .subtitle {
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-style: italic;
-      letter-spacing: 0.05em;
-      margin-bottom: 2rem;
-    }
-
-    #login-screen label {
-      display: block;
-      text-align: left;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    #login-screen input {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border: 2px solid var(--cream-dark);
-      border-radius: 3px;
-      font-family: 'Lora', serif;
-      font-size: 1rem;
-      color: var(--text);
-      background: white;
-      margin-bottom: 1.25rem;
-      transition: border-color 0.2s;
-    }
-
-    #login-screen input:focus {
-      outline: none;
-      border-color: var(--red);
-    }
-
-    .btn {
-      display: inline-block;
-      width: 100%;
-      padding: 0.85rem 1.5rem;
-      background: var(--red);
-      color: white;
-      font-family: 'Lora', serif;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: background 0.2s, transform 0.1s;
-    }
-
+    #login-screen .logo { font-family: 'Abril Fatface', serif; font-size: 2rem; color: var(--mahogany); line-height: 1.1; margin-bottom: 0.25rem; }
+    #login-screen .subtitle { font-size: 0.85rem; color: var(--muted); font-style: italic; letter-spacing: 0.05em; margin-bottom: 2rem; }
+    #login-screen label { display: block; text-align: left; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    #login-screen input { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 1rem; color: var(--text); background: white; margin-bottom: 1.25rem; transition: border-color 0.2s; }
+    #login-screen input:focus { outline: none; border-color: var(--red); }
+    .btn { display: inline-block; width: 100%; padding: 0.85rem 1.5rem; background: var(--red); color: white; font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s, transform 0.1s; }
     .btn:hover { background: var(--red-dark); }
     .btn:active { transform: translateY(1px); }
     .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--red);
-      border: 2px solid var(--red);
-      margin-top: 0.75rem;
-    }
-    .btn-secondary:hover { background: var(--red); color: white; }
-
-    #login-error {
-      color: var(--red);
-      font-size: 0.875rem;
-      margin-top: -0.75rem;
-      margin-bottom: 1rem;
-      display: none;
-    }
-
-    /* ─── ADMIN PANEL ──────────────────────────── */
-    #admin-panel {
-      display: none;
-      width: 100%;
-      max-width: 680px;
-    }
-
-    .admin-header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .admin-header .logo {
-      font-family: 'Abril Fatface', serif;
-      font-size: 2.2rem;
-      color: var(--cream);
-      line-height: 1.1;
-    }
-
-    .admin-header .subtitle {
-      font-size: 0.85rem;
-      color: var(--gold);
-      font-style: italic;
-      letter-spacing: 0.08em;
-      margin-top: 0.25rem;
-    }
-
-    .card {
-      background: var(--cream);
-      border-radius: 4px;
-      padding: 2rem;
-      margin-bottom: 1.25rem;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-      border-top: 4px solid var(--gold);
-    }
-
-    .card h2 {
-      font-family: 'Abril Fatface', serif;
-      font-size: 1.25rem;
-      color: var(--mahogany);
-      margin-bottom: 1.25rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--cream-dark);
-    }
-
-    .field-group {
-      margin-bottom: 1.25rem;
-    }
-
+    #login-error { color: var(--red); font-size: 0.875rem; margin-top: -0.75rem; margin-bottom: 1rem; display: none; }
+    #admin-panel { display: none; width: 100%; max-width: 680px; }
+    .admin-header { text-align: center; margin-bottom: 2rem; }
+    .admin-header .logo { font-family: 'Abril Fatface', serif; font-size: 2.2rem; color: var(--cream); line-height: 1.1; }
+    .admin-header .subtitle { font-size: 0.85rem; color: var(--gold); font-style: italic; letter-spacing: 0.08em; margin-top: 0.25rem; }
+    .card { background: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--gold); }
+    .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+    .field-group { margin-bottom: 1.25rem; }
     .field-group:last-child { margin-bottom: 0; }
-
-    .field-group label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .field-group input[type="text"],
-    .field-group textarea {
-      width: 100%;
-      padding: 0.7rem 0.9rem;
-      border: 2px solid var(--cream-dark);
-      border-radius: 3px;
-      font-family: 'Lora', serif;
-      font-size: 0.95rem;
-      color: var(--text);
-      background: white;
-      transition: border-color 0.2s;
-      resize: vertical;
-    }
-
-    .field-group input:focus,
-    .field-group textarea:focus {
-      outline: none;
-      border-color: var(--red);
-    }
-
-    /* Toggle switch */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 0;
-    }
-
-    .toggle-label {
-      font-size: 0.95rem;
-      color: var(--text);
-      font-weight: 600;
-    }
-
-    .toggle-label small {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 400;
-      font-style: italic;
-      margin-top: 0.1rem;
-    }
-
-    .toggle {
-      position: relative;
-      width: 52px;
-      height: 28px;
-      flex-shrink: 0;
-    }
-
+    .field-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+    .field-group input[type="text"], .field-group textarea { width: 100%; padding: 0.7rem 0.9rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 0.95rem; color: var(--text); background: white; transition: border-color 0.2s; resize: vertical; }
+    .field-group input:focus, .field-group textarea:focus { outline: none; border-color: var(--red); }
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
+    .toggle-label { font-size: 0.95rem; color: var(--text); font-weight: 600; }
+    .toggle-label small { display: block; font-size: 0.8rem; color: var(--muted); font-weight: 400; font-style: italic; margin-top: 0.1rem; }
+    .toggle { position: relative; width: 52px; height: 28px; flex-shrink: 0; }
     .toggle input { opacity: 0; width: 0; height: 0; }
-
-    .toggle-slider {
-      position: absolute;
-      inset: 0;
-      background: var(--cream-dark);
-      border-radius: 28px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .toggle-slider:before {
-      content: '';
-      position: absolute;
-      height: 20px;
-      width: 20px;
-      left: 4px;
-      top: 4px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-
+    .toggle-slider { position: absolute; inset: 0; background: var(--cream-dark); border-radius: 28px; cursor: pointer; transition: background 0.2s; }
+    .toggle-slider:before { content: ''; position: absolute; height: 20px; width: 20px; left: 4px; top: 4px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
     .toggle input:checked + .toggle-slider { background: var(--red); }
     .toggle input:checked + .toggle-slider:before { transform: translateX(24px); }
-
-    /* Hours grid */
-    .hours-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    /* Status bar */
-    #status-bar {
-      background: var(--cream);
-      border-radius: 4px;
-      padding: 1rem 1.5rem;
-      margin-bottom: 1.25rem;
-      display: none;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    #status-bar { background: var(--cream); border-radius: 4px; padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: none; align-items: center; gap: 0.75rem; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
     #status-bar.success { border-left: 4px solid #27ae60; color: #1e8449; }
     #status-bar.error { border-left: 4px solid var(--red); color: var(--red); }
-
-    .save-row {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-
+    .save-row { display: flex; gap: 1rem; align-items: center; }
     .save-row .btn { width: auto; flex: 1; }
-
-    .logout-btn {
-      background: none;
-      border: none;
-      color: var(--gold);
-      font-family: 'Lora', serif;
-      font-size: 0.8rem;
-      cursor: pointer;
-      letter-spacing: 0.05em;
-      padding: 0.25rem;
-      opacity: 0.8;
-      transition: opacity 0.2s;
-    }
+    .logout-btn { background: none; border: none; color: var(--gold); font-family: 'Lora', serif; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.05em; padding: 0.25rem; opacity: 0.8; transition: opacity 0.2s; }
     .logout-btn:hover { opacity: 1; }
-
-    .admin-footer {
-      text-align: center;
-      margin-top: 1rem;
-    }
-
-    /* Loading spinner */
-    .spinner {
-      display: inline-block;
-      width: 14px;
-      height: 14px;
-      border: 2px solid rgba(255,255,255,0.4);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.6s linear infinite;
-      margin-right: 0.4rem;
-      vertical-align: middle;
-    }
+    .admin-footer { text-align: center; margin-top: 1rem; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 0.4rem; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    @media (max-width: 500px) {
-      .hours-grid { grid-template-columns: 1fr; }
-      body { padding: 1rem; }
-    }
+    @media (max-width: 500px) { .hours-grid { grid-template-columns: 1fr; } body { padding: 1rem; } }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
   <div id="login-screen">
     <div class="logo">Frieda's Cafe</div>
     <div class="subtitle">Site Admin Panel</div>
@@ -346,17 +92,12 @@
     <button class="btn" id="login-btn">Sign In</button>
   </div>
 
-  <!-- ADMIN PANEL -->
   <div id="admin-panel">
-
     <div class="admin-header">
       <div class="logo">Frieda's Cafe</div>
       <div class="subtitle">Site Admin Panel</div>
     </div>
-
     <div id="status-bar"></div>
-
-    <!-- HOURS CARD -->
     <div class="card">
       <h2>☕ Cafe Hours</h2>
       <div class="hours-grid">
@@ -378,8 +119,6 @@
         </div>
       </div>
     </div>
-
-    <!-- HOLIDAY NOTICE CARD -->
     <div class="card">
       <h2>📢 Holiday Notice</h2>
       <div class="toggle-row">
@@ -397,23 +136,16 @@
         <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday!"></textarea>
       </div>
     </div>
-
-    <!-- SAVE ROW -->
     <div class="save-row">
       <button class="btn" id="save-btn">Save Changes</button>
     </div>
-
     <div class="admin-footer">
       <button class="logout-btn" id="logout-btn">Sign out</button>
     </div>
-
   </div>
 
   <script>
-    var FUNCTION_URL = '/.netlify/functions/update-content';
     var adminPassword = '';
-
-    // ─── ELEMENTS ────────────────────────────────
     var loginScreen = document.getElementById('login-screen');
     var adminPanel  = document.getElementById('admin-panel');
     var loginBtn    = document.getElementById('login-btn');
@@ -423,86 +155,57 @@
     var loginError  = document.getElementById('login-error');
     var statusBar   = document.getElementById('status-bar');
 
-    // ─── LOGIN ───────────────────────────────────
     function doLogin() {
       var pw = pwInput.value.trim();
       if (!pw) return;
-      adminPassword = pw;
       loginError.style.display = 'none';
       loginBtn.disabled = true;
-      loginBtn.innerHTML = '<span class="spinner"></span>Signing in…';
-
-      // Test the password by sending an empty update
-      fetch(FUNCTION_URL, {
+      loginBtn.innerHTML = '<span class="spinner"></span>Signing in\u2026';
+      fetch('/.netlify/functions/get-content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: adminPassword, updates: {} })
+        body: JSON.stringify({ password: pw })
       })
       .then(function(res) { return res.json(); })
       .then(function(data) {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Sign In';
         if (data.error === 'Unauthorized') {
-          adminPassword = '';
           loginError.style.display = 'block';
-          loginBtn.disabled = false;
-          loginBtn.textContent = 'Sign In';
-        } else {
-          // Password is valid — show admin panel
+        } else if (data.success) {
+          adminPassword = pw;
           loginScreen.style.display = 'none';
           adminPanel.style.display = 'block';
-          loadCurrentContent();
+          prefillFields(data.content);
+        } else {
+          loginError.textContent = 'Could not connect. Please try again.';
+          loginError.style.display = 'block';
         }
       })
       .catch(function() {
-        // Network error — still let them in and show error on save if needed
-        loginScreen.style.display = 'none';
-        adminPanel.style.display = 'block';
         loginBtn.disabled = false;
         loginBtn.textContent = 'Sign In';
+        loginError.textContent = 'Network error. Please try again.';
+        loginError.style.display = 'block';
       });
     }
 
     loginBtn.addEventListener('click', doLogin);
-    pwInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') doLogin();
-    });
+    pwInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
 
-    // ─── LOAD CURRENT CONTENT FROM SUPABASE ──────
-    function loadCurrentContent() {
-      var supabaseUrl = 'https://bhokimstqlnysyypivbp.supabase.co';
-      var supabaseAnon = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJob2tpbXN0cWxueXN5eXBpdmJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTQ1MjAsImV4cCI6MjA5MDQ5MDUyMH0.EBe5RMIAmagNF_4OJH0ZBghBj8N71-fOvvVVFYicxrs';
-
-      // If not replaced by build, skip prefill
-      if (supabaseUrl.indexOf('%%') !== -1) return;
-
-      fetch(supabaseUrl + '/rest/v1/site_content?select=key,value', {
-        headers: {
-          'apikey': supabaseAnon,
-          'Authorization': 'Bearer ' + supabaseAnon
-        }
-      })
-      .then(function(res) { return res.json(); })
-      .then(function(rows) {
-        rows.forEach(function(row) {
-          var el = document.getElementById(row.key);
-          if (!el) return;
-          if (el.type === 'checkbox') {
-            el.checked = (row.value === 'true');
-          } else {
-            el.value = row.value;
-          }
-        });
-      })
-      .catch(function(err) {
-        console.warn('Could not load current content:', err);
+    function prefillFields(content) {
+      Object.keys(content).forEach(function(key) {
+        var el = document.getElementById(key);
+        if (!el) return;
+        if (el.type === 'checkbox') { el.checked = (content[key] === 'true'); }
+        else { el.value = content[key]; }
       });
     }
 
-    // ─── SAVE ────────────────────────────────────
     saveBtn.addEventListener('click', function() {
       saveBtn.disabled = true;
-      saveBtn.innerHTML = '<span class="spinner"></span>Saving…';
+      saveBtn.innerHTML = '<span class="spinner"></span>Saving\u2026';
       statusBar.style.display = 'none';
-
       var updates = {
         hours_weekday:         document.getElementById('hours_weekday').value.trim(),
         hours_saturday:        document.getElementById('hours_saturday').value.trim(),
@@ -511,13 +214,8 @@
         holiday_notice_active: document.getElementById('holiday_notice_active').checked ? 'true' : 'false',
         holiday_notice_text:   document.getElementById('holiday_notice_text').value.trim()
       };
-
-      // Remove empty values so we don't blank out fields accidentally
-      Object.keys(updates).forEach(function(k) {
-        if (updates[k] === '' && k !== 'holiday_notice_text') delete updates[k];
-      });
-
-      fetch(FUNCTION_URL, {
+      Object.keys(updates).forEach(function(k) { if (updates[k] === '' && k !== 'holiday_notice_text') delete updates[k]; });
+      fetch('/.netlify/functions/update-content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password: adminPassword, updates: updates })
@@ -526,32 +224,24 @@
       .then(function(data) {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save Changes';
-        if (data.success) {
-          showStatus('success', '✓ Changes saved successfully! The site will update shortly.');
-        } else if (data.error === 'Unauthorized') {
-          showStatus('error', '✗ Session expired. Please refresh and sign in again.');
-        } else {
-          showStatus('error', '✗ Something went wrong. Please try again.');
-        }
+        if (data.success) { showStatus('success', '\u2713 Changes saved! The site will update shortly.'); }
+        else if (data.error === 'Unauthorized') { showStatus('error', '\u2717 Session expired. Please sign in again.'); }
+        else { showStatus('error', '\u2717 Something went wrong. Please try again.'); }
       })
       .catch(function() {
         saveBtn.disabled = false;
         saveBtn.textContent = 'Save Changes';
-        showStatus('error', '✗ Network error. Check your connection and try again.');
+        showStatus('error', '\u2717 Network error. Check your connection and try again.');
       });
     });
 
-    // ─── STATUS BAR ──────────────────────────────
     function showStatus(type, message) {
       statusBar.className = type;
       statusBar.textContent = message;
       statusBar.style.display = 'flex';
-      if (type === 'success') {
-        setTimeout(function() { statusBar.style.display = 'none'; }, 5000);
-      }
+      if (type === 'success') { setTimeout(function() { statusBar.style.display = 'none'; }, 5000); }
     }
 
-    // ─── LOGOUT ──────────────────────────────────
     logoutBtn.addEventListener('click', function() {
       adminPassword = '';
       adminPanel.style.display = 'none';
