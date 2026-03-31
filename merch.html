@@ -790,25 +790,16 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    // ── CONFIG ──
-    const SUPABASE_URL = 'https://bhokimstqlnysyypivbp.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJob2tpbXN0cWxueXN5eXBpdmJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5MTQ1MjAsImV4cCI6MjA5MDQ5MDUyMH0.EBe5RMIAmagNF_4OJH0ZBghBj8N71-fOvvVVFYicxrs'; // replace with actual key from Netlify env or inline
-
     // ── STATE ──
     let cart = JSON.parse(localStorage.getItem('fc_cart') || '[]');
     let cartOpen = false;
 
-    // ── SUPABASE FETCH ──
+    // ── FETCH PRODUCTS (server-side — no key in HTML) ──
     async function fetchProducts() {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/products?published=eq.true&order=name.asc`, {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
-      return res.json();
+      const res = await fetch('/.netlify/functions/get-products');
+      if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
+      const data = await res.json();
+      return data.products || [];
     }
 
     // ── RENDER PRODUCTS ──
