@@ -313,6 +313,7 @@
         loginError.style.display = 'block';
       } else if (data.success) {
         adminPassword = pw;
+        sessionStorage.setItem('fc_admin_pw', pw);
         loginScreen.style.display = 'none';
         adminPanel.style.display = 'block';
         prefillFields(data.content);
@@ -576,6 +577,7 @@
   logoutBtn.addEventListener('click', function() {
     adminPassword = '';
     allMenuItems = [];
+    sessionStorage.removeItem('fc_admin_pw');
     adminPanel.style.display = 'none';
     loginScreen.style.display = 'block';
     pwInput.value = '';
@@ -696,6 +698,37 @@
       else { showStatus('error', '\u2717 Failed to delete item.'); }
     });
   }
+
+  // ---- AUTO-LOGIN FROM SESSION ----
+  (function() {
+    var saved = sessionStorage.getItem('fc_admin_pw');
+    if (!saved) return;
+    pwInput.value = saved;
+    fetch('/.netlify/functions/get-content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: saved })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) {
+        adminPassword = saved;
+        loginScreen.style.display = 'none';
+        adminPanel.style.display = 'block';
+        prefillFields(data.content);
+        initGallery(data.content);
+        loadMenuItems();
+      } else {
+        sessionStorage.removeItem('fc_admin_pw');
+        pwInput.value = '';
+      }
+    })
+    .catch(function() {
+      sessionStorage.removeItem('fc_admin_pw');
+      pwInput.value = '';
+    });
+  })();
+
 </script>
 </body>
 </html>
