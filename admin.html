@@ -1,502 +1,600 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frieda's Cafe — Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --mahogany: #3b1a0e;
-      --cream: #f5f0e8;
-      --cream-dark: #e8dfd0;
-      --red: #c0392b;
-      --red-dark: #96281b;
-      --gold: #c9a84c;
-      --green: #27ae60;
-      --text: #2c1a0e;
-      --muted: #7a5c3e;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Lora', Georgia, serif;
-      background-color: var(--mahogany);
-      background-image: radial-gradient(ellipse at top left, #5c2d1a 0%, transparent 60%), radial-gradient(ellipse at bottom right, #1a0a05 0%, transparent 60%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-
-    /* LOGIN */
-    #login-screen { background: var(--cream); border-radius: 4px; padding: 3rem 2.5rem; width: 100%; max-width: 420px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-top: 5px solid var(--red); }
-    #login-screen .logo { font-family: 'Abril Fatface', serif; font-size: 2rem; color: var(--mahogany); line-height: 1.1; margin-bottom: 0.25rem; }
-    #login-screen .subtitle { font-size: 0.85rem; color: var(--muted); font-style: italic; letter-spacing: 0.05em; margin-bottom: 2rem; }
-    #login-screen label { display: block; text-align: left; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
-    #login-screen input { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 1rem; color: var(--text); background: white; margin-bottom: 1.25rem; transition: border-color 0.2s; }
-    #login-screen input:focus { outline: none; border-color: var(--red); }
-    #login-error { color: var(--red); font-size: 0.875rem; margin-top: -0.75rem; margin-bottom: 1rem; display: none; }
-
-    /* BUTTONS */
-    .btn { display: inline-block; width: 100%; padding: 0.85rem 1.5rem; background: var(--red); color: white; font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s, transform 0.1s; }
-    .btn:hover { background: var(--red-dark); }
-    .btn:active { transform: translateY(1px); }
-    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-    .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; width: auto; }
-    .btn-outline { background: transparent; color: var(--red); border: 2px solid var(--red); }
-    .btn-outline:hover { background: var(--red); color: white; }
-
-    /* ADMIN PANEL */
-    #admin-panel { display: none; width: 100%; max-width: 700px; }
-    .admin-header { text-align: center; margin-bottom: 2rem; }
-    .admin-header .logo { font-family: 'Abril Fatface', serif; font-size: 2.2rem; color: var(--cream); }
-    .admin-header .subtitle { font-size: 0.85rem; color: var(--gold); font-style: italic; letter-spacing: 0.08em; margin-top: 0.25rem; }
-
-    /* CARDS */
-    .card { background: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--gold); }
-    .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
-
-    /* FIELDS */
-    .field-group { margin-bottom: 1.25rem; }
-    .field-group:last-child { margin-bottom: 0; }
-    .field-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
-    .field-group input[type="text"], .field-group textarea, .field-group select { width: 100%; padding: 0.7rem 0.9rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 0.95rem; color: var(--text); background: white; transition: border-color 0.2s; resize: vertical; }
-    .field-group input:focus, .field-group textarea:focus, .field-group select:focus { outline: none; border-color: var(--red); }
-
-    /* TOGGLE */
-    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
-    .toggle-label { font-size: 0.95rem; color: var(--text); font-weight: 600; }
-    .toggle-label small { display: block; font-size: 0.8rem; color: var(--muted); font-weight: 400; font-style: italic; margin-top: 0.1rem; }
-    .toggle { position: relative; width: 52px; height: 28px; flex-shrink: 0; }
-    .toggle input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider { position: absolute; inset: 0; background: var(--cream-dark); border-radius: 28px; cursor: pointer; transition: background 0.2s; }
-    .toggle-slider:before { content: ''; position: absolute; height: 20px; width: 20px; left: 4px; top: 4px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
-    .toggle input:checked + .toggle-slider { background: var(--red); }
-    .toggle input:checked + .toggle-slider:before { transform: translateX(24px); }
-
-    /* HOURS GRID */
-    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    /* IMAGE UPLOAD */
-    .image-upload-block { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--cream-dark); }
-    .image-upload-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-    .image-preview { width: 100px; height: 80px; border-radius: 4px; object-fit: cover; background: var(--cream-dark); border: 2px solid var(--cream-dark); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.75rem; text-align: center; overflow: hidden; }
-    .image-preview img { width: 100%; height: 100%; object-fit: cover; }
-    .image-upload-info { flex: 1; }
-    .image-upload-info strong { display: block; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
-    .image-upload-info p { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-bottom: 0.6rem; }
-    .upload-progress { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; display: none; }
-    .upload-success { color: var(--green); }
-    .upload-error { color: var(--red); }
-
-    /* REVIEWS */
-    .review-block { background: white; border-radius: 4px; border: 2px solid var(--cream-dark); padding: 1.25rem; margin-bottom: 1rem; }
-    .review-block:last-child { margin-bottom: 0; }
-    .review-block h3 { font-family: 'Abril Fatface', serif; font-size: 1rem; color: var(--mahogany); margin-bottom: 1rem; }
-    .review-row { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; align-items: start; margin-bottom: 0.75rem; }
-    .stars-select { width: 90px; }
-
-    /* STATUS BAR */
-    #status-bar { background: var(--cream); border-radius: 4px; padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: none; align-items: center; gap: 0.75rem; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-    #status-bar.success { border-left: 4px solid var(--green); color: #1e8449; }
-    #status-bar.error { border-left: 4px solid var(--red); color: var(--red); }
-
-    .save-row { display: flex; gap: 1rem; align-items: center; }
-    .save-row .btn { width: auto; flex: 1; }
-    .logout-btn { background: none; border: none; color: var(--gold); font-family: 'Lora', serif; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.05em; padding: 0.25rem; opacity: 0.8; transition: opacity 0.2s; }
-    .logout-btn:hover { opacity: 1; }
-    .admin-footer { text-align: center; margin-top: 1rem; }
-
-    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 0.4rem; vertical-align: middle; }
-    .spinner-dark { border-color: rgba(0,0,0,0.2); border-top-color: var(--muted); }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    @media (max-width: 540px) {
-      .hours-grid { grid-template-columns: 1fr; }
-      .image-upload-block { flex-direction: column; }
-      .review-row { grid-template-columns: 1fr; }
-      body { padding: 1rem; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Frieda's Cafe — Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --mahogany: #3b1a0e; --cream: #f5f0e8; --cream-dark: #e8dfd0;
+    --red: #c0392b; --red-dark: #96281b; --gold: #c9a84c;
+    --green: #27ae60; --text: #2c1a0e; --muted: #7a5c3e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Lora', Georgia, serif;
+    background-color: var(--mahogany);
+    background-image: radial-gradient(ellipse at top left, #5c2d1a 0%, transparent 60%), radial-gradient(ellipse at bottom right, #1a0a05 0%, transparent 60%);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
+  }
+  /* LOGIN */
+  #login-screen {
+    background: var(--cream); border-radius: 4px; padding: 3rem 2.5rem;
+    width: 100%; max-width: 420px; text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5); border-top: 5px solid var(--red);
+  }
+  #login-screen .logo { font-family: 'Abril Fatface', serif; font-size: 2rem; color: var(--mahogany); line-height: 1.1; margin-bottom: 0.25rem; }
+  #login-screen .subtitle { font-size: 0.85rem; color: var(--muted); font-style: italic; letter-spacing: 0.05em; margin-bottom: 2rem; }
+  #login-screen label { display: block; text-align: left; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  #login-screen input { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 1rem; color: var(--text); background: white; margin-bottom: 1.25rem; transition: border-color 0.2s; }
+  #login-screen input:focus { outline: none; border-color: var(--red); }
+  #login-error { color: var(--red); font-size: 0.875rem; margin-top: -0.75rem; margin-bottom: 1rem; display: none; }
+  /* BUTTONS */
+  .btn { display: inline-block; width: 100%; padding: 0.85rem 1.5rem; background: var(--red); color: white; font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; border: none; border-radius: 3px; cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s, transform 0.1s; }
+  .btn:hover { background: var(--red-dark); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  .btn-sm { padding: 0.5rem 1rem; font-size: 0.875rem; width: auto; }
+  .btn-outline { background: transparent; color: var(--red); border: 2px solid var(--red); }
+  .btn-outline:hover { background: var(--red); color: white; }
+  /* ADMIN PANEL */
+  #admin-panel { display: none; width: 100%; max-width: 700px; }
+  .admin-header { text-align: center; margin-bottom: 2rem; }
+  .admin-header .logo { font-family: 'Abril Fatface', serif; font-size: 2.2rem; color: var(--cream); }
+  .admin-header .subtitle { font-size: 0.85rem; color: var(--gold); font-style: italic; letter-spacing: 0.08em; margin-top: 0.25rem; }
+  /* CARDS */
+  .card { background: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--gold); }
+  .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+  /* FIELDS */
+  .field-group { margin-bottom: 1.25rem; }
+  .field-group:last-child { margin-bottom: 0; }
+  .field-group label { display: block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+  .field-group input[type="text"], .field-group textarea, .field-group select { width: 100%; padding: 0.7rem 0.9rem; border: 2px solid var(--cream-dark); border-radius: 3px; font-family: 'Lora', serif; font-size: 0.95rem; color: var(--text); background: white; transition: border-color 0.2s; resize: vertical; }
+  .field-group input:focus, .field-group textarea:focus, .field-group select:focus { outline: none; border-color: var(--red); }
+  /* TOGGLE */
+  .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; }
+  .toggle-label { font-size: 0.95rem; color: var(--text); font-weight: 600; }
+  .toggle-label small { display: block; font-size: 0.8rem; color: var(--muted); font-weight: 400; font-style: italic; margin-top: 0.1rem; }
+  .toggle { position: relative; width: 52px; height: 28px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: var(--cream-dark); border-radius: 28px; cursor: pointer; transition: background 0.2s; }
+  .toggle-slider:before { content: ''; position: absolute; height: 20px; width: 20px; left: 4px; top: 4px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+  .toggle input:checked + .toggle-slider { background: var(--red); }
+  .toggle input:checked + .toggle-slider:before { transform: translateX(24px); }
+  /* HOURS GRID */
+  .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  /* IMAGE UPLOAD */
+  .image-upload-block { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--cream-dark); }
+  .image-upload-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .image-preview { width: 100px; height: 80px; border-radius: 4px; object-fit: cover; background: var(--cream-dark); border: 2px solid var(--cream-dark); flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 0.75rem; text-align: center; overflow: hidden; }
+  .image-preview img { width: 100%; height: 100%; object-fit: cover; }
+  .image-upload-info { flex: 1; }
+  .image-upload-info strong { display: block; font-size: 0.9rem; color: var(--text); margin-bottom: 0.25rem; }
+  .image-upload-info p { font-size: 0.8rem; color: var(--muted); font-style: italic; margin-bottom: 0.6rem; }
+  .upload-progress { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; display: none; }
+  .upload-success { color: var(--green); }
+  .upload-error { color: var(--red); }
+  /* REVIEWS */
+  .review-block { background: white; border-radius: 4px; border: 2px solid var(--cream-dark); padding: 1.25rem; margin-bottom: 1rem; }
+  .review-block:last-child { margin-bottom: 0; }
+  .review-block h3 { font-family: 'Abril Fatface', serif; font-size: 1rem; color: var(--mahogany); margin-bottom: 1rem; }
+  .review-row { display: grid; grid-template-columns: 1fr auto; gap: 0.75rem; align-items: start; margin-bottom: 0.75rem; }
+  .stars-select { width: 90px; }
+  /* MENU ITEM ROW */
+  .menu-item-row { display: grid; grid-template-columns: 1fr auto auto auto; gap: 0.5rem; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid var(--cream-dark); }
+  .menu-item-row:last-child { border-bottom: none; }
+  .menu-item-row .item-label { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+  .menu-item-row .item-cat { font-size: 0.75rem; color: var(--muted); }
+  .menu-item-row .item-price { font-size: 0.9rem; font-weight: 600; color: var(--mahogany); white-space: nowrap; }
+  .icon-btn { background: none; border: 1px solid var(--cream-dark); color: var(--muted); padding: 0.3rem 0.6rem; border-radius: 3px; font-size: 0.75rem; cursor: pointer; transition: all 0.15s; }
+  .icon-btn:hover { border-color: var(--gold); color: var(--mahogany); }
+  .icon-btn.danger { color: var(--red); }
+  .icon-btn.danger:hover { background: var(--red); color: white; border-color: var(--red); }
+  /* STATUS BAR */
+  #status-bar { background: var(--cream); border-radius: 4px; padding: 1rem 1.5rem; margin-bottom: 1.25rem; display: none; align-items: center; gap: 0.75rem; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  #status-bar.success { border-left: 4px solid var(--green); color: #1e8449; }
+  #status-bar.error { border-left: 4px solid var(--red); color: var(--red); }
+  .save-row { display: flex; gap: 1rem; align-items: center; }
+  .save-row .btn { width: auto; flex: 1; }
+  .logout-btn { background: none; border: none; color: var(--gold); font-family: 'Lora', serif; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.05em; padding: 0.25rem; opacity: 0.8; transition: opacity 0.2s; }
+  .logout-btn:hover { opacity: 1; }
+  .admin-footer { text-align: center; margin-top: 1rem; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 0.4rem; vertical-align: middle; }
+  .spinner-dark { border-color: rgba(0,0,0,0.2); border-top-color: var(--muted); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 540px) {
+    .hours-grid { grid-template-columns: 1fr; }
+    .image-upload-block { flex-direction: column; }
+    .review-row { grid-template-columns: 1fr; }
+    .menu-item-row { grid-template-columns: 1fr auto auto; }
+    body { padding: 1rem; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- LOGIN -->
-  <div id="login-screen">
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="logo">Frieda's Cafe</div>
+  <div class="subtitle">Site Admin Panel</div>
+  <label for="password-input">Admin Password</label>
+  <input type="password" id="password-input" placeholder="Enter password" autocomplete="current-password" />
+  <div id="login-error">Incorrect password. Please try again.</div>
+  <button class="btn" id="login-btn">Sign In</button>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-header">
     <div class="logo">Frieda's Cafe</div>
     <div class="subtitle">Site Admin Panel</div>
-    <label for="password-input">Admin Password</label>
-    <input type="password" id="password-input" placeholder="Enter password" autocomplete="current-password" />
-    <div id="login-error">Incorrect password. Please try again.</div>
-    <button class="btn" id="login-btn">Sign In</button>
   </div>
 
-  <!-- ADMIN PANEL -->
-  <div id="admin-panel">
-    <div class="admin-header">
-      <div class="logo">Frieda's Cafe</div>
-      <div class="subtitle">Site Admin Panel</div>
-    </div>
+  <div id="status-bar"></div>
 
-    <div id="status-bar"></div>
-
-    <!-- HOURS -->
-    <div class="card">
-      <h2>☕ Cafe Hours</h2>
-      <div class="hours-grid">
-        <div class="field-group">
-          <label>Monday – Friday</label>
-          <input type="text" id="hours_weekday" placeholder="e.g. 6am – 4pm" />
-        </div>
-        <div class="field-group">
-          <label>Saturday</label>
-          <input type="text" id="hours_saturday" placeholder="e.g. 6am – 11am" />
-        </div>
-        <div class="field-group">
-          <label>Sunday</label>
-          <input type="text" id="hours_sunday" placeholder="e.g. Closed" />
-        </div>
-        <div class="field-group">
-          <label>Payment Note</label>
-          <input type="text" id="payment_note" placeholder="e.g. Cash and check only in the cafe." />
-        </div>
+  <!-- HOURS -->
+  <div class="card">
+    <h2>&#9749; Cafe Hours</h2>
+    <div class="hours-grid">
+      <div class="field-group">
+        <label>Monday &ndash; Friday</label>
+        <input type="text" id="hours_weekday" placeholder="e.g. 6am &ndash; 4pm" />
       </div>
-    </div>
-
-    <!-- HOLIDAY NOTICE -->
-    <div class="card">
-      <h2>📢 Holiday Notice</h2>
-      <div class="toggle-row">
-        <div class="toggle-label">
-          Show Holiday Notice
-          <small>Displays a banner on the homepage</small>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="holiday_notice_active" />
-          <span class="toggle-slider"></span>
-        </label>
+      <div class="field-group">
+        <label>Saturday</label>
+        <input type="text" id="hours_saturday" placeholder="e.g. 6am &ndash; 11am" />
       </div>
-      <div class="field-group" style="margin-top: 1rem;">
-        <label>Notice Message</label>
-        <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday!"></textarea>
+      <div class="field-group">
+        <label>Sunday</label>
+        <input type="text" id="hours_sunday" placeholder="e.g. Closed" />
       </div>
-    </div>
-
-    <!-- IMAGES -->
-    <div class="card">
-      <h2>🖼️ Site Images</h2>
-
-      <div class="image-upload-block">
-        <div class="image-preview" id="preview-story">
-          <span>No image</span>
-        </div>
-        <div class="image-upload-info">
-          <strong>Our Story Photo</strong>
-          <p>The photo shown in the "Our Story" section of the homepage</p>
-          <input type="file" id="file-story" accept="image/jpeg,image/png,image/webp" style="display:none" />
-          <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-story').click()">Choose Photo</button>
-          <div class="upload-progress" id="progress-story"></div>
-        </div>
+      <div class="field-group">
+        <label>Payment Note</label>
+        <input type="text" id="payment_note" placeholder="e.g. Cash and check only in the cafe." />
       </div>
-
-      <div class="image-upload-block">
-        <div class="image-preview" id="preview-menu">
-          <span>No image</span>
-        </div>
-        <div class="image-upload-info">
-          <strong>Menu Hero Photo</strong>
-          <p>The banner photo shown at the top of the Menu page</p>
-          <input type="file" id="file-menu" accept="image/jpeg,image/png,image/webp" style="display:none" />
-          <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-menu').click()">Choose Photo</button>
-          <div class="upload-progress" id="progress-menu"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REVIEWS -->
-    <div class="card">
-      <h2>⭐ Loved by Willmar — Reviews</h2>
-      <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;">Copy your favorite Google reviews here. These show up in the "Loved by Willmar" section of the homepage.</p>
-
-      <div class="review-block">
-        <h3>Review 1</h3>
-        <div class="review-row">
-          <div class="field-group" style="margin-bottom:0">
-            <label>Reviewer Name</label>
-            <input type="text" id="review_1_name" placeholder="e.g. Sarah M." />
-          </div>
-          <div class="field-group" style="margin-bottom:0">
-            <label>Stars</label>
-            <select id="review_1_stars" class="stars-select">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-group">
-          <label>Review Text</label>
-          <textarea id="review_1_text" rows="3" placeholder="Paste the review text here..."></textarea>
-        </div>
-      </div>
-
-      <div class="review-block">
-        <h3>Review 2</h3>
-        <div class="review-row">
-          <div class="field-group" style="margin-bottom:0">
-            <label>Reviewer Name</label>
-            <input type="text" id="review_2_name" placeholder="e.g. Tom K." />
-          </div>
-          <div class="field-group" style="margin-bottom:0">
-            <label>Stars</label>
-            <select id="review_2_stars" class="stars-select">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-group">
-          <label>Review Text</label>
-          <textarea id="review_2_text" rows="3" placeholder="Paste the review text here..."></textarea>
-        </div>
-      </div>
-
-      <div class="review-block">
-        <h3>Review 3</h3>
-        <div class="review-row">
-          <div class="field-group" style="margin-bottom:0">
-            <label>Reviewer Name</label>
-            <input type="text" id="review_3_name" placeholder="e.g. Linda R." />
-          </div>
-          <div class="field-group" style="margin-bottom:0">
-            <label>Stars</label>
-            <select id="review_3_stars" class="stars-select">
-              <option value="5">⭐⭐⭐⭐⭐</option>
-              <option value="4">⭐⭐⭐⭐</option>
-              <option value="3">⭐⭐⭐</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-group">
-          <label>Review Text</label>
-          <textarea id="review_3_text" rows="3" placeholder="Paste the review text here..."></textarea>
-        </div>
-      </div>
-    </div>
-
-    <!-- SAVE -->
-    <div class="save-row">
-      <button class="btn" id="save-btn">Save Changes</button>
-    </div>
-    <div class="admin-footer">
-      <button class="logout-btn" id="logout-btn">Sign out</button>
     </div>
   </div>
 
-  <script>
-    var adminPassword = '';
-    var loginScreen = document.getElementById('login-screen');
-    var adminPanel  = document.getElementById('admin-panel');
-    var loginBtn    = document.getElementById('login-btn');
-    var saveBtn     = document.getElementById('save-btn');
-    var logoutBtn   = document.getElementById('logout-btn');
-    var pwInput     = document.getElementById('password-input');
-    var loginError  = document.getElementById('login-error');
-    var statusBar   = document.getElementById('status-bar');
+  <!-- HOLIDAY NOTICE -->
+  <div class="card">
+    <h2>&#128226; Holiday Notice</h2>
+    <div class="toggle-row">
+      <div class="toggle-label">
+        Show Holiday Notice
+        <small>Displays a banner on the homepage and menu page</small>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="holiday_notice_active" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+    <div class="field-group" style="margin-top: 1rem;">
+      <label>Notice Message</label>
+      <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday!"></textarea>
+    </div>
+  </div>
 
-    // ─── LOGIN ───────────────────────────────────
-    function doLogin() {
-      var pw = pwInput.value.trim();
-      if (!pw) return;
-      loginError.style.display = 'none';
-      loginBtn.disabled = true;
-      loginBtn.innerHTML = '<span class="spinner"></span>Signing in\u2026';
-      fetch('/.netlify/functions/get-content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: pw })
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        loginBtn.disabled = false;
-        loginBtn.textContent = 'Sign In';
-        if (data.error === 'Unauthorized') {
-          loginError.style.display = 'block';
-        } else if (data.success) {
-          adminPassword = pw;
-          loginScreen.style.display = 'none';
-          adminPanel.style.display = 'block';
-          prefillFields(data.content);
-        } else {
-          loginError.textContent = 'Could not connect. Please try again.';
-          loginError.style.display = 'block';
-        }
-      })
-      .catch(function() {
-        loginBtn.disabled = false;
-        loginBtn.textContent = 'Sign In';
-        loginError.textContent = 'Network error. Please try again.';
+  <!-- MENU MANAGEMENT -->
+  <div class="card">
+    <h2>&#127869; Menu Items</h2>
+    <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;">Add, edit, or remove items from the live menu. Changes appear on the website immediately.</p>
+
+    <div class="field-group" style="margin-bottom:1.5rem;">
+      <label>Filter by Category</label>
+      <select id="menu-cat-filter" onchange="filterMenuItems()">
+        <option value="">All Categories</option>
+        <option value="breakfast">Breakfast</option>
+        <option value="pancakes">Pancakes &amp; French Toast</option>
+        <option value="sandwiches">Sandwiches</option>
+        <option value="dinners">Dinners</option>
+        <option value="sides">Sides</option>
+        <option value="dessert">Dessert</option>
+        <option value="beverages">Beverages</option>
+      </select>
+    </div>
+
+    <div id="menu-items-list" style="margin-bottom:1.5rem;">
+      <div style="text-align:center;padding:2rem;color:var(--muted);font-style:italic;">Sign in to load menu items.</div>
+    </div>
+
+    <div style="border-top:2px solid var(--cream-dark);padding-top:1.5rem;">
+      <h3 style="font-family:'Abril Fatface',serif;font-size:1rem;color:var(--mahogany);margin-bottom:1rem;">Add New Item</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+        <div class="field-group" style="margin-bottom:0;">
+          <label>Category</label>
+          <select id="new-item-category">
+            <option value="breakfast">Breakfast</option>
+            <option value="pancakes">Pancakes &amp; French Toast</option>
+            <option value="sandwiches">Sandwiches</option>
+            <option value="dinners">Dinners</option>
+            <option value="sides">Sides</option>
+            <option value="dessert">Dessert</option>
+            <option value="beverages">Beverages</option>
+          </select>
+        </div>
+        <div class="field-group" style="margin-bottom:0;">
+          <label>Price</label>
+          <input type="text" id="new-item-price" placeholder="e.g. $4.99" />
+        </div>
+      </div>
+      <div class="field-group" style="margin-top:0.75rem;">
+        <label>Item Name</label>
+        <input type="text" id="new-item-name" placeholder="e.g. Bacon, Eggs &amp; Toast" />
+      </div>
+      <div class="field-group">
+        <label>Description <span style="font-weight:400;text-transform:none;font-style:italic;">(optional)</span></label>
+        <input type="text" id="new-item-desc" placeholder="e.g. Served with hash browns" />
+      </div>
+      <button class="btn btn-sm" id="add-item-btn" onclick="addMenuItem()" style="width:100%;">+ Add to Menu</button>
+    </div>
+  </div>
+
+  <!-- IMAGES -->
+  <div class="card">
+    <h2>&#128444;&#65039; Site Images</h2>
+    <div class="image-upload-block">
+      <div class="image-preview" id="preview-story"><span>No image</span></div>
+      <div class="image-upload-info">
+        <strong>Our Story Photo</strong>
+        <p>The photo shown in the "Our Story" section of the homepage</p>
+        <input type="file" id="file-story" accept="image/jpeg,image/png,image/webp" style="display:none" />
+        <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-story').click()">Choose Photo</button>
+        <div class="upload-progress" id="progress-story"></div>
+      </div>
+    </div>
+    <div class="image-upload-block">
+      <div class="image-preview" id="preview-menu"><span>No image</span></div>
+      <div class="image-upload-info">
+        <strong>Menu Hero Photo</strong>
+        <p>The banner photo shown at the top of the Menu page</p>
+        <input type="file" id="file-menu" accept="image/jpeg,image/png,image/webp" style="display:none" />
+        <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-menu').click()">Choose Photo</button>
+        <div class="upload-progress" id="progress-menu"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="card">
+    <h2>&#11088; Reviews</h2>
+    <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;">Copy your favorite Google reviews here. These show up in the "Loved by Willmar" section of the homepage.</p>
+    <div class="review-block">
+      <h3>Review 1</h3>
+      <div class="review-row">
+        <div class="field-group" style="margin-bottom:0;"><label>Reviewer Name</label><input type="text" id="review_1_name" placeholder="e.g. Sarah M." /></div>
+        <div class="field-group" style="margin-bottom:0;"><label>Stars</label><select id="review_1_stars" class="stars-select"><option value="5">&#11088;&#11088;&#11088;&#11088;&#11088;</option><option value="4">&#11088;&#11088;&#11088;&#11088;</option><option value="3">&#11088;&#11088;&#11088;</option></select></div>
+      </div>
+      <div class="field-group"><label>Review Text</label><textarea id="review_1_text" rows="3" placeholder="Paste the review text here..."></textarea></div>
+    </div>
+    <div class="review-block">
+      <h3>Review 2</h3>
+      <div class="review-row">
+        <div class="field-group" style="margin-bottom:0;"><label>Reviewer Name</label><input type="text" id="review_2_name" placeholder="e.g. Tom K." /></div>
+        <div class="field-group" style="margin-bottom:0;"><label>Stars</label><select id="review_2_stars" class="stars-select"><option value="5">&#11088;&#11088;&#11088;&#11088;&#11088;</option><option value="4">&#11088;&#11088;&#11088;&#11088;</option><option value="3">&#11088;&#11088;&#11088;</option></select></div>
+      </div>
+      <div class="field-group"><label>Review Text</label><textarea id="review_2_text" rows="3" placeholder="Paste the review text here..."></textarea></div>
+    </div>
+    <div class="review-block">
+      <h3>Review 3</h3>
+      <div class="review-row">
+        <div class="field-group" style="margin-bottom:0;"><label>Reviewer Name</label><input type="text" id="review_3_name" placeholder="e.g. Linda R." /></div>
+        <div class="field-group" style="margin-bottom:0;"><label>Stars</label><select id="review_3_stars" class="stars-select"><option value="5">&#11088;&#11088;&#11088;&#11088;&#11088;</option><option value="4">&#11088;&#11088;&#11088;&#11088;</option><option value="3">&#11088;&#11088;&#11088;</option></select></div>
+      </div>
+      <div class="field-group"><label>Review Text</label><textarea id="review_3_text" rows="3" placeholder="Paste the review text here..."></textarea></div>
+    </div>
+  </div>
+
+  <!-- SAVE -->
+  <div class="save-row">
+    <button class="btn" id="save-btn">Save Changes</button>
+  </div>
+  <div class="admin-footer">
+    <button class="logout-btn" id="logout-btn">Sign out</button>
+  </div>
+</div>
+
+<script>
+  var adminPassword = '';
+  var loginScreen = document.getElementById('login-screen');
+  var adminPanel = document.getElementById('admin-panel');
+  var loginBtn = document.getElementById('login-btn');
+  var saveBtn = document.getElementById('save-btn');
+  var logoutBtn = document.getElementById('logout-btn');
+  var pwInput = document.getElementById('password-input');
+  var loginError = document.getElementById('login-error');
+  var statusBar = document.getElementById('status-bar');
+
+  // --- LOGIN ---
+  function doLogin() {
+    var pw = pwInput.value.trim();
+    if (!pw) return;
+    loginError.style.display = 'none';
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<span class="spinner"></span>Signing in&hellip;';
+    fetch('/.netlify/functions/get-content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Sign In';
+      if (data.error === 'Unauthorized') {
         loginError.style.display = 'block';
-      });
-    }
+      } else if (data.success) {
+        adminPassword = pw;
+        loginScreen.style.display = 'none';
+        adminPanel.style.display = 'block';
+        prefillFields(data.content);
+        loadMenuItems();
+      } else {
+        loginError.textContent = 'Could not connect. Please try again.';
+        loginError.style.display = 'block';
+      }
+    })
+    .catch(function() {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Sign In';
+      loginError.textContent = 'Network error. Please try again.';
+      loginError.style.display = 'block';
+    });
+  }
+  loginBtn.addEventListener('click', doLogin);
+  pwInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
 
-    loginBtn.addEventListener('click', doLogin);
-    pwInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+  // --- PREFILL ---
+  function prefillFields(content) {
+    ['hours_weekday','hours_saturday','hours_sunday','payment_note','holiday_notice_text'].forEach(function(k) {
+      var el = document.getElementById(k);
+      if (el && content[k] !== undefined) el.value = content[k];
+    });
+    var toggle = document.getElementById('holiday_notice_active');
+    if (toggle && content.holiday_notice_active !== undefined) toggle.checked = (content.holiday_notice_active === 'true');
+    ['story','menu'].forEach(function(type) {
+      var key = type + '_image_url';
+      if (content[key] && content[key] !== '') {
+        var preview = document.getElementById('preview-' + type);
+        preview.innerHTML = '<img src="' + content[key] + '" alt="Current image" />';
+      }
+    });
+    [1,2,3].forEach(function(n) {
+      var key = 'review_' + n;
+      if (content[key]) {
+        try {
+          var r = JSON.parse(content[key]);
+          var nameEl = document.getElementById(key + '_name');
+          var textEl = document.getElementById(key + '_text');
+          var starsEl = document.getElementById(key + '_stars');
+          if (nameEl) nameEl.value = r.name || '';
+          if (textEl) textEl.value = r.text || '';
+          if (starsEl) starsEl.value = String(r.stars || 5);
+        } catch(e) {}
+      }
+    });
+  }
 
-    // ─── PREFILL ─────────────────────────────────
-    function prefillFields(content) {
-      // Simple text fields
-      ['hours_weekday','hours_saturday','hours_sunday','payment_note','holiday_notice_text'].forEach(function(k) {
-        var el = document.getElementById(k);
-        if (el && content[k] !== undefined) el.value = content[k];
-      });
-      // Toggle
-      var toggle = document.getElementById('holiday_notice_active');
-      if (toggle && content.holiday_notice_active !== undefined) toggle.checked = (content.holiday_notice_active === 'true');
-      // Images
-      ['story','menu'].forEach(function(type) {
-        var key = type + '_image_url';
-        if (content[key] && content[key] !== '') {
-          var preview = document.getElementById('preview-' + type);
-          preview.innerHTML = '<img src="' + content[key] + '" alt="Current image" />';
-        }
-      });
-      // Reviews
-      [1,2,3].forEach(function(n) {
-        var key = 'review_' + n;
-        if (content[key]) {
-          try {
-            var r = JSON.parse(content[key]);
-            var nameEl = document.getElementById(key + '_name');
-            var textEl = document.getElementById(key + '_text');
-            var starsEl = document.getElementById(key + '_stars');
-            if (nameEl) nameEl.value = r.name || '';
-            if (textEl) textEl.value = r.text || '';
-            if (starsEl) starsEl.value = String(r.stars || 5);
-          } catch(e) {}
-        }
-      });
-    }
-
-    // ─── IMAGE UPLOAD ─────────────────────────────
-    function setupImageUpload(type, contentKey) {
-      var fileInput = document.getElementById('file-' + type);
-      var preview   = document.getElementById('preview-' + type);
-      var progress  = document.getElementById('progress-' + type);
-
-      fileInput.addEventListener('change', function() {
-        var file = fileInput.files[0];
-        if (!file) return;
-        if (file.size > 5 * 1024 * 1024) {
-          progress.textContent = 'File too large. Max 5MB.';
-          progress.className = 'upload-progress upload-error';
-          progress.style.display = 'block';
-          return;
-        }
-
-        progress.innerHTML = '<span class="spinner spinner-dark"></span>Uploading\u2026';
-        progress.className = 'upload-progress';
+  // --- IMAGE UPLOAD ---
+  function setupImageUpload(type, contentKey) {
+    var fileInput = document.getElementById('file-' + type);
+    var preview = document.getElementById('preview-' + type);
+    var progress = document.getElementById('progress-' + type);
+    fileInput.addEventListener('change', function() {
+      var file = fileInput.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        progress.textContent = 'File too large. Max 5MB.';
+        progress.className = 'upload-progress upload-error';
         progress.style.display = 'block';
-
-        var reader = new FileReader();
-        reader.onload = function(e) {
-          var base64 = e.target.result.split(',')[1];
-          fetch('/.netlify/functions/upload-image', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              password: adminPassword,
-              contentKey: contentKey,
-              imageData: base64,
-              mimeType: file.type
-            })
-          })
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            if (data.success) {
-              preview.innerHTML = '<img src="' + data.url + '" alt="Uploaded image" />';
-              progress.textContent = '\u2713 Uploaded successfully!';
-              progress.className = 'upload-progress upload-success';
-            } else {
-              progress.textContent = '\u2717 Upload failed: ' + (data.error || 'Unknown error');
-              progress.className = 'upload-progress upload-error';
-            }
-          })
-          .catch(function() {
-            progress.textContent = '\u2717 Network error. Try again.';
+        return;
+      }
+      progress.innerHTML = '<span class="spinner spinner-dark"></span>Uploading&hellip;';
+      progress.className = 'upload-progress';
+      progress.style.display = 'block';
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var base64 = e.target.result.split(',')[1];
+        fetch('/.netlify/functions/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: adminPassword, contentKey: contentKey, imageData: base64, mimeType: file.type })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.success) {
+            preview.innerHTML = '<img src="' + data.url + '" alt="Uploaded image" />';
+            progress.textContent = '\u2713 Uploaded!';
+            progress.className = 'upload-progress upload-success';
+          } else {
+            progress.textContent = '\u2717 Upload failed.';
             progress.className = 'upload-progress upload-error';
-          });
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    setupImageUpload('story', 'story_image_url');
-    setupImageUpload('menu', 'menu_image_url');
-
-    // ─── SAVE ────────────────────────────────────
-    saveBtn.addEventListener('click', function() {
-      saveBtn.disabled = true;
-      saveBtn.innerHTML = '<span class="spinner"></span>Saving\u2026';
-      statusBar.style.display = 'none';
-
-      var updates = {
-        hours_weekday:         document.getElementById('hours_weekday').value.trim(),
-        hours_saturday:        document.getElementById('hours_saturday').value.trim(),
-        hours_sunday:          document.getElementById('hours_sunday').value.trim(),
-        payment_note:          document.getElementById('payment_note').value.trim(),
-        holiday_notice_active: document.getElementById('holiday_notice_active').checked ? 'true' : 'false',
-        holiday_notice_text:   document.getElementById('holiday_notice_text').value.trim()
+          }
+        })
+        .catch(function() {
+          progress.textContent = '\u2717 Network error.';
+          progress.className = 'upload-progress upload-error';
+        });
       };
-
-      // Package reviews as JSON strings
-      [1,2,3].forEach(function(n) {
-        var name  = document.getElementById('review_' + n + '_name').value.trim();
-        var text  = document.getElementById('review_' + n + '_text').value.trim();
-        var stars = parseInt(document.getElementById('review_' + n + '_stars').value, 10);
-        updates['review_' + n] = JSON.stringify({ name: name, text: text, stars: stars });
-      });
-
-      // Remove blank non-essential fields
-      ['hours_weekday','hours_saturday','hours_sunday','payment_note'].forEach(function(k) {
-        if (updates[k] === '') delete updates[k];
-      });
-
-      fetch('/.netlify/functions/update-content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: adminPassword, updates: updates })
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Changes';
-        if (data.success) { showStatus('success', '\u2713 Changes saved! The site will update shortly.'); }
-        else if (data.error === 'Unauthorized') { showStatus('error', '\u2717 Session expired. Please sign in again.'); }
-        else { showStatus('error', '\u2717 Something went wrong. Please try again.'); }
-      })
-      .catch(function() {
-        saveBtn.disabled = false;
-        saveBtn.textContent = 'Save Changes';
-        showStatus('error', '\u2717 Network error. Check your connection.');
-      });
+      reader.readAsDataURL(file);
     });
+  }
+  setupImageUpload('story', 'story_image_url');
+  setupImageUpload('menu', 'menu_image_url');
 
-    function showStatus(type, msg) {
-      statusBar.className = type;
-      statusBar.textContent = msg;
-      statusBar.style.display = 'flex';
-      if (type === 'success') { setTimeout(function() { statusBar.style.display = 'none'; }, 5000); }
+  // --- SAVE (site content) ---
+  saveBtn.addEventListener('click', function() {
+    saveBtn.disabled = true;
+    saveBtn.innerHTML = '<span class="spinner"></span>Saving&hellip;';
+    statusBar.style.display = 'none';
+    var updates = {
+      hours_weekday: document.getElementById('hours_weekday').value.trim(),
+      hours_saturday: document.getElementById('hours_saturday').value.trim(),
+      hours_sunday: document.getElementById('hours_sunday').value.trim(),
+      payment_note: document.getElementById('payment_note').value.trim(),
+      holiday_notice_active: document.getElementById('holiday_notice_active').checked ? 'true' : 'false',
+      holiday_notice_text: document.getElementById('holiday_notice_text').value.trim()
+    };
+    [1,2,3].forEach(function(n) {
+      var name = document.getElementById('review_' + n + '_name').value.trim();
+      var text = document.getElementById('review_' + n + '_text').value.trim();
+      var stars = parseInt(document.getElementById('review_' + n + '_stars').value, 10);
+      updates['review_' + n] = JSON.stringify({ name: name, text: text, stars: stars });
+    });
+    fetch('/.netlify/functions/update-content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPassword, updates: updates })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Changes';
+      if (data.success) {
+        showStatus('success', '\u2713 Changes saved! The site will update shortly.');
+      } else if (data.error === 'Unauthorized') {
+        showStatus('error', '\u2717 Session expired. Please sign in again.');
+      } else {
+        showStatus('error', '\u2717 Something went wrong. Please try again.');
+      }
+    })
+    .catch(function() {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save Changes';
+      showStatus('error', '\u2717 Network error. Check your connection.');
+    });
+  });
+
+  function showStatus(type, msg) {
+    statusBar.className = type;
+    statusBar.textContent = msg;
+    statusBar.style.display = 'flex';
+    if (type === 'success') setTimeout(function() { statusBar.style.display = 'none'; }, 5000);
+  }
+
+  logoutBtn.addEventListener('click', function() {
+    adminPassword = '';
+    allMenuItems = [];
+    adminPanel.style.display = 'none';
+    loginScreen.style.display = 'block';
+    pwInput.value = '';
+  });
+
+  // --- MENU MANAGEMENT ---
+  var allMenuItems = [];
+  var CAT_LABELS = {
+    breakfast: 'Breakfast', pancakes: 'Pancakes & French Toast',
+    sandwiches: 'Sandwiches', dinners: 'Dinners',
+    sides: 'Sides', dessert: 'Dessert', beverages: 'Beverages'
+  };
+
+  function loadMenuItems() {
+    document.getElementById('menu-items-list').innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;"><span class="spinner spinner-dark"></span> Loading...</div>';
+    fetch('/.netlify/functions/update-menu', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPassword, action: 'list' })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) { allMenuItems = data.items || []; renderMenuItems(allMenuItems); }
+      else { document.getElementById('menu-items-list').innerHTML = '<p style="color:var(--red);font-size:0.85rem;">Could not load menu items.</p>'; }
+    })
+    .catch(function() {
+      document.getElementById('menu-items-list').innerHTML = '<p style="color:var(--red);font-size:0.85rem;">Network error loading menu.</p>';
+    });
+  }
+
+  function filterMenuItems() {
+    var cat = document.getElementById('menu-cat-filter').value;
+    renderMenuItems(cat ? allMenuItems.filter(function(i) { return i.category === cat; }) : allMenuItems);
+  }
+
+  function escHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function renderMenuItems(items) {
+    var list = document.getElementById('menu-items-list');
+    if (!items || items.length === 0) {
+      list.innerHTML = '<p style="color:var(--muted);font-style:italic;font-size:0.85rem;text-align:center;padding:1rem;">No items found.</p>';
+      return;
     }
+    list.innerHTML = items.map(function(item) {
+      return '<div class="menu-item-row">'
+        + '<div><div class="item-label">' + escHtml(item.name) + '</div><div class="item-cat">' + (CAT_LABELS[item.category] || item.category) + '</div></div>'
+        + '<div class="item-price">' + escHtml(item.price) + '</div>'
+        + '<button class="icon-btn" onclick="startEditItem(\'' + item.id + '\')">Edit</button>'
+        + '<button class="icon-btn danger" onclick="deleteMenuItem(\'' + item.id + '\',\'' + escHtml(item.name) + '\')">Delete</button>'
+        + '</div>';
+    }).join('') + '<p style="font-size:0.78rem;color:var(--muted);padding:0.5rem 0 0;font-style:italic;">' + items.length + ' items shown</p>';
+  }
 
-    logoutBtn.addEventListener('click', function() {
-      adminPassword = '';
-      adminPanel.style.display = 'none';
-      loginScreen.style.display = 'block';
-      pwInput.value = '';
+  function addMenuItem() {
+    var name = document.getElementById('new-item-name').value.trim();
+    var price = document.getElementById('new-item-price').value.trim();
+    var category = document.getElementById('new-item-category').value;
+    var desc = document.getElementById('new-item-desc').value.trim();
+    if (!name || !price) { showStatus('error', '\u2717 Item name and price are required.'); return; }
+    var btn = document.getElementById('add-item-btn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Adding&hellip;';
+    fetch('/.netlify/functions/update-menu', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPassword, action: 'add', item: { name: name, price: price, category: category, description: desc } })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      btn.disabled = false;
+      btn.textContent = '+ Add to Menu';
+      if (data.success) {
+        document.getElementById('new-item-name').value = '';
+        document.getElementById('new-item-price').value = '';
+        document.getElementById('new-item-desc').value = '';
+        showStatus('success', '\u2713 "' + name + '" added to the menu!');
+        loadMenuItems();
+      } else {
+        showStatus('error', '\u2717 Failed to add item.');
+      }
+    })
+    .catch(function() { btn.disabled = false; btn.textContent = '+ Add to Menu'; showStatus('error', '\u2717 Network error.'); });
+  }
+
+  function startEditItem(id) {
+    var item = allMenuItems.find(function(i) { return i.id === id; });
+    if (!item) return;
+    var newName = prompt('Item name:', item.name);
+    if (newName === null) return;
+    var newPrice = prompt('Price (e.g. $4.99):', item.price);
+    if (newPrice === null) return;
+    var newDesc = prompt('Description (optional):', item.description || '');
+    if (newDesc === null) return;
+    fetch('/.netlify/functions/update-menu', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPassword, action: 'update', item: { id: id, name: newName.trim(), price: newPrice.trim(), description: newDesc.trim() } })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) { showStatus('success', '\u2713 Item updated!'); loadMenuItems(); }
+      else { showStatus('error', '\u2717 Failed to update item.'); }
     });
-  </script>
+  }
+
+  function deleteMenuItem(id, name) {
+    if (!confirm('Delete "' + name + '" from the menu?\nThis cannot be undone.')) return;
+    fetch('/.netlify/functions/update-menu', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPassword, action: 'delete', item: { id: id } })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) { showStatus('success', '\u2713 "' + name + '" removed from the menu.'); loadMenuItems(); }
+      else { showStatus('error', '\u2717 Failed to delete item.'); }
+    });
+  }
+</script>
 </body>
 </html>

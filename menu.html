@@ -362,6 +362,8 @@
     }
     footer a { color: var(--gold); text-decoration: none; }
 
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 600px) {
       .nav-links { display: none; }
       main { padding: 2rem 1.25rem 4rem; }
@@ -473,6 +475,8 @@
     }
     .lightbox-close:hover { background: rgba(255,255,255,0.2); }
 
+    @keyframes spin { to { transform: rotate(360deg); } }
+
     @media (max-width: 600px) {
       .menu-images-grid { grid-template-columns: 1fr; }
     }
@@ -556,332 +560,13 @@
       <div class="specials-price">$7.50</div>
     </div>
 
-    <!-- BREAKFAST -->
-    <section class="menu-section" id="breakfast">
-      <div class="section-header">
-        <span class="section-icon">🍳</span>
-        <h2 class="section-title">Breakfast</h2>
-        <div class="section-rule"></div>
+    <!-- MENU SECTIONS — rendered dynamically from Supabase -->
+    <div id="menuSections">
+      <div class="state-loading" style="text-align:center;padding:4rem 0;color:var(--text-light);">
+        <div style="width:36px;height:36px;border:3px solid var(--cream-dark);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;"></div>
+        <p style="font-style:italic;">Loading menu…</p>
       </div>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Ham, Eggs &amp; Toast</div></div>
-          <div class="item-price">$5.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Bacon, Eggs &amp; Toast</div></div>
-          <div class="item-price">$5.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Hamburger, Eggs &amp; Toast</div></div>
-          <div class="item-price">$5.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">2 Eggs &amp; Toast</div></div>
-          <div class="item-price">$3.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">1 Egg &amp; Toast</div></div>
-          <div class="item-price">$2.95</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Extra Side of Meat</div></div>
-          <div class="item-price">$3.49</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Side of 2 Eggs</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Side of 1 Egg</div></div>
-          <div class="item-price">$1.00</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Side of Toast</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Oatmeal</div></div>
-          <div class="item-price">$2.89</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ornament-divider">· · ·</div>
-
-    <!-- PANCAKES & FRENCH TOAST -->
-    <section class="menu-section" id="pancakes">
-      <div class="section-header">
-        <span class="section-icon">🥞</span>
-        <h2 class="section-title">Pancakes &amp; French Toast</h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="section-note">Served only until 10:30am</div>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">1 Pancake</div></div>
-          <div class="item-price">$3.00</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Short Stack (2)</div></div>
-          <div class="item-price">$4.00</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Full Stack (3)</div></div>
-          <div class="item-price">$5.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">French Toast (3)</div></div>
-          <div class="item-price">$4.50</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ornament-divider">· · ·</div>
-
-    <!-- SANDWICHES -->
-    <section class="menu-section" id="sandwiches">
-      <div class="section-header">
-        <span class="section-icon">🥪</span>
-        <h2 class="section-title">Sandwiches</h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Hamburger</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Cheese Burger</div></div>
-          <div class="item-price">$2.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Double Cheeseburger</div></div>
-          <div class="item-price">$4.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Bacon Cheeseburger</div></div>
-          <div class="item-price">$2.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Bacon Double Cheeseburger</div></div>
-          <div class="item-price">$4.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Tuna Fish Sandwich</div></div>
-          <div class="item-price">$2.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">BLT Sandwich</div></div>
-          <div class="item-price">$4.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Ham Sandwich</div></div>
-          <div class="item-price">$2.59</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Grilled Ham &amp; Cheese</div></div>
-          <div class="item-price">$3.79</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Bacon &amp; Cheese</div></div>
-          <div class="item-price">$3.79</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Denver</div></div>
-          <div class="item-price">$3.75</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Fish Steak</div></div>
-          <div class="item-price">$4.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Pork Tenderloin</div></div>
-          <div class="item-price">$4.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Grilled Cheese</div></div>
-          <div class="item-price">$2.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Fried Egg Sandwich</div></div>
-          <div class="item-price">$2.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Hamburger Steak</div></div>
-          <div class="item-price">$4.79</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Cheese Sandwich</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Patty Melt</div></div>
-          <div class="item-price">$4.75</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Chicken Strips or Popcorn Shrimp w/ Toast</div></div>
-          <div class="item-price">$5.30</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Chicken Drummies &amp; Toast</div></div>
-          <div class="item-price">$6.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Pizza Burger</div></div>
-          <div class="item-price">$3.75</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ornament-divider">· · ·</div>
-
-    <!-- DINNERS -->
-    <section class="menu-section" id="dinners">
-      <div class="section-header">
-        <span class="section-icon">🍽️</span>
-        <h2 class="section-title">Dinners</h2>
-        <div class="section-rule"></div>
-      </div>
-      <p class="includes-note">All dinners include potatoes, toast, and salad</p>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Shrimp</div></div>
-          <div class="item-price">$7.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Fish Steak</div></div>
-          <div class="item-price">$7.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Hamburger Steak</div></div>
-          <div class="item-price">$7.50</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ornament-divider">· · ·</div>
-
-    <!-- SIDES -->
-    <section class="menu-section" id="sides">
-      <div class="section-header">
-        <span class="section-icon">🍟</span>
-        <h2 class="section-title">Sides</h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">French Fries</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Hash Browns</div></div>
-          <div class="item-price">$3.39</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Lettuce Salad</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Bowl of Soup</div></div>
-          <div class="item-price">$2.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Onion Rings</div></div>
-          <div class="item-price">$3.50</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ornament-divider">· · ·</div>
-
-    <!-- DESSERT -->
-    <section class="menu-section" id="dessert">
-      <div class="section-header">
-        <span class="section-icon">🥧</span>
-        <h2 class="section-title">Dessert</h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Caramel Roll</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Pie</div></div>
-          <div class="item-price">$2.25</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Pie Alamode</div></div>
-          <div class="item-price">$3.00</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Delight Desserts</div></div>
-          <div class="item-price">$2.75</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Shake or Malt</div></div>
-          <div class="item-price">$4.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Cookies</div></div>
-          <div class="item-price">$0.70</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Floats</div></div>
-          <div class="item-price">$3.49</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Sundae</div></div>
-          <div class="item-price">$2.89</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Dish Ice Cream</div></div>
-          <div class="item-price">$1.30</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="ornament-divider">· · ·</div>
-
-    <!-- BEVERAGES -->
-    <section class="menu-section" id="beverages">
-      <div class="section-header">
-        <span class="section-icon">☕</span>
-        <h2 class="section-title">Beverages</h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="menu-items">
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Coffee</div></div>
-          <div class="item-price">$0.50</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Orange Juice</div></div>
-          <div class="item-price">$2.49</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Pop</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Milk / Chocolate Milk</div></div>
-          <div class="item-price">$1.99</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Tea</div></div>
-          <div class="item-price">$1.00</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Apple Juice</div></div>
-          <div class="item-price">$2.49</div>
-        </div>
-        <div class="menu-item">
-          <div class="item-info"><div class="item-name">Hot Chocolate</div></div>
-          <div class="item-price">$1.00</div>
-        </div>
-      </div>
-    </section>
+    </div>
 
   </main>
 
@@ -948,6 +633,126 @@
 
     loadSiteContent();
     initCategoryNav();
+  </script>
+</body>
+</html>    const CATEGORY_CONFIG = {
+      breakfast:   { label: 'Breakfast',               icon: '🍳', note: null },
+      pancakes:    { label: 'Pancakes & French Toast',  icon: '🥞', note: 'Served only until 10:30am' },
+      sandwiches:  { label: 'Sandwiches',               icon: '🥪', note: null },
+      dinners:     { label: 'Dinners',                  icon: '🍽️', note: 'All dinners include potatoes, toast, and salad' },
+      sides:       { label: 'Sides',                    icon: '🍟', note: null },
+      dessert:     { label: 'Dessert',                  icon: '🥧', note: null },
+      beverages:   { label: 'Beverages',                icon: '☕', note: null }
+    };
+
+    async function loadMenu() {
+      try {
+        const res = await fetch('/.netlify/functions/get-menu');
+        if (!res.ok) throw new Error('Failed to load menu');
+        const data = await res.json();
+        renderMenu(data.menu || {});
+      } catch (err) {
+        console.error(err);
+        document.getElementById('menuSections').innerHTML =
+          '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">Could not load menu. Please refresh.</p>';
+      }
+    }
+
+    function renderMenu(grouped) {
+      const container = document.getElementById('menuSections');
+      const categoryOrder = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages'];
+      let html = '';
+
+      categoryOrder.forEach((cat, idx) => {
+        const items = grouped[cat];
+        if (!items || items.length === 0) return;
+        const cfg = CATEGORY_CONFIG[cat] || { label: cat, icon: '🍴', note: null };
+
+        if (idx > 0) html += '<div class="ornament-divider">· · ·</div>';
+
+        html += `<section class="menu-section" id="${cat}">
+          <div class="section-header">
+            <span class="section-icon">${cfg.icon}</span>
+            <h2 class="section-title">${cfg.label}</h2>
+            <div class="section-rule"></div>
+          </div>`;
+
+        if (cfg.note) html += `<div class="section-note">${cfg.note}</div>`;
+        if (cat === 'dinners') html += `<p class="includes-note">All dinners include potatoes, toast, and salad</p>`;
+
+        html += '<div class="menu-items">';
+        items.forEach(item => {
+          html += `<div class="menu-item">
+            <div class="item-info">
+              <div class="item-name">${item.name}</div>
+              ${item.description ? `<div class="item-desc">${item.description}</div>` : ''}
+            </div>
+            <div class="item-price">${item.price}</div>
+          </div>`;
+        });
+        html += '</div></section>';
+      });
+
+      container.innerHTML = html;
+      initCategoryNav();
+    }
+
+    async function loadSiteContent() {
+      try {
+        const res = await fetch('/.netlify/functions/get-public-content');
+        if (!res.ok) return;
+        const data = await res.json();
+        const content = data.content || {};
+
+        if (content.hours_weekday || content.hours_saturday) {
+          const wd = content.hours_weekday || '6:00am – 4:00pm';
+          const sat = content.hours_saturday || '6:00am – 11:00am';
+          const sun = content.hours_sunday || 'Closed';
+          document.getElementById('hoursBanner').innerHTML =
+            `<strong>Mon–Fri</strong> ${wd} &nbsp;·&nbsp; <strong>Saturday</strong> ${sat} &nbsp;·&nbsp; <strong>Sunday</strong> ${sun}`;
+        }
+
+        if (content.holiday_notice_active === 'true' && content.holiday_notice_text) {
+          const n = document.getElementById('holidayNotice');
+          n.textContent = content.holiday_notice_text;
+          n.classList.add('visible');
+        }
+
+        if (content.payment_note) {
+          document.querySelector('.payment-note').textContent = content.payment_note;
+        }
+      } catch (e) {
+        console.log('Could not load site content:', e);
+      }
+    }
+
+    function initCategoryNav() {
+      const sections = document.querySelectorAll('.menu-section');
+      const links = document.querySelectorAll('.cat-link');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+          }
+        });
+      }, { rootMargin: '-30% 0px -60% 0px' });
+      sections.forEach(s => observer.observe(s));
+    }
+
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    loadSiteContent();
+    loadMenu();
   </script>
 </body>
 </html>
