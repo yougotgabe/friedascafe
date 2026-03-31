@@ -232,27 +232,15 @@
 
   <!-- IMAGES -->
   <div class="card">
-    <h2>&#128444;&#65039; Site Images</h2>
-    <div class="image-upload-block">
-      <div class="image-preview" id="preview-story"><span>No image</span></div>
-      <div class="image-upload-info">
-        <strong>Our Story Photo</strong>
-        <p>The photo shown in the "Our Story" section of the homepage</p>
-        <input type="file" id="file-story" accept="image/jpeg,image/png,image/webp" style="display:none" />
-        <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-story').click()">Choose Photo</button>
-        <div class="upload-progress" id="progress-story"></div>
-      </div>
+    <h2>&#128444;&#65039; Photo Gallery</h2>
+    <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.5rem;">These photos show in the rotating slideshow on the homepage. Add as many as you like — they cycle automatically.</p>
+
+    <div id="gallery-slots">
+      <!-- Slots rendered by JS after login -->
+      <div style="text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;font-size:0.85rem;">Sign in to manage photos.</div>
     </div>
-    <div class="image-upload-block">
-      <div class="image-preview" id="preview-menu"><span>No image</span></div>
-      <div class="image-upload-info">
-        <strong>Menu Hero Photo</strong>
-        <p>The banner photo shown at the top of the Menu page</p>
-        <input type="file" id="file-menu" accept="image/jpeg,image/png,image/webp" style="display:none" />
-        <button class="btn btn-sm btn-outline" onclick="document.getElementById('file-menu').click()">Choose Photo</button>
-        <div class="upload-progress" id="progress-menu"></div>
-      </div>
-    </div>
+
+    <button class="btn btn-sm btn-outline" id="add-slot-btn" onclick="addGallerySlot()" style="width:100%;margin-top:1rem;display:none;">+ Add Another Photo</button>
   </div>
 
   <!-- REVIEWS -->
@@ -328,6 +316,7 @@
         loginScreen.style.display = 'none';
         adminPanel.style.display = 'block';
         prefillFields(data.content);
+        initGallery(data.content);
         loadMenuItems();
       } else {
         loginError.textContent = 'Could not connect. Please try again.';
@@ -419,8 +408,116 @@
       reader.readAsDataURL(file);
     });
   }
-  setupImageUpload('story', 'story_image_url');
-  setupImageUpload('menu', 'menu_image_url');
+  // --- GALLERY MANAGEMENT ---
+  var gallerySlotCount = 0;
+  var galleryData = {}; // key -> url
+
+  function initGallery(siteContent) {
+    galleryData = {};
+    gallerySlotCount = 0;
+    var slots = document.getElementById('gallery-slots');
+    slots.innerHTML = '';
+
+    // Find all gallery_image_N keys from loaded content
+    var i = 1;
+    var found = false;
+    while (siteContent['gallery_image_' + i]) {
+      addGallerySlot(i, siteContent['gallery_image_' + i]);
+      i++;
+      found = true;
+    }
+
+    // Always show at least one empty slot
+    if (!found) addGallerySlot(i, '');
+
+    document.getElementById('add-slot-btn').style.display = 'block';
+  }
+
+  function addGallerySlot(slotNum, existingUrl) {
+    gallerySlotCount++;
+    var n = slotNum || gallerySlotCount;
+    var key = 'gallery_image_' + n;
+    var slots = document.getElementById('gallery-slots');
+
+    var block = document.createElement('div');
+    block.className = 'image-upload-block';
+    block.id = 'gallery-block-' + n;
+    block.innerHTML =
+      '<div class="image-preview" id="gallery-preview-' + n + '">'
+        + (existingUrl ? '<img src="' + existingUrl + '" alt="Gallery photo ' + n + '" />' : '<span>No photo</span>')
+      + '</div>'
+      + '<div class="image-upload-info">'
+        + '<strong>Photo ' + n + '</strong>'
+        + '<p style="margin-bottom:0.5rem;">' + (existingUrl ? 'Photo uploaded ✓' : 'No photo yet') + '</p>'
+        + '<input type="file" id="gallery-file-' + n + '" accept="image/jpeg,image/png,image/webp" style="display:none" />'
+        + '<div style="display:flex;gap:0.5rem;flex-wrap:wrap;">'
+          + '<button class="btn btn-sm btn-outline" onclick="document.getElementById('gallery-file-' + n + '').click()">Choose Photo</button>'
+          + (n > 1 ? '<button class="btn btn-sm" style="background:none;border:1px solid var(--cream-dark);color:var(--red);" onclick="removeGallerySlot(' + n + ')">Remove</button>' : '')
+        + '</div>'
+        + '<div class="upload-progress" id="gallery-progress-' + n + '"></div>'
+      + '</div>';
+
+    slots.appendChild(block);
+
+    // Wire up file input
+    document.getElementById('gallery-file-' + n).addEventListener('change', function() {
+      var file = this.files[0];
+      if (!file) return;
+      if (file.size > 5 * 1024 * 1024) {
+        showGalleryProgress(n, 'error', 'File too large. Max 5MB.');
+        return;
+      }
+      showGalleryProgress(n, 'loading', 'Uploading…');
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var base64 = e.target.result.split(',')[1];
+        fetch('/.netlify/functions/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: adminPassword, contentKey: 'gallery_image_' + n, imageData: base64, mimeType: file.type })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.success) {
+            document.getElementById('gallery-preview-' + n).innerHTML = '<img src="' + data.url + '" alt="Gallery photo" />';
+            showGalleryProgress(n, 'success', '✓ Uploaded! Will appear in the slideshow.');
+          } else {
+            showGalleryProgress(n, 'error', '✗ Upload failed: ' + (data.error || 'Unknown'));
+          }
+        })
+        .catch(function() { showGalleryProgress(n, 'error', '✗ Network error.'); });
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function removeGallerySlot(n) {
+    if (!confirm('Remove Photo ' + n + ' from the slideshow?')) return;
+    // Clear from site_content by setting empty value
+    fetch('/.netlify/functions/update-content', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: adminPassword, updates: { ['gallery_image_' + n]: '' } })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.success) {
+        var block = document.getElementById('gallery-block-' + n);
+        if (block) block.remove();
+        showStatus('success', '✓ Photo ' + n + ' removed.');
+      } else {
+        showStatus('error', '✗ Could not remove photo.');
+      }
+    });
+  }
+
+  function showGalleryProgress(n, type, msg) {
+    var el = document.getElementById('gallery-progress-' + n);
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'upload-progress' + (type === 'success' ? ' upload-success' : type === 'error' ? ' upload-error' : '');
+    el.style.display = 'block';
+  }
 
   // --- SAVE (site content) ---
   saveBtn.addEventListener('click', function() {
