@@ -315,6 +315,9 @@
   .ornament::after { background:linear-gradient(to left, transparent, var(--border)); }
 
   /* ── RESPONSIVE ───────────────────────────────── */
+  @media (max-width:700px) {
+    .video-grid { grid-template-columns:1fr !important; }
+  }
   @media (max-width:900px) {
     .about-grid, .visit-grid { grid-template-columns:1fr; }
     .menu-grid { grid-template-columns:1fr 1fr; }
@@ -537,31 +540,57 @@
 </section>
 
 
-<!-- PBS VIDEO -->
+<!-- VIDEOS -->
 <section id="video" style="background:var(--dark);padding:0;">
   <div style="max-width:1100px;margin:0 auto;padding:5rem 2rem;text-align:center;">
-    <span class="section-label" style="color:var(--gold-lt);">As Seen on PBS</span>
-    <h2 class="section-title" style="color:var(--cream);margin-bottom:0.5rem;">Frieda's Story</h2>
+    <span class="section-label" style="color:var(--gold-lt);">Featured</span>
+    <h2 class="section-title" style="color:var(--cream);margin-bottom:0.5rem;">Frieda's in the Spotlight</h2>
     <div class="section-rule centered" style="background:var(--gold-lt);"></div>
-    <p style="color:rgba(245,239,226,0.65);font-style:italic;max-width:580px;margin:0 auto 2rem;font-size:0.95rem;line-height:1.7;">
-      Pioneer PBS's <em>Postcards</em> visited Frieda's Cafe — a story that begins as a WWII refugee tale and becomes a community institution. Ten minutes well spent.
+    <p style="color:rgba(245,239,226,0.65);font-style:italic;max-width:580px;margin:0 auto 3rem;font-size:0.95rem;line-height:1.7;">
+      From a WWII refugee story to a Willmar institution — Frieda's has been making people feel at home for over 55 years.
     </p>
-    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:800px;margin:0 auto;border:3px solid rgba(201,147,10,0.3);box-shadow:0 0 60px rgba(0,0,0,0.5);">
-      <iframe
-        src="https://player.pbs.org/viralplayer/3089373435/"
-        width="100%"
-        height="100%"
-        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-        allowfullscreen
-        allow="encrypted-media"
-        title="Frieda's Cafe — PBS Postcards Season 15 Episode 5">
-      </iframe>
+
+    <div class="video-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;text-align:left;">
+
+      <!-- PBS -->
+      <div>
+        <p style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:0.6rem;">Pioneer PBS · Postcards · S15 E5</p>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:2px solid rgba(201,147,10,0.3);box-shadow:0 8px 40px rgba(0,0,0,0.4);">
+          <iframe
+            src="https://player.pbs.org/viralplayer/3089373435/"
+            width="100%"
+            height="100%"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+            allowfullscreen
+            allow="encrypted-media"
+            title="Frieda's Cafe — PBS Postcards Season 15 Episode 5">
+          </iframe>
+        </div>
+        <p style="color:rgba(245,239,226,0.55);font-size:0.85rem;font-style:italic;margin-top:0.75rem;line-height:1.5;">Frieda's Cafe in Willmar began as a WWII refugee story and continues to serve the community today. 10 min.</p>
+      </div>
+
+      <!-- City of Willmar -->
+      <div>
+        <p style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:0.6rem;">City of Willmar</p>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:2px solid rgba(201,147,10,0.3);box-shadow:0 8px 40px rgba(0,0,0,0.4);">
+          <iframe
+            src="https://www.youtube.com/embed/rYxpYNHjxhs"
+            width="100%"
+            height="100%"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+            allowfullscreen
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            title="Frieda's Cafe — City of Willmar">
+          </iframe>
+        </div>
+        <p style="color:rgba(245,239,226,0.55);font-size:0.85rem;font-style:italic;margin-top:0.75rem;line-height:1.5;">The City of Willmar spotlights Frieda's Cafe — a cornerstone of the downtown community.</p>
+      </div>
+
     </div>
-    <p style="color:rgba(245,239,226,0.35);font-size:0.78rem;margin-top:1rem;font-family:'Oswald',sans-serif;letter-spacing:0.1em;">
-      POSTCARDS · PIONEER PBS · SEASON 15 EPISODE 5
-    </p>
   </div>
 </section>
+
+
 
 <!-- MERCH -->
 <section id="merch" class="merch-section">
