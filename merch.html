@@ -796,7 +796,7 @@
 
     // ── FETCH PRODUCTS (server-side — no key in HTML) ──
     async function fetchProducts() {
-      const res = await fetch('/.netlify/functions/get-products');
+      const res = await fetch('/api/get-products');
       if (!res.ok) throw new Error(`Failed to load products: ${res.status}`);
       const data = await res.json();
       return data.products || [];
@@ -1011,7 +1011,7 @@
       }));
 
       try {
-        const res = await fetch('/.netlify/functions/create-checkout', {
+        const res = await fetch('/api/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ cart: lineItems })
