@@ -1011,19 +1011,19 @@
       btn.innerHTML = `<div class="spinner" style="width:20px;height:20px;border-width:2px;margin:0;"></div> Processing…`;
 
       const lineItems = cart.map(item => ({
-        productId: item.productId,
-        variantId: item.variantId,
+        name: item.variantTitle ? `${item.name} — ${item.variantTitle}` : item.name,
+        price_cents: item.priceCents,
         quantity: item.qty,
-        name: item.name,
-        variantTitle: item.variantTitle,
-        priceCents: item.priceCents
+        image_url: item.imgSrc || '',
+        variant_id: item.variantId || '',
+        product_id: item.productId
       }));
 
       try {
         const res = await fetch('/.netlify/functions/create-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: lineItems })
+          body: JSON.stringify({ cart: lineItems })
         });
         const data = await res.json();
         if (data.url) {
