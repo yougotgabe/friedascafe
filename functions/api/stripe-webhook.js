@@ -2,8 +2,8 @@
 // Stripe uses HMAC-SHA256 with the raw request body — we must NOT parse the body
 // before verifying the signature.
 
-export default {
-  async fetch(request, env) {
+export async function onRequest(context) {
+  const { request, env } = context;
     const corsHeaders = {
       'Content-Type': 'application/json',
     };
