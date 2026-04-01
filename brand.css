@@ -1,0 +1,103 @@
+/* ============================================================
+   brand.css — Frieda's Cafe
+   Single source of truth for colors, fonts, and brand tokens.
+   ============================================================
+   TO RESKIN FOR A NEW CLIENT:
+   1. Update the font @import URL below
+   2. Update --font-display and --font-body
+   3. Update the color values in :root
+   That's it. Every page inherits from here.
+   ============================================================ */
+
+/* ── FONTS ── */
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&family=Oswald:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+
+/* ── BRAND TOKENS ── */
+:root {
+
+  /* Primary palette */
+  --color-primary:        #3b1a0e;   /* deep mahogany — nav, headers, dark backgrounds */
+  --color-primary-mid:    #5c2d1a;   /* mid mahogany — hover states, secondary dark */
+  --color-primary-light:  #7a3d22;   /* light mahogany — subtle borders, muted elements */
+
+  /* Surface palette */
+  --color-surface:        #f5efe0;   /* cream — main page background */
+  --color-surface-mid:    #e8dcc8;   /* cream dark — cards, dividers */
+  --color-surface-dark:   #d9c9aa;   /* cream darker — deeper dividers */
+  --color-white:          #fff9f0;   /* warm white — card backgrounds */
+
+  /* Accent palette */
+  --color-accent:         #b5221b;   /* red — buttons, CTAs */
+  --color-accent-dark:    #8c1915;   /* red dark — button hover */
+  --color-highlight:      #c89a3a;   /* gold — labels, prices, decorative */
+  --color-highlight-lt:   #e8b84b;   /* gold light — nav hover, subtle highlights */
+
+  /* Text palette */
+  --color-text:           #1e0f07;   /* near black — primary body text */
+  --color-text-mid:       #4a2810;   /* mid brown — secondary text */
+  --color-text-muted:     #8a6040;   /* muted brown — captions, placeholders */
+
+  /* Semantic */
+  --color-border:         rgba(59, 36, 16, 0.18);
+  --color-success:        #2d7a3a;
+  --color-error:          #b5221b;
+
+  /* Typography */
+  --font-display:         'Abril Fatface', cursive;
+  --font-body:            'Lora', Georgia, serif;
+  --font-ui:              'Oswald', sans-serif;
+
+  /* Legacy aliases — keeps existing CSS working without a full find/replace */
+  /* Remove these gradually as each file is fully refactored */
+  --mahogany:             var(--color-primary);
+  --mahogany-mid:         var(--color-primary-mid);
+  --mahogany-light:       var(--color-primary-light);
+  --cream:                var(--color-surface);
+  --cream-dark:           var(--color-surface-mid);
+  --cream-darker:         var(--color-surface-dark);
+  --white:                var(--color-white);
+  --red:                  var(--color-accent);
+  --red-dark:             var(--color-accent-dark);
+  --red-dim:              var(--color-accent-dark);
+  --gold:                 var(--color-highlight);
+  --gold-lt:              var(--color-highlight-lt);
+  --text-dark:            var(--color-text);
+  --text-mid:             var(--color-text-mid);
+  --text-light:           var(--color-text-muted);
+  --muted:                var(--color-text-muted);
+  --dark:                 var(--color-text);
+  --brown:                var(--color-primary);
+  --border:               var(--color-border);
+  --parchment:            var(--color-surface-mid);
+}
+
+/* ── GLOBAL RESETS (shared across all pages) ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 18px;
+  min-height: 100vh;
+}
+
+/* ── NOISE TEXTURE OVERLAY (shared) ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}

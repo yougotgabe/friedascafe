@@ -4,46 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Merch – Frieda's Cafe</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/brand.css" />
   <style>
-    :root {
-      --mahogany: #3b1a0e;
-      --mahogany-mid: #5c2d1a;
-      --mahogany-light: #7a3d22;
-      --cream: #f5efe0;
-      --cream-dark: #e8dcc8;
-      --red: #b5221b;
-      --red-dark: #8c1915;
-      --gold: #c89a3a;
-      --text-dark: #1e0f07;
-      --text-mid: #4a2810;
-      --text-light: #8a6040;
-      --cart-width: 420px;
-    }
+    :root { --cart-width: 420px; }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      background-color: var(--cream);
-      color: var(--text-dark);
-      font-family: 'Lora', Georgia, serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ── TEXTURE OVERLAY ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-    }
+    body { font-size: 16px; }
 
     /* ── NAV ── */
     nav {

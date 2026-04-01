@@ -4,20 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Frieda's Cafe — Admin Panel</title>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/brand.css" />
 <style>
-  :root {
-    --mahogany: #3b1a0e; --cream: #f5f0e8; --cream-dark: #e8dfd0;
-    --red: #c0392b; --red-dark: #96281b; --gold: #c9a84c;
-    --green: #27ae60; --text: #2c1a0e; --muted: #7a5c3e;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  /* Admin overrides — body has a special dark background for the login screen */
   body {
-    font-family: 'Lora', Georgia, serif;
-    background-color: var(--mahogany);
+    background-color: var(--color-primary);
     background-image: radial-gradient(ellipse at top left, #5c2d1a 0%, transparent 60%), radial-gradient(ellipse at bottom right, #1a0a05 0%, transparent 60%);
-    min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;
+    display: flex; align-items: center; justify-content: center; padding: 2rem;
   }
+  body::before { display: none; } /* suppress noise texture on admin */
   /* LOGIN */
   #login-screen {
     background: var(--cream); border-radius: 4px; padding: 3rem 2.5rem;
