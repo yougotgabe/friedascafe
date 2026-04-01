@@ -122,8 +122,7 @@ export async function onRequest(context) {
         headers: corsHeaders,
       });
     }
-  },
-};
+}
 
 /**
  * Verify a Stripe webhook signature using the Web Crypto API.
