@@ -301,9 +301,8 @@
     loginBtn.disabled = true;
     loginBtn.innerHTML = '<span class="spinner"></span>Signing in&hellip;';
     fetch('/api/get-content', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: pw })
+      method: 'GET',
+      headers: { 'x-admin-password': pw }
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -311,13 +310,13 @@
       loginBtn.textContent = 'Sign In';
       if (data.error === 'Unauthorized') {
         loginError.style.display = 'block';
-      } else if (data.success) {
+      } else if (!data.error) {
         adminPassword = pw;
         sessionStorage.setItem('fc_admin_pw', pw);
         loginScreen.style.display = 'none';
         adminPanel.style.display = 'block';
-        prefillFields(data.content);
-        initGallery(data.content);
+        prefillFields(data);
+        initGallery(data);
         loadMenuItems();
       } else {
         loginError.textContent = 'Could not connect. Please try again.';
@@ -387,8 +386,8 @@
         var base64 = e.target.result.split(',')[1];
         fetch('/api/upload-image', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: adminPassword, contentKey: contentKey, imageData: base64, mimeType: file.type })
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+          body: JSON.stringify({ key: contentKey, filename: file.name, contentType: file.type, data: base64 })
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
@@ -474,8 +473,8 @@
         var base64 = e.target.result.split(',')[1];
         fetch('/api/upload-image', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: adminPassword, contentKey: 'gallery_image_' + n, imageData: base64, mimeType: file.type })
+          headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+          body: JSON.stringify({ key: 'gallery_image_' + n, filename: file.name, contentType: file.type, data: base64 })
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
@@ -545,8 +544,8 @@
     });
     fetch('/api/update-content', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: adminPassword, updates: updates })
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      body: JSON.stringify(updates)
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -595,12 +594,12 @@
     document.getElementById('menu-items-list').innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;"><span class="spinner spinner-dark"></span> Loading...</div>';
     fetch('/api/update-menu', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: adminPassword, action: 'list' })
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      body: JSON.stringify({ action: 'list' })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      if (data.success) { allMenuItems = data.items || []; renderMenuItems(allMenuItems); }
+      if (!data.error) { allMenuItems = data.items || []; renderMenuItems(allMenuItems); }
       else { document.getElementById('menu-items-list').innerHTML = '<p style="color:var(--red);font-size:0.85rem;">Could not load menu items.</p>'; }
     })
     .catch(function() {
@@ -644,8 +643,8 @@
     btn.innerHTML = '<span class="spinner"></span>Adding&hellip;';
     fetch('/api/update-menu', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: adminPassword, action: 'add', item: { name: name, price: price, category: category, description: desc } })
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      body: JSON.stringify({ action: 'add', item: { name: name, price: price, category: category, description: desc } })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -675,8 +674,8 @@
     if (newDesc === null) return;
     fetch('/api/update-menu', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: adminPassword, action: 'update', item: { id: id, name: newName.trim(), price: newPrice.trim(), description: newDesc.trim() } })
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      body: JSON.stringify({ action: 'update', item: { id: id, name: newName.trim(), price: newPrice.trim(), description: newDesc.trim() } })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -689,8 +688,8 @@
     if (!confirm('Delete "' + name + '" from the menu?\nThis cannot be undone.')) return;
     fetch('/api/update-menu', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: adminPassword, action: 'delete', item: { id: id } })
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': adminPassword },
+      body: JSON.stringify({ action: 'delete', item: { id: id } })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
@@ -705,18 +704,17 @@
     if (!saved) return;
     pwInput.value = saved;
     fetch('/api/get-content', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: saved })
+      method: 'GET',
+      headers: { 'x-admin-password': saved }
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      if (data.success) {
+      if (!data.error) {
         adminPassword = saved;
         loginScreen.style.display = 'none';
         adminPanel.style.display = 'block';
-        prefillFields(data.content);
-        initGallery(data.content);
+        prefillFields(data);
+        initGallery(data);
         loadMenuItems();
       } else {
         sessionStorage.removeItem('fc_admin_pw');
