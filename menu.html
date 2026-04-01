@@ -41,7 +41,6 @@
       z-index: 0;
     }
 
-    /* ── NAV ── */
     nav {
       background: var(--mahogany);
       padding: 0 2rem;
@@ -78,7 +77,6 @@
     }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
-    /* ── HERO ── */
     .menu-hero {
       background: var(--mahogany);
       padding: 3.5rem 2rem;
@@ -119,7 +117,6 @@
       line-height: 1.6;
     }
 
-    /* ── HOURS BANNER ── */
     .hours-banner {
       background: var(--red);
       color: var(--cream);
@@ -132,7 +129,6 @@
     }
     .hours-banner strong { font-weight: 600; }
 
-    /* ── PAYMENT NOTE ── */
     .payment-note {
       background: var(--gold);
       color: var(--mahogany);
@@ -145,7 +141,6 @@
       z-index: 1;
     }
 
-    /* ── HOLIDAY NOTICE ── */
     .holiday-notice {
       background: var(--red);
       color: var(--cream);
@@ -158,7 +153,6 @@
     }
     .holiday-notice.visible { display: block; }
 
-    /* ── CATEGORY NAV ── */
     .category-nav {
       background: var(--cream);
       border-bottom: 2px solid var(--cream-dark);
@@ -190,7 +184,6 @@
     .cat-link:hover { color: var(--mahogany); }
     .cat-link.active { color: var(--red); border-bottom-color: var(--red); }
 
-    /* ── MAIN ── */
     main {
       max-width: 900px;
       margin: 0 auto;
@@ -199,7 +192,6 @@
       z-index: 1;
     }
 
-    /* ── NOON SPECIALS CALLOUT ── */
     .specials-box {
       background: var(--mahogany);
       color: var(--cream);
@@ -243,7 +235,6 @@
       z-index: 1;
     }
 
-    /* ── MENU SECTION ── */
     .menu-section {
       margin-bottom: 3.5rem;
       scroll-margin-top: 160px;
@@ -267,7 +258,6 @@
       background: linear-gradient(to right, var(--cream-darker), transparent);
     }
 
-    /* ── SECTION NOTE ── */
     .section-note {
       background: var(--red);
       color: var(--cream);
@@ -280,7 +270,6 @@
       margin-bottom: 1.25rem;
     }
 
-    /* ── MENU ITEMS ── */
     .menu-items { display: flex; flex-direction: column; }
 
     .menu-item {
@@ -320,16 +309,6 @@
       flex-shrink: 0;
     }
 
-    /* ── SUBSECTION ── */
-    .menu-subsection-title {
-      font-family: 'Abril Fatface', cursive;
-      font-size: 0.95rem;
-      color: var(--red);
-      padding: 1rem 0 0.25rem;
-      letter-spacing: 0.02em;
-    }
-
-    /* ── DINNERS INCLUDES NOTE ── */
     .includes-note {
       font-style: italic;
       font-size: 0.85rem;
@@ -338,7 +317,6 @@
       padding-left: 0.1rem;
     }
 
-    /* ── ORNAMENT ── */
     .ornament-divider {
       text-align: center;
       color: var(--gold);
@@ -348,7 +326,6 @@
       opacity: 0.5;
     }
 
-    /* ── FOOTER ── */
     footer {
       background: var(--mahogany);
       color: var(--cream-dark);
@@ -362,22 +339,10 @@
     }
     footer a { color: var(--gold); text-decoration: none; }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-      main { padding: 2rem 1.25rem 4rem; }
-      .menu-hero { padding: 2.5rem 1.25rem; }
-      .category-nav-inner { padding: 0 1.25rem; }
-      .specials-box { flex-direction: column; gap: 0.5rem; }
-    }
-
-    /* ── MENU IMAGES ── */
     .menu-images-section {
       margin-bottom: 3rem;
     }
     .menu-images-label {
-      font-family: 'Abril Fatface', cursive;
       font-size: 1.1rem;
       color: var(--mahogany);
       margin-bottom: 1rem;
@@ -430,14 +395,9 @@
       padding: 0.3rem 0.8rem;
       border-radius: 20px;
     }
-    .menu-image-wrap:hover .menu-image-overlay {
-      background: rgba(59,26,14,0.1);
-    }
-    .menu-image-wrap:hover .menu-image-overlay span {
-      opacity: 1;
-    }
+    .menu-image-wrap:hover .menu-image-overlay { background: rgba(59,26,14,0.1); }
+    .menu-image-wrap:hover .menu-image-overlay span { opacity: 1; }
 
-    /* ── LIGHTBOX ── */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -449,9 +409,7 @@
       padding: 2rem;
       cursor: zoom-out;
     }
-    .lightbox.active {
-      display: flex;
-    }
+    .lightbox.active { display: flex; }
     .lightbox img {
       max-width: 90vw;
       max-height: 90vh;
@@ -478,9 +436,13 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     @media (max-width: 600px) {
+      .nav-links { display: none; }
+      main { padding: 2rem 1.25rem 4rem; }
+      .menu-hero { padding: 2.5rem 1.25rem; }
+      .category-nav-inner { padding: 0 1.25rem; }
+      .specials-box { flex-direction: column; gap: 0.5rem; }
       .menu-images-grid { grid-template-columns: 1fr; }
     }
-
   </style>
 </head>
 <body>
@@ -489,8 +451,8 @@
     <a href="/" class="nav-logo">Frieda's<span>.</span></a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/menu.html" class="active">Menu</a></li>
-      <li><a href="/merch.html">Merch</a></li>
+      <li><a href="/menu" class="active">Menu</a></li>
+      <li><a href="/merch">Merch</a></li>
     </ul>
   </nav>
 
@@ -525,8 +487,6 @@
   </nav>
 
   <main>
-
-    <!-- MENU IMAGES -->
     <div class="menu-images-section">
       <p class="menu-images-label">Our In-Store Menu</p>
       <div class="menu-images-grid">
@@ -545,13 +505,11 @@
       </div>
     </div>
 
-    <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-      <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-close" type="button" onclick="closeLightbox()">✕</button>
       <img id="lightbox-img" src="" alt="Menu" />
     </div>
 
-    <!-- NOON SPECIALS -->
     <div class="specials-box">
       <div class="specials-box-inner">
         <h3>Noon Specials</h3>
@@ -560,14 +518,12 @@
       <div class="specials-price">$7.50</div>
     </div>
 
-    <!-- MENU SECTIONS — rendered dynamically from Supabase -->
     <div id="menuSections">
       <div class="state-loading" style="text-align:center;padding:4rem 0;color:var(--text-light);">
         <div style="width:36px;height:36px;border:3px solid var(--cream-dark);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;"></div>
         <p style="font-style:italic;">Loading menu…</p>
       </div>
     </div>
-
   </main>
 
   <footer>
@@ -576,6 +532,16 @@
   </footer>
 
   <script>
+    const CATEGORY_CONFIG = {
+      breakfast:   { label: 'Breakfast', icon: '🍳', note: null },
+      pancakes:    { label: 'Pancakes & French Toast', icon: '🥞', note: 'Served only until 10:30am' },
+      sandwiches:  { label: 'Sandwiches', icon: '🥪', note: null },
+      dinners:     { label: 'Dinners', icon: '🍽️', note: 'All dinners include potatoes, toast, and salad' },
+      sides:       { label: 'Sides', icon: '🍟', note: null },
+      dessert:     { label: 'Dessert', icon: '🥧', note: null },
+      beverages:   { label: 'Beverages', icon: '☕', note: null }
+    };
+
     async function loadSiteContent() {
       try {
         const res = await fetch('/api/get-public-content');
@@ -583,7 +549,7 @@
         const data = await res.json();
         const content = data.content || {};
 
-        if (content.hours_weekday || content.hours_saturday) {
+        if (content.hours_weekday || content.hours_saturday || content.hours_sunday) {
           const wd = content.hours_weekday || '6:00am – 4:00pm';
           const sat = content.hours_saturday || '6:00am – 11:00am';
           const sun = content.hours_sunday || 'Closed';
@@ -592,9 +558,9 @@
         }
 
         if (content.holiday_notice_active === 'true' && content.holiday_notice_text) {
-          const n = document.getElementById('holidayNotice');
-          n.textContent = content.holiday_notice_text;
-          n.classList.add('visible');
+          const notice = document.getElementById('holidayNotice');
+          notice.textContent = content.holiday_notice_text;
+          notice.classList.add('visible');
         }
 
         if (content.payment_note) {
@@ -608,32 +574,146 @@
     function initCategoryNav() {
       const sections = document.querySelectorAll('.menu-section');
       const links = document.querySelectorAll('.cat-link');
+
+      links.forEach(link => {
+        link.classList.remove('active');
+      });
+
+      if (!sections.length) return;
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
-            links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+            links.forEach(link => {
+              link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+            });
           }
         });
       }, { rootMargin: '-30% 0px -60% 0px' });
-      sections.forEach(s => observer.observe(s));
+
+      sections.forEach(section => observer.observe(section));
     }
 
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function normalizeGroupedMenu(payload) {
+      if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
+        const hasCategoryKeys = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages']
+          .some(key => Array.isArray(payload[key]));
+        if (hasCategoryKeys) return payload;
+      }
+
+      const items = Array.isArray(payload?.items) ? payload.items
+        : Array.isArray(payload?.menu_items) ? payload.menu_items
+        : Array.isArray(payload) ? payload
+        : [];
+
+      return items.reduce((grouped, item) => {
+        const category = item.category;
+        if (!category) return grouped;
+        if (!grouped[category]) grouped[category] = [];
+        grouped[category].push(item);
+        return grouped;
+      }, {});
+    }
+
+    async function loadMenu() {
+      try {
+        const res = await fetch('/api/get-menu');
+        if (!res.ok) throw new Error(`Failed to load menu: ${res.status}`);
+
+        const data = await res.json();
+        const grouped = normalizeGroupedMenu(data.menu || data);
+
+        renderMenu(grouped);
+      } catch (err) {
+        console.error(err);
+        document.getElementById('menuSections').innerHTML =
+          '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">Could not load menu. Please refresh.</p>';
+      }
+    }
+
+    function renderMenu(grouped) {
+      const container = document.getElementById('menuSections');
+      const categoryOrder = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages'];
+      let html = '';
+
+      categoryOrder.forEach((cat) => {
+        const items = Array.isArray(grouped[cat]) ? grouped[cat] : [];
+        if (!items.length) return;
+
+        const cfg = CATEGORY_CONFIG[cat] || { label: cat, icon: '🍴', note: null };
+
+        if (html) html += '<div class="ornament-divider">· · ·</div>';
+
+        html += `<section class="menu-section" id="${escapeHtml(cat)}">
+          <div class="section-header">
+            <span class="section-icon">${cfg.icon}</span>
+            <h2 class="section-title">${escapeHtml(cfg.label)}</h2>
+            <div class="section-rule"></div>
+          </div>`;
+
+        if (cfg.note) {
+          html += `<div class="section-note">${escapeHtml(cfg.note)}</div>`;
+        }
+
+        if (cat === 'dinners') {
+          html += '<p class="includes-note">All dinners include potatoes, toast, and salad</p>';
+        }
+
+        html += '<div class="menu-items">';
+        items
+          .slice()
+          .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
+          .forEach((item) => {
+            const description = item.description && item.description !== 'EMPTY' ? item.description : '';
+            html += `<div class="menu-item">
+              <div class="item-info">
+                <div class="item-name">${escapeHtml(item.name)}</div>
+                ${description ? `<div class="item-desc">${escapeHtml(description)}</div>` : ''}
+              </div>
+              <div class="item-price">${escapeHtml(item.price)}</div>
+            </div>`;
+          });
+        html += '</div></section>';
+      });
+
+      if (!html) {
+        container.innerHTML =
+          '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">No menu items available right now.</p>';
+        return;
+      }
+
+      container.innerHTML = html;
+      initCategoryNav();
+    }
 
     function openLightbox(src) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
     }
+
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
       document.body.style.overflow = '';
     }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
 
     loadSiteContent();
+    loadMenu();
     initCategoryNav();
   </script>
-</body>
 </body>
 </html>
