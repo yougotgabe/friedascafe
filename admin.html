@@ -56,7 +56,32 @@
   .back-to-site-btn:hover { opacity: 1; color: var(--gold); }
   /* CARDS */
   .card { background: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--gold); }
-  .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
+  .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+  /* ── ACCORDION ── */
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--cream-dark);
+    user-select: none; -webkit-user-select: none;
+  }
+  .card-header:hover h2 { color: var(--red); }
+  .card-chevron {
+    font-size: 0.75rem; color: var(--muted);
+    transition: transform 0.25s ease; flex-shrink: 0;
+    margin-left: 0.75rem;
+  }
+  .card.open .card-chevron { transform: rotate(180deg); }
+  .card-body {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease, padding-top 0.3s ease;
+    padding-top: 0;
+  }
+  .card.open .card-body {
+    max-height: 4000px; /* large enough for any content */
+    padding-top: 1.25rem;
+  }
   /* FIELDS */
   .field-group { margin-bottom: 1.25rem; }
   .field-group:last-child { margin-bottom: 0; }
@@ -205,8 +230,12 @@
   <div id="status-bar"></div>
 
   <!-- HOURS -->
-  <div class="card">
-    <h2>&#9749; Cafe Hours</h2>
+  <div class="card open" id="card-hours">
+    <div class="card-header" onclick="toggleCard('card-hours')">
+      <h2>&#9749; Cafe Hours</h2>
+      <span class="card-chevron">&#9660;</span>
+    </div>
+    <div class="card-body">
     <div class="hours-grid">
       <div class="field-group">
         <label>Monday &ndash; Friday</label>
@@ -225,11 +254,16 @@
         <input type="text" id="payment_note" placeholder="e.g. Cash and check only in the cafe." />
       </div>
     </div>
+    </div><!-- /card-body -->
   </div>
 
   <!-- ANNOUNCEMENT BANNER -->
-  <div class="card">
-    <h2>&#128226; Announcement Banner</h2>
+  <div class="card open" id="card-banner">
+    <div class="card-header" onclick="toggleCard('card-banner')">
+      <h2>&#128226; Announcement Banner</h2>
+      <span class="card-chevron">&#9660;</span>
+    </div>
+    <div class="card-body">
     <div class="toggle-row">
       <div class="toggle-label">
         Show Announcement Banner
@@ -244,11 +278,16 @@
       <label>Banner Message</label>
       <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday! — or — New mugs just dropped, shop the merch page!"></textarea>
     </div>
+    </div><!-- /card-body -->
   </div>
 
   <!-- MENU MANAGEMENT -->
-  <div class="card">
-    <h2>&#127869; Menu Items</h2>
+  <div class="card" id="card-menu">
+    <div class="card-header" onclick="toggleCard('card-menu')">
+      <h2>&#127869; Menu Items</h2>
+      <span class="card-chevron">&#9660;</span>
+    </div>
+    <div class="card-body">
     <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;">Add, edit, or remove items from the live menu. Changes appear on the website immediately.</p>
 
     <div class="field-group" style="margin-bottom:1.5rem;">
@@ -299,11 +338,16 @@
       </div>
       <button class="btn btn-sm" id="add-item-btn" onclick="addMenuItem()" style="width:100%;">+ Add to Menu</button>
     </div>
+    </div><!-- /card-body -->
   </div>
 
   <!-- IMAGES -->
-  <div class="card">
-    <h2>&#128444;&#65039; Photo Gallery</h2>
+  <div class="card" id="card-gallery">
+    <div class="card-header" onclick="toggleCard('card-gallery')">
+      <h2>&#128444;&#65039; Photo Gallery</h2>
+      <span class="card-chevron">&#9660;</span>
+    </div>
+    <div class="card-body">
     <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.5rem;">These photos show in the rotating slideshow on the homepage. Add as many as you like — they cycle automatically.</p>
 
     <div id="gallery-slots">
@@ -312,11 +356,16 @@
     </div>
 
     <button class="btn btn-sm btn-outline" id="add-slot-btn" onclick="addGallerySlot()" style="width:100%;margin-top:1rem;display:none;">+ Add Another Photo</button>
+    </div><!-- /card-body -->
   </div>
 
   <!-- REVIEWS -->
-  <div class="card">
-    <h2>&#11088; Reviews</h2>
+  <div class="card" id="card-reviews">
+    <div class="card-header" onclick="toggleCard('card-reviews')">
+      <h2>&#11088; Reviews</h2>
+      <span class="card-chevron">&#9660;</span>
+    </div>
+    <div class="card-body">
     <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.25rem;">Copy your favorite Google reviews here. These show up in the "Loved by Willmar" section of the homepage.</p>
     <div class="review-block">
       <h3>Review 1</h3>
@@ -342,15 +391,21 @@
       </div>
       <div class="field-group"><label>Review Text</label><textarea id="review_3_text" rows="3" placeholder="Paste the review text here..."></textarea></div>
     </div>
+    </div><!-- /card-body -->
   </div>
 
   <!-- ORDERS -->
-  <div class="card" id="orders-card">
-    <h2>&#128230; Recent Orders</h2>
+  <div class="card" id="card-orders">
+    <div class="card-header" onclick="toggleCard('card-orders')">
+      <h2>&#128230; Recent Orders</h2>
+      <span class="card-chevron">&#9660;</span>
+    </div>
+    <div class="card-body">
     <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.5rem;">Live from Stripe &amp; Printify — no data is stored on this site.</p>
     <div id="orders-list">
       <div style="text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;font-size:0.85rem;">Sign in to view orders.</div>
     </div>
+    </div><!-- /card-body -->
   </div>
 
   <!-- SAVE -->
@@ -364,6 +419,12 @@
 
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
+  // ── ACCORDION ──
+  function toggleCard(id) {
+    var card = document.getElementById(id);
+    if (card) card.classList.toggle('open');
+  }
+
   var googleToken = '';
   var adminLoaded = false;
   var loginScreen = document.getElementById('login-screen');
