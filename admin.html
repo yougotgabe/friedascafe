@@ -890,12 +890,26 @@
   }
 
   // ── SESSION RESTORE ──
-  // If a valid Google token is in sessionStorage, skip the login screen
+  // If a valid Google token is in sessionStorage, skip the login screen.
+  // We deliberately do NOT init Google Auth until AFTER the panel loads
+  // to prevent GSI auto-callbacks from interfering with our session restore.
   (function() {
     var saved = sessionStorage.getItem('fc_google_token');
-    if (!saved) return;
+    if (!saved) {
+      // No saved session — init Google Auth so the sign-in button works
+      window.addEventListener('load', function() {
+        if (typeof google !== 'undefined' && google.accounts) {
+          initGoogleAuth();
+        }
+      });
+      return;
+    }
+
+    // We have a saved token — set it and load the panel immediately.
+    // Do NOT init Google Auth yet; we'll skip it entirely since we're already authed.
     googleToken = saved;
     adminLoaded = true;
+
     fetch('/api/get-content', {
       headers: { 'x-google-token': saved }
     })
@@ -906,29 +920,25 @@
         adminPanel.style.display = 'block';
         prefillFields(data);
         initGallery(data);
-        // Defer until after GSI script finishes initializing
-        setTimeout(function() {
-          loadMenuItems();
-          loadOrders();
-        }, 500);
+        // Load these after content is rendered — token captured in closure above
+        loadMenuItems();
+        loadOrders();
       } else {
-        // Token expired — clear and show login
+        // Token expired — clear and show login, then init Google Auth
         googleToken = '';
+        adminLoaded = false;
         sessionStorage.removeItem('fc_google_token');
+        if (typeof google !== 'undefined' && google.accounts) {
+          initGoogleAuth();
+        }
       }
     })
     .catch(function() {
       googleToken = '';
+      adminLoaded = false;
       sessionStorage.removeItem('fc_google_token');
     });
   })();
-
-  // ── INIT GOOGLE AUTH (runs after Google GSI script loads) ──
-  window.addEventListener('load', function() {
-    if (typeof google !== 'undefined' && google.accounts) {
-      initGoogleAuth();
-    }
-  });
 
 </script>
 </body>
