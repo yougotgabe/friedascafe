@@ -51,10 +51,14 @@ export async function onRequest(context) {
       }
 
       const rows = await res.json();
-      // Convert array of {key, value} rows to a flat object
+      // Convert array of {key, value} rows to a flat object.
+      // Normalize all values to strings so the frontend gets consistent types
+      // regardless of how Supabase coerces column values (e.g. boolean vs text).
       const data = {};
       for (const row of rows) {
-        data[row.key] = row.value;
+        data[row.key] = row.value === null || row.value === undefined
+          ? ''
+          : String(row.value);
       }
 
       return new Response(JSON.stringify(data), { headers: corsHeaders });
