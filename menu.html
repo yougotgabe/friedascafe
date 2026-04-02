@@ -666,11 +666,20 @@
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      // Hide sticky nav so it doesn't bleed through
+      var catNav = document.querySelector('.category-nav');
+      if (catNav) catNav.style.display = 'none';
     }
 
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
       document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+      var catNav = document.querySelector('.category-nav');
+      if (catNav) catNav.style.display = '';
     }
 
     document.addEventListener('keydown', (e) => {
