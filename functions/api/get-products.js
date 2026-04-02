@@ -27,7 +27,7 @@ export async function onRequest(context) {
   try {
     // Fetch all published products (up to 100)
     var res = await fetch(
-      'https://api.printify.com/v1/shops/' + env.PRINTIFY_SHOP_ID + '/products.json?limit=100',
+      'https://api.printify.com/v1/shops/' + env.PRINTIFY_SHOP_ID + '/products.json?limit=50',
       { headers: printifyHeaders }
     );
 
