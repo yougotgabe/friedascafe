@@ -43,6 +43,19 @@ export async function onRequest(context) {
     params.append('success_url', `${origin}/merch?checkout=success`);
     params.append('cancel_url', `${origin}/merch?checkout=cancel`);
 
+    // Store cart as metadata so the webhook and order view can read it
+    const cartSummary = cart.map(item => ({
+      name: item.name,
+      quantity: item.quantity,
+      price_cents: item.price_cents,
+      variant_id: item.variant_id || '',
+      product_id: item.product_id || '',
+    }));
+    const cartJson = JSON.stringify(cartSummary);
+    if (cartJson.length <= 500) {
+      params.append('metadata[cart]', cartJson);
+    }
+
     cart.forEach((item, index) => {
       const name = String(item.name || 'Item');
       const unitAmount = Number(item.price_cents || 0);
