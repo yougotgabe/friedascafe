@@ -570,7 +570,7 @@
       fetch('/api/get-public-content')
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          var content = data.content || {};
+          var content = data || {};
           if (content.hours_weekday || content.hours_saturday || content.hours_sunday) {
             var wd = content.hours_weekday || '6:00am &ndash; 4:00pm';
             var sat = content.hours_saturday || '6:00am &ndash; 11:00am';

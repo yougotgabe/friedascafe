@@ -898,7 +898,7 @@
     fetch('/api/get-public-content')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var c = data.content || {};
+        var c = data || {};
 
         // Gallery slideshow
         var galleryImages = [];
