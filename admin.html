@@ -383,6 +383,8 @@
   }
 
   function handleGoogleCredential(response) {
+    // If session restore already loaded the panel, ignore GSI auto-callbacks
+    if (adminLoaded) return;
     var token = response.credential;
     var btn = document.getElementById('google-signin-btn');
     btn.disabled = true;
@@ -434,10 +436,11 @@
       adminPanel.style.display = 'block';
       prefillFields(data);
       initGallery(data);
+      // Defer until after GSI script finishes initializing
       setTimeout(function() {
         loadMenuItems();
         loadOrders();
-      }, 100);
+      }, 500);
     })
     .catch(function() {
       adminLoaded = false;
@@ -903,11 +906,11 @@
         adminPanel.style.display = 'block';
         prefillFields(data);
         initGallery(data);
-        // Small defer prevents Google GSI auto_select from interfering
+        // Defer until after GSI script finishes initializing
         setTimeout(function() {
           loadMenuItems();
           loadOrders();
-        }, 100);
+        }, 500);
       } else {
         // Token expired — clear and show login
         googleToken = '';
