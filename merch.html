@@ -262,7 +262,7 @@
       </button>
     </div>
     <div class="cart-items" id="cartItems">
-      <p class="cart-empty-msg">Your cart is empty.<br>Add something delicious!</p>
+      <p class="cart-empty-msg">Your cart is empty.<br>Find something you love above!</p>
     </div>
     <div class="cart-footer">
       <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
@@ -611,7 +611,7 @@
       document.getElementById('cartTotal').textContent = formatPrice(subtotal);
       document.getElementById('checkoutBtn').disabled = cart.length === 0;
       var itemsEl = document.getElementById('cartItems');
-      if (!cart.length) { itemsEl.innerHTML = '<p class="cart-empty-msg">Your cart is empty.<br>Add something delicious!</p>'; return; }
+      if (!cart.length) { itemsEl.innerHTML = '<p class="cart-empty-msg">Your cart is empty.<br>Find something you love above!</p>'; return; }
       itemsEl.innerHTML = cart.map(function(item) {
         var img = item.imgSrc
           ? '<img class="cart-item-img" src="' + item.imgSrc + '" alt="' + item.name + '" />'
