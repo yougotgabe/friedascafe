@@ -1,9 +1,10 @@
+import { verifyAdminToken } from './admin-auth.js';
 export async function onRequest(context) {
   const { request, env } = context;
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, x-admin-password',
+      'Access-Control-Allow-Headers': 'Content-Type, x-google-token',
       'Content-Type': 'application/json',
     };
 
@@ -11,14 +12,9 @@ export async function onRequest(context) {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Password check
-    const pw = request.headers.get('x-admin-password');
-    if (!pw || pw !== env.ADMIN_PASSWORD) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: corsHeaders,
-      });
-    }
+    // Google token auth
+    const authError = await verifyAdminToken(request, env, corsHeaders);
+    if (authError) return authError;
 
     try {
       const res = await fetch(
