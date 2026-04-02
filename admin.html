@@ -378,7 +378,7 @@
     google.accounts.id.initialize({
       client_id: '50741753242-gh3h1qqp4qn1sgcfst3evbu6lfbl5ufr.apps.googleusercontent.com',
       callback: handleGoogleCredential,
-      auto_select: true,
+      auto_select: false,
     });
   }
 
@@ -434,8 +434,10 @@
       adminPanel.style.display = 'block';
       prefillFields(data);
       initGallery(data);
-      loadMenuItems();
-      loadOrders();
+      setTimeout(function() {
+        loadMenuItems();
+        loadOrders();
+      }, 100);
     })
     .catch(function() {
       adminLoaded = false;
@@ -901,8 +903,11 @@
         adminPanel.style.display = 'block';
         prefillFields(data);
         initGallery(data);
-        loadMenuItems();
-        loadOrders();
+        // Small defer prevents Google GSI auto_select from interfering
+        setTimeout(function() {
+          loadMenuItems();
+          loadOrders();
+        }, 100);
       } else {
         // Token expired — clear and show login
         googleToken = '';
