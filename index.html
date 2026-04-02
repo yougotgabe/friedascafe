@@ -73,9 +73,16 @@
     text-align: center;
     padding: 0.75rem 2rem;
     font-size: 0.9rem;
-    position: relative;
-    z-index: 1;
+    position: fixed;
+    top: 64px; /* sits flush below the fixed nav */
+    left: 0; right: 0;
+    z-index: 850; /* below nav (900) but above everything else */
     font-style: italic;
+  }
+
+  /* When banner is active, push hero content down so it's not hidden behind it */
+  body.banner-active .hero {
+    padding-top: 130px;
   }
 
   /* ── HERO ── */
@@ -925,6 +932,7 @@
           if (banner) {
             banner.textContent = c.holiday_notice_text;
             banner.style.display = 'block';
+            document.body.classList.add('banner-active');
           }
         }
 
