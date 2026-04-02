@@ -43,7 +43,19 @@
   }
 
   /* ── HERO ─────────────────────────────────────── */
-  .hero {
+  /* ── ANNOUNCEMENT BANNER ── */
+  .announcement-banner {
+    background: var(--red);
+    color: var(--white);
+    text-align: center;
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+    font-style: italic;
+  }
+
+  /* ── HERO ──
     min-height:100vh; position:relative;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
@@ -399,7 +411,8 @@
   <button class="nav-hamburger" aria-label="Menu">☰</button>
 </nav>
 
-<!-- HERO -->
+<!-- ANNOUNCEMENT BANNER -->
+<div class="announcement-banner" id="announcementBanner" style="display:none;"></div>
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-content">
@@ -751,6 +764,7 @@
   <div class="footer-bottom">
     <p>&copy; 2026 Frieda's Cafe &nbsp;·&nbsp; Willmar, Minnesota</p>
     <p>Web design by <a href="https://dreadpiratestudio.com" target="_blank">Dread Pirate Studio</a></p>
+    <p><a href="/admin.html" style="color:rgba(245,239,226,0.15);font-size:0.7rem;text-decoration:none;letter-spacing:0.05em;">&#9679;</a></p>
   </div>
 </footer>
 
@@ -866,13 +880,13 @@
           if (heroItems[2] && c.hours_sunday) heroItems[2].querySelector('.hero-hours-val').textContent = c.hours_sunday;
         }
 
-        // Holiday notice
+        // Announcement banner
         if (c.holiday_notice_active === 'true' && c.holiday_notice_text) {
-          var banner = document.createElement('div');
-          banner.style.cssText = 'background:var(--red);color:var(--white);text-align:center;padding:0.75rem 2rem;font-size:0.9rem;position:relative;z-index:1;';
-          banner.textContent = c.holiday_notice_text;
-          var nav = document.querySelector('nav');
-          if (nav) nav.insertAdjacentElement('afterend', banner);
+          var banner = document.getElementById('announcementBanner');
+          if (banner) {
+            banner.textContent = c.holiday_notice_text;
+            banner.style.display = 'block';
+          }
         }
       })
       .catch(function() {});
