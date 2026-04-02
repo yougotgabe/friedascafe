@@ -39,10 +39,33 @@
   .nav-cta:hover { background:var(--red-dim) !important; color:var(--white) !important; }
   .nav-hamburger {
     display:none; background:none; border:none;
-    color:var(--cream); font-size:1.3rem; cursor:pointer;
+    color:var(--cream); font-size:1.3rem; cursor:pointer; padding:0.25rem;
   }
 
-  /* ── HERO ─────────────────────────────────────── */
+  /* ── MOBILE NAV DRAWER ── */
+  .nav-drawer {
+    display:none;
+    position:fixed; top:64px; left:0; right:0; z-index:850;
+    background:var(--brown);
+    border-bottom:3px solid var(--red);
+    flex-direction:column;
+  }
+  .nav-drawer.open { display:flex; }
+  .nav-drawer a {
+    display:block; padding:0.9rem 2rem;
+    font-family:'Oswald', sans-serif; font-size:0.8rem;
+    letter-spacing:0.15em; text-transform:uppercase;
+    color:rgba(245,239,226,0.8); text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    transition:background 0.15s, color 0.15s;
+  }
+  .nav-drawer a:hover { background:rgba(255,255,255,0.05); color:var(--gold-lt); }
+  .nav-drawer a.drawer-cta {
+    background:var(--red); color:var(--white);
+    margin:0.75rem 2rem 1rem; text-align:center; border-bottom:none;
+  }
+  .nav-drawer a.drawer-cta:hover { background:var(--red-dim); }
+
   /* ── ANNOUNCEMENT BANNER ── */
   .announcement-banner {
     background: var(--red);
@@ -323,18 +346,21 @@
   .testi-award-badge span:last-child { font-family:'Abril Fatface',serif; font-size:1.2rem; color:var(--gold-lt); }
   .testi-award p { color:rgba(245,239,226,0.65); font-size:0.9rem; font-style:italic; max-width:300px; }
 
-  /* ── MERCH ────────────────────────────────────── */
+  /* ── MERCH PREVIEW ────────────────────────────── */
   .merch-section { background:var(--parchment); }
   .merch-section .section-inner { text-align:center; }
   .merch-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:2.5rem; }
   .merch-card { background:var(--white); border:2px solid var(--border); overflow:hidden; text-align:left; transition:all 0.25s; }
   .merch-card:hover { border-color:var(--red); transform:translateY(-3px); box-shadow:0 8px 30px rgba(59,36,16,0.12); }
-  .merch-img { aspect-ratio:1; background:var(--parchment); display:flex; align-items:center; justify-content:center; font-size:3.5rem; border-bottom:2px solid var(--border); }
+  .merch-img { aspect-ratio:1; background:var(--parchment); display:flex; align-items:center; justify-content:center; font-size:3.5rem; border-bottom:2px solid var(--border); overflow:hidden; }
+  .merch-img img { width:100%; height:100%; object-fit:cover; }
+  .merch-img-placeholder { font-size:3.5rem; }
   .merch-body { padding:1rem; }
   .merch-name { font-family:'Oswald', sans-serif; font-size:0.8rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--brown); margin-bottom:0.25rem; }
   .merch-price { font-family:'Abril Fatface',serif; font-size:1rem; color:var(--red); }
-  .merch-cta { display:block; margin-top:2rem; font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); text-decoration:none; border:2px solid var(--red); padding:0.75rem 2rem; display:inline-block; transition:all 0.25s; }
+  .merch-cta { display:inline-block; margin-top:2rem; font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); text-decoration:none; border:2px solid var(--red); padding:0.75rem 2rem; transition:all 0.25s; }
   .merch-cta:hover { background:var(--red); color:var(--white); }
+  .merch-loading { text-align:center; padding:3rem; color:var(--muted); font-style:italic; }
 
   /* ── VISIT ────────────────────────────────────── */
   .visit-section { background:var(--cream); }
@@ -344,9 +370,6 @@
   .visit-detail-text h4 { font-family:'Oswald',sans-serif; font-size:0.7rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--red); margin-bottom:0.2rem; }
   .visit-detail-text p { color:var(--brown); font-size:0.95rem; line-height:1.6; }
   .visit-map { background:var(--parchment); border:2px solid var(--border); height:320px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
-  .visit-map-placeholder { text-align:center; color:var(--muted); }
-  .visit-map-placeholder span { font-size:2.5rem; display:block; margin-bottom:0.5rem; }
-  .visit-map-placeholder p { font-size:0.85rem; font-style:italic; }
   .visit-cash-note { margin-top:2rem; padding:1rem 1.25rem; background:rgba(192,57,43,0.06); border-left:3px solid var(--red); }
   .visit-cash-note p { font-size:0.9rem; color:var(--brown); font-style:italic; line-height:1.5; }
 
@@ -389,7 +412,8 @@
     .nav-hamburger { display:block; }
   }
   @media (max-width:560px) {
-    .menu-grid, .testi-grid, .merch-grid { grid-template-columns:1fr; }
+    .menu-grid, .testi-grid { grid-template-columns:1fr; }
+    .merch-grid { grid-template-columns:1fr 1fr; }
     .footer-bottom { flex-direction:column; gap:0.5rem; }
   }
 
@@ -409,11 +433,23 @@
     <li><a href="#visit">Find Us</a></li>
     <li><a href="/merch.html" class="nav-cta">Shop Now</a></li>
   </ul>
-  <button class="nav-hamburger" aria-label="Menu">☰</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <a href="#about" onclick="closeDrawer()">Our Story</a>
+  <a href="/menu.html">Menu</a>
+  <a href="#testimonials" onclick="closeDrawer()">Reviews</a>
+  <a href="#video" onclick="closeDrawer()">PBS Feature</a>
+  <a href="/merch.html">Merch</a>
+  <a href="#visit" onclick="closeDrawer()">Find Us</a>
+  <a href="/merch.html" class="drawer-cta">Shop Now &#8594;</a>
+</div>
 
 <!-- ANNOUNCEMENT BANNER -->
 <div class="announcement-banner" id="announcementBanner" style="display:none;"></div>
+
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-content">
@@ -440,16 +476,16 @@
     </div>
     <div class="hero-hours">
       <div class="hero-hours-item">
-        <span class="hero-hours-label">Mon – Fri</span>
-        <span class="hero-hours-val">6am – 4pm</span>
+        <span class="hero-hours-label">Mon &ndash; Fri</span>
+        <span class="hero-hours-val" id="hours-weekday">6am &ndash; 4pm</span>
       </div>
       <div class="hero-hours-item">
         <span class="hero-hours-label">Saturday</span>
-        <span class="hero-hours-val">6am – 11am</span>
+        <span class="hero-hours-val" id="hours-saturday">6am &ndash; 11am</span>
       </div>
       <div class="hero-hours-item">
         <span class="hero-hours-label">Sunday</span>
-        <span class="hero-hours-val">Closed</span>
+        <span class="hero-hours-val" id="hours-sunday">Closed</span>
       </div>
       <div class="hero-hours-item">
         <span class="hero-hours-label">Payment</span>
@@ -463,7 +499,7 @@
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat"><span class="stat-num">55+</span><span class="stat-label">Years Serving Willmar</span></div>
-    <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Google Rating</span></div>
+    <div class="stat"><span class="stat-num">4.8&#9733;</span><span class="stat-label">Google Rating</span></div>
     <div class="stat"><span class="stat-num">657+</span><span class="stat-label">Five-Star Reviews</span></div>
     <div class="stat"><span class="stat-num">$2.95</span><span class="stat-label">Breakfast Starting At</span></div>
   </div>
@@ -482,10 +518,15 @@
         <p>Our menu is a nod to the good ol' days. Whether you're craving grandma's pie, a classic grilled cheese, or pancakes so big they hang off the plate — you'll find it here. Every dish is made with love and the finest ingredients.</p>
         <p style="margin-top:1rem;"><em>— Steve and Amy</em></p>
       </div>
-      <div class="about-img-grid">
-        <div class="about-img-box" id="about-img-main"><span class="about-img-placeholder">☕</span></div>
-        <div class="about-img-box" id="about-img-food"><span class="about-img-placeholder">🥞</span></div>
-        <div class="about-img-box" id="about-img-staff"><span class="about-img-placeholder">👨‍👩‍👦</span></div>
+      <div class="slideshow-wrap">
+        <div class="slideshow" id="about-slideshow">
+          <div class="slide active">
+            <div class="slide-placeholder">&#9749;</div>
+          </div>
+        </div>
+        <button class="slide-btn slide-prev" onclick="slidePrev()" aria-label="Previous photo">&#8592;</button>
+        <button class="slide-btn slide-next" onclick="slideNext()" aria-label="Next photo">&#8594;</button>
+        <div class="slide-dots" id="slide-dots"></div>
       </div>
     </div>
   </div>
@@ -499,7 +540,7 @@
     <div class="section-rule centered"></div>
     <div class="menu-grid">
       <div class="menu-card">
-        <div class="menu-card-icon">🍳</div>
+        <div class="menu-card-icon">&#127859;</div>
         <h3 class="menu-card-title">Breakfast</h3>
         <ul class="menu-card-items">
           <li>Ham &amp; Eggs <span class="menu-price">$5.50</span></li>
@@ -511,7 +552,7 @@
         </ul>
       </div>
       <div class="menu-card">
-        <div class="menu-card-icon">🥪</div>
+        <div class="menu-card-icon">&#129386;</div>
         <h3 class="menu-card-title">Lunch</h3>
         <ul class="menu-card-items">
           <li>Grilled Cheese <span class="menu-price">$2.25</span></li>
@@ -523,7 +564,7 @@
         </ul>
       </div>
       <div class="menu-card">
-        <div class="menu-card-icon">🥧</div>
+        <div class="menu-card-icon">&#129383;</div>
         <h3 class="menu-card-title">Dessert</h3>
         <ul class="menu-card-items">
           <li>Caramel Roll <span class="menu-price">$1.99</span></li>
@@ -541,7 +582,7 @@
       <strong>Cash or check only</strong> for food orders.
     </p>
     <div style="text-align:center;margin-top:2rem;">
-      <a href="/menu.html" class="btn btn-primary" style="display:inline-block;">View Full Menu ↗</a>
+      <a href="/menu.html" class="btn btn-primary" style="display:inline-block;">View Full Menu &#8599;</a>
     </div>
   </div>
 </section>
@@ -557,36 +598,36 @@
     <span class="section-label">What People Are Saying</span>
     <h2 class="section-title">Loved by Willmar</h2>
     <div class="section-rule"></div>
-    <div class="testi-grid">
+    <div class="testi-grid" id="testiGrid">
       <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-text">"The pancakes hang over the edge of a dinner plate and are awesome!!!!!"</p>
-        <span class="testi-author">— Ken</span>
+        <span class="testi-author">&mdash; Ken</span>
       </div>
       <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-text">"Great traditional small town diner, friendly service, awesome food. The best way to start your day."</p>
-        <span class="testi-author">— Zach</span>
+        <span class="testi-author">&mdash; Zach</span>
       </div>
       <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-text">"Coming all the way from Mexico — the hamburgers were perfect. The atmosphere was cozy and the service was friendly."</p>
-        <span class="testi-author">— Google Review</span>
+        <span class="testi-author">&mdash; Google Review</span>
       </div>
       <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-text">"Family of five had breakfast for under $40. A gem of a find in Willmar."</p>
-        <span class="testi-author">— Roberta D.</span>
+        <span class="testi-author">&mdash; Roberta D.</span>
       </div>
       <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-text">"I've never been disappointed in the food at Frieda's and the service is fast and friendly. I highly recommend."</p>
-        <span class="testi-author">— Dennis</span>
+        <span class="testi-author">&mdash; Dennis</span>
       </div>
       <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
+        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <p class="testi-text">"Cram/study before the test &amp; the best breakfast ever! NEVER go away, Frieda's. Stay forever."</p>
-        <span class="testi-author">— Kate</span>
+        <span class="testi-author">&mdash; Kate</span>
       </div>
     </div>
     <div class="testi-award">
@@ -599,7 +640,6 @@
   </div>
 </section>
 
-
 <!-- VIDEOS -->
 <section id="video" style="background:var(--dark);padding:0;">
   <div style="max-width:1100px;margin:0 auto;padding:5rem 2rem;text-align:center;">
@@ -609,76 +649,37 @@
     <p style="color:rgba(245,239,226,0.65);font-style:italic;max-width:580px;margin:0 auto 3rem;font-size:0.95rem;line-height:1.7;">
       From a WWII refugee story to a Willmar institution — Frieda's has been making people feel at home for over 55 years.
     </p>
-
     <div class="video-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;text-align:left;">
-
-      <!-- PBS -->
       <div>
-        <p style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:0.6rem;">Pioneer PBS · Postcards · S15 E5</p>
+        <p style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:0.6rem;">Pioneer PBS &middot; Postcards &middot; S15 E5</p>
         <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:2px solid rgba(201,147,10,0.3);box-shadow:0 8px 40px rgba(0,0,0,0.4);">
-          <iframe
-            src="https://player.pbs.org/viralplayer/3089373435/"
-            width="100%"
-            height="100%"
-            style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-            allowfullscreen
-            allow="encrypted-media"
-            title="Frieda's Cafe — PBS Postcards Season 15 Episode 5">
-          </iframe>
+          <iframe src="https://player.pbs.org/viralplayer/3089373435/" width="100%" height="100%" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="encrypted-media" title="Frieda's Cafe — PBS Postcards Season 15 Episode 5"></iframe>
         </div>
         <p style="color:rgba(245,239,226,0.55);font-size:0.85rem;font-style:italic;margin-top:0.75rem;line-height:1.5;">Frieda's Cafe in Willmar began as a WWII refugee story and continues to serve the community today. 10 min.</p>
       </div>
-
-      <!-- City of Willmar -->
       <div>
         <p style="font-family:'Oswald',sans-serif;font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:0.6rem;">City of Willmar</p>
         <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:2px solid rgba(201,147,10,0.3);box-shadow:0 8px 40px rgba(0,0,0,0.4);">
-          <iframe
-            src="https://www.youtube.com/embed/rYxpYNHjxhs"
-            width="100%"
-            height="100%"
-            style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
-            allowfullscreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            title="Frieda's Cafe — City of Willmar">
-          </iframe>
+          <iframe src="https://www.youtube.com/embed/rYxpYNHjxhs" width="100%" height="100%" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" title="Frieda's Cafe — City of Willmar"></iframe>
         </div>
         <p style="color:rgba(245,239,226,0.55);font-size:0.85rem;font-style:italic;margin-top:0.75rem;line-height:1.5;">The City of Willmar spotlights Frieda's Cafe — a cornerstone of the downtown community.</p>
       </div>
-
     </div>
   </div>
 </section>
 
-
-
-<!-- MERCH -->
+<!-- MERCH PREVIEW -->
 <section id="merch" class="merch-section">
   <div class="section-inner">
     <span class="section-label" style="text-align:center;display:block;">Nobody Stacks 'Em Like Frieda's</span>
     <h2 class="section-title" style="text-align:center;">Wear the Colors</h2>
     <div class="section-rule centered"></div>
     <p style="text-align:center;color:var(--muted);font-style:italic;max-width:480px;margin:0 auto;">Official Frieda's Cafe merch — shipped straight to your door. Cards accepted online.</p>
-    <div class="merch-grid">
-      <div class="merch-card">
-        <div class="merch-img">☕</div>
-        <div class="merch-body"><p class="merch-name">Coffee Stop Tee</p><p class="merch-price">From $22.98</p></div>
-      </div>
-      <div class="merch-card">
-        <div class="merch-img">🧢</div>
-        <div class="merch-body"><p class="merch-name">Cuffed Beanie</p><p class="merch-price">$19.99</p></div>
-      </div>
-      <div class="merch-card">
-        <div class="merch-img">🧥</div>
-        <div class="merch-body"><p class="merch-name">Coffee Stop Sweatshirt</p><p class="merch-price">$30.00</p></div>
-      </div>
-      <div class="merch-card">
-        <div class="merch-img">🗺️</div>
-        <div class="merch-body"><p class="merch-name">Coordinates Tee</p><p class="merch-price">$20.00</p></div>
-      </div>
+    <div class="merch-grid" id="merchPreviewGrid">
+      <div class="merch-loading" style="grid-column:1/-1;">Loading merch&hellip;</div>
     </div>
     <div style="text-align:center;margin-top:2rem;">
-      <a href="/merch.html" class="merch-cta">Shop All Items ↗</a>
+      <a href="/merch.html" class="merch-cta">Shop All Items &#8599;</a>
     </div>
   </div>
 </section>
@@ -692,24 +693,24 @@
         <h2 class="section-title">Come Find<br>Your Table</h2>
         <div class="section-rule"></div>
         <div class="visit-detail">
-          <span class="visit-detail-icon">📍</span>
+          <span class="visit-detail-icon">&#128205;</span>
           <div class="visit-detail-text">
             <h4>Address</h4>
             <p>511 Benson Ave SW<br>Willmar, MN 56201<br><em style="font-size:0.85rem;color:var(--muted);">Downtown, around the corner from Ray Peterson Shoes</em></p>
           </div>
         </div>
         <div class="visit-detail">
-          <span class="visit-detail-icon">📞</span>
+          <span class="visit-detail-icon">&#128222;</span>
           <div class="visit-detail-text">
             <h4>Phone</h4>
             <p><a href="tel:3202352865" style="color:var(--brown);text-decoration:none;">(320) 235-2865</a></p>
           </div>
         </div>
         <div class="visit-detail">
-          <span class="visit-detail-icon">🕐</span>
+          <span class="visit-detail-icon">&#128336;</span>
           <div class="visit-detail-text">
             <h4>Hours</h4>
-            <p>Monday – Friday: 6am – 4pm<br>Saturday: 6am – 11am<br>Sunday: Closed</p>
+            <p>Monday &ndash; Friday: 6am &ndash; 4pm<br>Saturday: 6am &ndash; 11am<br>Sunday: Closed</p>
           </div>
         </div>
         <div class="visit-cash-note">
@@ -719,16 +720,7 @@
       </div>
       <div>
         <div class="visit-map" style="padding:0;border:2px solid var(--border);">
-          <iframe
-            src="https://maps.google.com/maps?q=Frieda%27s+Cafe+511+Benson+Ave+SW+Willmar+MN+56201&t=&z=16&ie=UTF8&iwloc=&output=embed"
-            width="100%"
-            height="320"
-            style="border:0;display:block;"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Frieda's Cafe location map">
-          </iframe>
+          <iframe src="https://maps.google.com/maps?q=Frieda%27s+Cafe+511+Benson+Ave+SW+Willmar+MN+56201&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="320" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Frieda's Cafe location map"></iframe>
         </div>
       </div>
     </div>
@@ -750,7 +742,6 @@
         <li><a href="/menu.html">Menu</a></li>
         <li><a href="#testimonials">Reviews</a></li>
         <li><a href="#video">PBS Feature</a></li>
-    <li><a href="#video">PBS Feature</a></li>
         <li><a href="/merch.html">Merch Shop</a></li>
         <li><a href="#visit">Find Us</a></li>
       </ul>
@@ -759,18 +750,45 @@
       <span class="footer-col-title">Contact</span>
       <p>511 Benson Ave SW<br>Willmar, MN 56201</p>
       <p style="margin-top:0.5rem;"><a href="tel:3202352865" style="color:rgba(245,239,226,0.55);text-decoration:none;">(320) 235-2865</a></p>
-      <p style="margin-top:1rem;"><a href="https://www.facebook.com/friedascafe/" target="_blank" style="color:rgba(245,239,226,0.55);text-decoration:none;">📘 Facebook</a></p>
+      <p style="margin-top:1rem;"><a href="https://www.facebook.com/friedascafe/" target="_blank" style="color:rgba(245,239,226,0.55);text-decoration:none;">&#128152; Facebook</a></p>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; 2026 Frieda's Cafe &nbsp;·&nbsp; Willmar, Minnesota</p>
+    <p>&copy; 2026 Frieda's Cafe &nbsp;&middot;&nbsp; Willmar, Minnesota</p>
     <p>Web design by <a href="https://dreadpiratestudio.com" target="_blank">Dread Pirate Studio</a></p>
     <p><a href="/admin.html" style="color:rgba(245,239,226,0.15);font-size:0.7rem;text-decoration:none;letter-spacing:0.05em;">&#9679;</a></p>
   </div>
 </footer>
 
-
 <script>
+  // ── HAMBURGER NAV ─────────────────────────────────────
+  var hamburger = document.getElementById('navHamburger');
+  var drawer = document.getElementById('navDrawer');
+  var drawerOpen = false;
+
+  hamburger.addEventListener('click', function() {
+    drawerOpen = !drawerOpen;
+    drawer.classList.toggle('open', drawerOpen);
+    hamburger.setAttribute('aria-expanded', String(drawerOpen));
+    drawer.setAttribute('aria-hidden', String(!drawerOpen));
+    hamburger.innerHTML = drawerOpen ? '&#10005;' : '&#9776;';
+  });
+
+  function closeDrawer() {
+    drawerOpen = false;
+    drawer.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    hamburger.innerHTML = '&#9776;';
+  }
+
+  // Close drawer when clicking outside
+  document.addEventListener('click', function(e) {
+    if (drawerOpen && !drawer.contains(e.target) && e.target !== hamburger) {
+      closeDrawer();
+    }
+  });
+
   // ── SLIDESHOW ──────────────────────────────────────────
   var slides = [];
   var currentSlide = 0;
@@ -779,33 +797,22 @@
   function buildSlideshow(imageUrls) {
     var container = document.getElementById('about-slideshow');
     var dotsContainer = document.getElementById('slide-dots');
-
-    // If no images uploaded yet, keep the placeholder
     if (!imageUrls || imageUrls.length === 0) return;
-
-    // Build slides
     container.innerHTML = imageUrls.map(function(url, i) {
       return '<div class="slide' + (i === 0 ? ' active' : '') + '">'
-        + '<img src="' + url + '" alt="Frieda's Cafe photo ' + (i+1) + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '" />'
+        + '<img src="' + url + '" alt="Frieda\'s Cafe photo ' + (i+1) + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '" />'
         + '</div>';
     }).join('');
-
-    // Build dots
     dotsContainer.innerHTML = imageUrls.map(function(_, i) {
       return '<button class="slide-dot' + (i === 0 ? ' active' : '') + '" onclick="goToSlide(' + i + ')" aria-label="Photo ' + (i+1) + '"></button>';
     }).join('');
-
     slides = container.querySelectorAll('.slide');
-
-    // Hide arrows if only one image
     if (imageUrls.length <= 1) {
       document.querySelector('.slide-prev').style.display = 'none';
       document.querySelector('.slide-next').style.display = 'none';
       dotsContainer.style.display = 'none';
       return;
     }
-
-    // Start auto-advance (5 seconds)
     startSlideshow();
   }
 
@@ -831,55 +838,86 @@
     startSlideshow();
   }
 
-  // Pause on hover
   var wrap = document.querySelector('.slideshow-wrap');
   if (wrap) {
     wrap.addEventListener('mouseenter', function() { clearInterval(slideshowTimer); });
-    wrap.addEventListener('mouseleave', function() { startSlideshow(); });
+    wrap.addEventListener('mouseleave', function() { if (slides.length > 1) startSlideshow(); });
   }
 
-  // Touch/swipe support for mobile
   var touchStartX = 0;
   var slideshowEl = document.getElementById('about-slideshow');
   if (slideshowEl) {
     slideshowEl.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
     slideshowEl.addEventListener('touchend', function(e) {
       var diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) diff > 0 ? slideNext() : slidePrev();
+      if (Math.abs(diff) > 40) { diff > 0 ? slideNext() : slidePrev(); }
     }, { passive: true });
+  }
+
+  // ── MERCH PREVIEW ─────────────────────────────────────
+  function formatPrice(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+
+  function loadMerchPreview() {
+    fetch('/api/get-products')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var products = data.products || [];
+        var grid = document.getElementById('merchPreviewGrid');
+        if (!products.length) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-style:italic;">Merch coming soon — check back!</div>';
+          return;
+        }
+        // Show up to 4 products
+        var preview = products.slice(0, 4);
+        grid.innerHTML = preview.map(function(p) {
+          var img = (p.images && p.images.length > 0)
+            ? '<img src="' + (p.images.find(function(i) { return i.is_default; }) || p.images[0]).src + '" alt="' + p.name + '" style="width:100%;height:100%;object-fit:cover;" />'
+            : '<span class="merch-img-placeholder">&#128247;</span>';
+          var price = p.variants && p.variants.length > 1
+            ? 'From ' + formatPrice(Math.min.apply(null, p.variants.map(function(v) { return v.price; })))
+            : formatPrice(p.price_cents);
+          return '<div class="merch-card">'
+            + '<div class="merch-img">' + img + '</div>'
+            + '<div class="merch-body">'
+            + '<p class="merch-name">' + p.name + '</p>'
+            + '<p class="merch-price">' + price + '</p>'
+            + '</div></div>';
+        }).join('');
+      })
+      .catch(function() {
+        // Silently fail — fallback static cards shown below if this block is swapped
+        var grid = document.getElementById('merchPreviewGrid');
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-style:italic;">Shop our merch at the link below.</div>';
+      });
   }
 
   // ── LIVE CONTENT FROM SUPABASE ────────────────────────
   (function() {
-    fetch('/.netlify/functions/get-public-content')
+    fetch('/api/get-public-content')
       .then(function(r) { return r.json(); })
       .then(function(data) {
         var c = data.content || {};
 
-        // Collect all gallery image URLs in order
+        // Gallery slideshow
         var galleryImages = [];
         var i = 1;
-        // Numbered gallery keys: gallery_image_1, gallery_image_2, ...
         while (c['gallery_image_' + i]) {
           galleryImages.push(c['gallery_image_' + i]);
           i++;
         }
-        // Fall back to legacy keys if no gallery images uploaded yet
         if (galleryImages.length === 0) {
           if (c.story_image_url) galleryImages.push(c.story_image_url);
           if (c.menu_image_url) galleryImages.push(c.menu_image_url);
           if (c.staff_image_url) galleryImages.push(c.staff_image_url);
         }
-
         buildSlideshow(galleryImages);
 
         // Hours
-        if (c.hours_weekday || c.hours_saturday) {
-          var heroItems = document.querySelectorAll('.hero-hours-item');
-          if (heroItems[0] && c.hours_weekday) heroItems[0].querySelector('.hero-hours-val').textContent = c.hours_weekday;
-          if (heroItems[1] && c.hours_saturday) heroItems[1].querySelector('.hero-hours-val').textContent = c.hours_saturday;
-          if (heroItems[2] && c.hours_sunday) heroItems[2].querySelector('.hero-hours-val').textContent = c.hours_sunday;
-        }
+        if (c.hours_weekday) document.getElementById('hours-weekday').textContent = c.hours_weekday;
+        if (c.hours_saturday) document.getElementById('hours-saturday').textContent = c.hours_saturday;
+        if (c.hours_sunday) document.getElementById('hours-sunday').textContent = c.hours_sunday;
 
         // Announcement banner
         if (c.holiday_notice_active === 'true' && c.holiday_notice_text) {
@@ -889,8 +927,36 @@
             banner.style.display = 'block';
           }
         }
+
+        // Reviews — replace static cards if we have live data
+        var hasReviews = c.review_1 || c.review_2 || c.review_3;
+        if (hasReviews) {
+          var reviewHtml = '';
+          [1, 2, 3].forEach(function(n) {
+            var raw = c['review_' + n];
+            if (!raw) return;
+            try {
+              var r = JSON.parse(raw);
+              if (!r.text) return;
+              var stars = '';
+              for (var s = 0; s < (r.stars || 5); s++) stars += '&#9733;';
+              reviewHtml += '<div class="testi-card">'
+                + '<div class="testi-stars">' + stars + '</div>'
+                + '<p class="testi-text">"' + r.text + '"</p>'
+                + '<span class="testi-author">&mdash; ' + (r.name || 'Guest') + '</span>'
+                + '</div>';
+            } catch(e) {}
+          });
+          if (reviewHtml) {
+            document.getElementById('testiGrid').innerHTML = reviewHtml;
+          }
+        }
       })
       .catch(function() {});
   })();
+
+  // Load merch preview
+  loadMerchPreview();
 </script>
 </body>
+</html>

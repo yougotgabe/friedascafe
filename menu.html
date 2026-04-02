@@ -43,6 +43,40 @@
     }
     .nav-links a:hover, .nav-links a.active { color: var(--gold); }
 
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--cream);
+      font-size: 1.3rem;
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none;
+      position: sticky;
+      top: 70px;
+      z-index: 90;
+      background: var(--mahogany);
+      border-bottom: 3px solid var(--gold);
+      flex-direction: column;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      display: block;
+      padding: 0.85rem 2rem;
+      color: var(--cream-dark);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-drawer a:hover { color: var(--gold); background: rgba(255,255,255,0.04); }
+
     .menu-hero {
       background: var(--mahogany);
       padding: 3.5rem 2rem;
@@ -305,9 +339,7 @@
     }
     footer a { color: var(--gold); text-decoration: none; }
 
-    .menu-images-section {
-      margin-bottom: 3rem;
-    }
+    .menu-images-section { margin-bottom: 3rem; }
     .menu-images-label {
       font-size: 1.1rem;
       color: var(--mahogany);
@@ -336,10 +368,7 @@
       transform: translateY(-3px);
       box-shadow: 0 8px 32px rgba(59,26,14,0.22);
     }
-    .menu-image-wrap img {
-      width: 100%;
-      display: block;
-    }
+    .menu-image-wrap img { width: 100%; display: block; }
     .menu-image-overlay {
       position: absolute;
       inset: 0;
@@ -403,6 +432,7 @@
 
     @media (max-width: 600px) {
       .nav-links { display: none; }
+      .nav-hamburger { display: block; }
       main { padding: 2rem 1.25rem 4rem; }
       .menu-hero { padding: 2.5rem 1.25rem; }
       .category-nav-inner { padding: 0 1.25rem; }
@@ -417,25 +447,33 @@
     <a href="/" class="nav-logo">Frieda's<span>.</span></a>
     <ul class="nav-links">
       <li><a href="/">Home</a></li>
-      <li><a href="/menu" class="active">Menu</a></li>
-      <li><a href="/merch">Merch</a></li>
+      <li><a href="/menu.html" class="active">Menu</a></li>
+      <li><a href="/merch.html">Merch</a></li>
     </ul>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
   </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-drawer" id="navDrawer" aria-hidden="true">
+    <a href="/">Home</a>
+    <a href="/menu.html">Menu</a>
+    <a href="/merch.html">Merch</a>
+  </div>
 
   <section class="menu-hero">
     <div class="menu-hero-inner">
-      <div class="menu-hero-label">Made fresh daily · Est. 1970</div>
+      <div class="menu-hero-label">Made fresh daily &middot; Est. 1970</div>
       <h1>Our Menu</h1>
       <p>Breakfast, lunch &amp; smiles — the same way since 1970.</p>
     </div>
   </section>
 
   <div class="hours-banner" id="hoursBanner">
-    <strong>Mon–Fri</strong> 6:00am – 4:00pm &nbsp;·&nbsp; <strong>Saturday</strong> 6:00am – 11:00am &nbsp;·&nbsp; <strong>Sunday</strong> Closed
+    <strong>Mon&ndash;Fri</strong> 6:00am &ndash; 4:00pm &nbsp;&middot;&nbsp; <strong>Saturday</strong> 6:00am &ndash; 11:00am &nbsp;&middot;&nbsp; <strong>Sunday</strong> Closed
   </div>
 
   <div class="payment-note">
-    Cash &amp; check only · We do not accept cards in the cafe
+    Cash &amp; check only &middot; We do not accept cards in the cafe
   </div>
 
   <div class="holiday-notice" id="holidayNotice"></div>
@@ -458,21 +496,17 @@
       <div class="menu-images-grid">
         <div class="menu-image-wrap" onclick="openLightbox('https://bhokimstqlnysyypivbp.supabase.co/storage/v1/object/public/site-images/menu-p1.png')">
           <img src="https://bhokimstqlnysyypivbp.supabase.co/storage/v1/object/public/site-images/menu-p1.png" alt="Frieda's Cafe menu — breakfast, pancakes & sandwiches" />
-          <div class="menu-image-overlay">
-            <span>Click to enlarge</span>
-          </div>
+          <div class="menu-image-overlay"><span>Click to enlarge</span></div>
         </div>
         <div class="menu-image-wrap" onclick="openLightbox('https://bhokimstqlnysyypivbp.supabase.co/storage/v1/object/public/site-images/menu-p2.jpg')">
           <img src="https://bhokimstqlnysyypivbp.supabase.co/storage/v1/object/public/site-images/menu-p2.jpg" alt="Frieda's Cafe menu — dinners, sides, dessert & beverages" />
-          <div class="menu-image-overlay">
-            <span>Click to enlarge</span>
-          </div>
+          <div class="menu-image-overlay"><span>Click to enlarge</span></div>
         </div>
       </div>
     </div>
 
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-      <button class="lightbox-close" type="button" onclick="closeLightbox()">✕</button>
+      <button class="lightbox-close" type="button" onclick="closeLightbox()">&#10005;</button>
       <img id="lightbox-img" src="" alt="Menu" />
     </div>
 
@@ -485,105 +519,112 @@
     </div>
 
     <div id="menuSections">
-      <div class="state-loading" style="text-align:center;padding:4rem 0;color:var(--text-light);">
+      <div style="text-align:center;padding:4rem 0;color:var(--text-light);">
         <div style="width:36px;height:36px;border:3px solid var(--cream-dark);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;"></div>
-        <p style="font-style:italic;">Loading menu…</p>
+        <p style="font-style:italic;">Loading menu&hellip;</p>
       </div>
     </div>
   </main>
 
   <footer>
-    <p>511 Benson Ave SW, Willmar MN 56201 &nbsp;·&nbsp; <a href="tel:3202352865">(320) 235-2865</a></p>
-    <p style="margin-top:0.5rem">© 2025 Frieda's Cafe · Menu items and prices subject to change.</p>
+    <p>511 Benson Ave SW, Willmar MN 56201 &nbsp;&middot;&nbsp; <a href="tel:3202352865">(320) 235-2865</a></p>
+    <p style="margin-top:0.5rem">&copy; 2026 Frieda's Cafe &middot; Menu items and prices subject to change.</p>
   </footer>
 
   <script>
-    const CATEGORY_CONFIG = {
-      breakfast:   { label: 'Breakfast', icon: '🍳', note: null },
-      pancakes:    { label: 'Pancakes & French Toast', icon: '🥞', note: 'Served only until 10:30am' },
-      sandwiches:  { label: 'Sandwiches', icon: '🥪', note: null },
-      dinners:     { label: 'Dinners', icon: '🍽️', note: 'All dinners include potatoes, toast, and salad' },
-      sides:       { label: 'Sides', icon: '🍟', note: null },
-      dessert:     { label: 'Dessert', icon: '🥧', note: null },
-      beverages:   { label: 'Beverages', icon: '☕', note: null }
+    // ── HAMBURGER ──
+    var hamburger = document.getElementById('navHamburger');
+    var drawer = document.getElementById('navDrawer');
+    var drawerOpen = false;
+
+    hamburger.addEventListener('click', function() {
+      drawerOpen = !drawerOpen;
+      drawer.classList.toggle('open', drawerOpen);
+      hamburger.setAttribute('aria-expanded', String(drawerOpen));
+      drawer.setAttribute('aria-hidden', String(!drawerOpen));
+      hamburger.innerHTML = drawerOpen ? '&#10005;' : '&#9776;';
+    });
+
+    document.addEventListener('click', function(e) {
+      if (drawerOpen && !drawer.contains(e.target) && e.target !== hamburger) {
+        drawerOpen = false;
+        drawer.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        hamburger.innerHTML = '&#9776;';
+      }
+    });
+
+    // ── MENU ──
+    var CATEGORY_CONFIG = {
+      breakfast:   { label: 'Breakfast', icon: '&#127859;', note: null },
+      pancakes:    { label: 'Pancakes & French Toast', icon: '&#129382;', note: 'Served only until 10:30am' },
+      sandwiches:  { label: 'Sandwiches', icon: '&#129386;', note: null },
+      dinners:     { label: 'Dinners', icon: '&#127869;', note: 'All dinners include potatoes, toast, and salad' },
+      sides:       { label: 'Sides', icon: '&#127839;', note: null },
+      dessert:     { label: 'Dessert', icon: '&#129383;', note: null },
+      beverages:   { label: 'Beverages', icon: '&#9749;', note: null }
     };
 
-    async function loadSiteContent() {
-      try {
-        const res = await fetch('/api/get-public-content');
-        if (!res.ok) return;
-        const data = await res.json();
-        const content = data.content || {};
-
-        if (content.hours_weekday || content.hours_saturday || content.hours_sunday) {
-          const wd = content.hours_weekday || '6:00am – 4:00pm';
-          const sat = content.hours_saturday || '6:00am – 11:00am';
-          const sun = content.hours_sunday || 'Closed';
-          document.getElementById('hoursBanner').innerHTML =
-            `<strong>Mon–Fri</strong> ${wd} &nbsp;·&nbsp; <strong>Saturday</strong> ${sat} &nbsp;·&nbsp; <strong>Sunday</strong> ${sun}`;
-        }
-
-        if (content.holiday_notice_active === 'true' && content.holiday_notice_text) {
-          const notice = document.getElementById('holidayNotice');
-          notice.textContent = content.holiday_notice_text;
-          notice.classList.add('visible');
-        }
-
-        if (content.payment_note) {
-          document.querySelector('.payment-note').textContent = content.payment_note;
-        }
-      } catch (e) {
-        console.log('Could not load site content:', e);
-      }
+    function loadSiteContent() {
+      fetch('/api/get-public-content')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var content = data.content || {};
+          if (content.hours_weekday || content.hours_saturday || content.hours_sunday) {
+            var wd = content.hours_weekday || '6:00am &ndash; 4:00pm';
+            var sat = content.hours_saturday || '6:00am &ndash; 11:00am';
+            var sun = content.hours_sunday || 'Closed';
+            document.getElementById('hoursBanner').innerHTML =
+              '<strong>Mon&ndash;Fri</strong> ' + wd + ' &nbsp;&middot;&nbsp; <strong>Saturday</strong> ' + sat + ' &nbsp;&middot;&nbsp; <strong>Sunday</strong> ' + sun;
+          }
+          if (content.holiday_notice_active === 'true' && content.holiday_notice_text) {
+            var notice = document.getElementById('holidayNotice');
+            notice.textContent = content.holiday_notice_text;
+            notice.classList.add('visible');
+          }
+          if (content.payment_note) {
+            document.querySelector('.payment-note').textContent = content.payment_note;
+          }
+        })
+        .catch(function() {});
     }
 
     function initCategoryNav() {
-      const sections = document.querySelectorAll('.menu-section');
-      const links = document.querySelectorAll('.cat-link');
-
-      links.forEach(link => {
-        link.classList.remove('active');
-      });
-
+      var sections = document.querySelectorAll('.menu-section');
+      var links = document.querySelectorAll('.cat-link');
+      links.forEach(function(link) { link.classList.remove('active'); });
       if (!sections.length) return;
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            links.forEach(link => {
+            var id = entry.target.getAttribute('id');
+            links.forEach(function(link) {
               link.classList.toggle('active', link.getAttribute('href') === '#' + id);
             });
           }
         });
       }, { rootMargin: '-30% 0px -60% 0px' });
-
-      sections.forEach(section => observer.observe(section));
+      sections.forEach(function(section) { observer.observe(section); });
     }
 
     function escapeHtml(value) {
-      return String(value ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
+      return String(value || '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
     function normalizeGroupedMenu(payload) {
       if (payload && typeof payload === 'object' && !Array.isArray(payload)) {
-        const hasCategoryKeys = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages']
-          .some(key => Array.isArray(payload[key]));
+        var hasCategoryKeys = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages']
+          .some(function(key) { return Array.isArray(payload[key]); });
         if (hasCategoryKeys) return payload;
       }
-
-      const items = Array.isArray(payload?.items) ? payload.items
-        : Array.isArray(payload?.menu_items) ? payload.menu_items
-        : Array.isArray(payload) ? payload
-        : [];
-
-      return items.reduce((grouped, item) => {
-        const category = item.category;
+      var items = Array.isArray(payload && payload.items) ? payload.items
+        : Array.isArray(payload && payload.menu_items) ? payload.menu_items
+        : Array.isArray(payload) ? payload : [];
+      return items.reduce(function(grouped, item) {
+        var category = item.category;
         if (!category) return grouped;
         if (!grouped[category]) grouped[category] = [];
         grouped[category].push(item);
@@ -591,73 +632,64 @@
       }, {});
     }
 
-    async function loadMenu() {
-      try {
-        const res = await fetch('/api/get-menu');
-        if (!res.ok) throw new Error(`Failed to load menu: ${res.status}`);
-
-        const data = await res.json();
-        const grouped = normalizeGroupedMenu(data.menu || data);
-
-        renderMenu(grouped);
-      } catch (err) {
-        console.error(err);
-        document.getElementById('menuSections').innerHTML =
-          '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">Could not load menu. Please refresh.</p>';
-      }
+    function loadMenu() {
+      fetch('/api/get-menu')
+        .then(function(r) {
+          if (!r.ok) throw new Error('Failed to load menu: ' + r.status);
+          return r.json();
+        })
+        .then(function(data) {
+          var grouped = normalizeGroupedMenu(data.menu || data);
+          renderMenu(grouped);
+        })
+        .catch(function(err) {
+          console.error(err);
+          document.getElementById('menuSections').innerHTML =
+            '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">Could not load menu. Please refresh.</p>';
+        });
     }
 
     function renderMenu(grouped) {
-      const container = document.getElementById('menuSections');
-      const categoryOrder = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages'];
-      let html = '';
+      var container = document.getElementById('menuSections');
+      var categoryOrder = ['breakfast','pancakes','sandwiches','dinners','sides','dessert','beverages'];
+      var html = '';
 
-      categoryOrder.forEach((cat) => {
-        const items = Array.isArray(grouped[cat]) ? grouped[cat] : [];
+      categoryOrder.forEach(function(cat) {
+        var items = Array.isArray(grouped[cat]) ? grouped[cat] : [];
         if (!items.length) return;
-
-        const cfg = CATEGORY_CONFIG[cat] || { label: cat, icon: '🍴', note: null };
-
-        if (html) html += '<div class="ornament-divider">· · ·</div>';
-
-        html += `<section class="menu-section" id="${escapeHtml(cat)}">
-          <div class="section-header">
-            <span class="section-icon">${cfg.icon}</span>
-            <h2 class="section-title">${escapeHtml(cfg.label)}</h2>
-            <div class="section-rule"></div>
-          </div>`;
-
+        var cfg = CATEGORY_CONFIG[cat] || { label: cat, icon: '&#127860;', note: null };
+        if (html) html += '<div class="ornament-divider">&middot; &middot; &middot;</div>';
+        html += '<section class="menu-section" id="' + escapeHtml(cat) + '">'
+          + '<div class="section-header">'
+          + '<span class="section-icon">' + cfg.icon + '</span>'
+          + '<h2 class="section-title">' + escapeHtml(cfg.label) + '</h2>'
+          + '<div class="section-rule"></div>'
+          + '</div>';
         if (cfg.note) {
-          html += `<div class="section-note">${escapeHtml(cfg.note)}</div>`;
+          html += '<div class="section-note">' + escapeHtml(cfg.note) + '</div>';
         }
-
         if (cat === 'dinners') {
           html += '<p class="includes-note">All dinners include potatoes, toast, and salad</p>';
         }
-
         html += '<div class="menu-items">';
-        items
-          .slice()
-          .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-          .forEach((item) => {
-            const description = item.description && item.description !== 'EMPTY' ? item.description : '';
-            html += `<div class="menu-item">
-              <div class="item-info">
-                <div class="item-name">${escapeHtml(item.name)}</div>
-                ${description ? `<div class="item-desc">${escapeHtml(description)}</div>` : ''}
-              </div>
-              <div class="item-price">${escapeHtml(item.price)}</div>
-            </div>`;
+        items.slice().sort(function(a, b) { return (a.sort_order || 0) - (b.sort_order || 0); })
+          .forEach(function(item) {
+            var description = item.description && item.description !== 'EMPTY' ? item.description : '';
+            html += '<div class="menu-item">'
+              + '<div class="item-info">'
+              + '<div class="item-name">' + escapeHtml(item.name) + '</div>'
+              + (description ? '<div class="item-desc">' + escapeHtml(description) + '</div>' : '')
+              + '</div>'
+              + '<div class="item-price">' + escapeHtml(item.price) + '</div>'
+              + '</div>';
           });
         html += '</div></section>';
       });
 
       if (!html) {
-        container.innerHTML =
-          '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">No menu items available right now.</p>';
+        container.innerHTML = '<p style="text-align:center;padding:3rem;color:var(--text-light);font-style:italic;">No menu items available right now.</p>';
         return;
       }
-
       container.innerHTML = html;
       initCategoryNav();
     }
@@ -666,9 +698,6 @@
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      // Hide sticky nav so it doesn't bleed through
       var catNav = document.querySelector('.category-nav');
       if (catNav) catNav.style.display = 'none';
     }
@@ -676,13 +705,11 @@
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
       document.body.style.overflow = '';
-      document.body.style.position = '';
-      document.body.style.width = '';
       var catNav = document.querySelector('.category-nav');
       if (catNav) catNav.style.display = '';
     }
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') closeLightbox();
     });
 
