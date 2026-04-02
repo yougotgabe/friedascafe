@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal — Frieda's Cafe</title>
+<link rel="stylesheet" href="/brand.css">
+<style>
+
+  /* ── NAV ──────────────────────────────────────── */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:900;
+    background:var(--brown);
+    border-bottom:3px solid var(--red);
+    padding:0 2rem; height:64px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-brand {
+    font-family:'Abril Fatface', serif;
+    font-size:1.4rem; color:var(--cream);
+    text-decoration:none; letter-spacing:0.02em;
+  }
+  .nav-brand span { color:var(--gold-lt); }
+  .nav-links { display:flex; gap:0; list-style:none; }
+  .nav-links a {
+    display:block; padding:0.4rem 1rem;
+    font-family:'Oswald', sans-serif; font-size:0.75rem;
+    letter-spacing:0.15em; text-transform:uppercase;
+    color:rgba(245,239,226,0.7); text-decoration:none;
+    transition:color 0.2s; border-right:1px solid rgba(255,255,255,0.08);
+  }
+  .nav-links a:first-child { border-left:1px solid rgba(255,255,255,0.08); }
+  .nav-links a:hover { color:var(--gold-lt); }
+  .nav-cta {
+    background:var(--red); color:var(--white) !important;
+    padding:0.4rem 1.1rem !important; border:none !important;
+    transition:background 0.2s !important;
+  }
+  .nav-cta:hover { background:var(--red-dim) !important; color:var(--white) !important; }
+  .nav-hamburger {
+    display:none; background:none; border:none;
+    color:var(--cream); font-size:1.3rem; cursor:pointer; padding:0.25rem;
+  }
+
+  /* ── MOBILE NAV DRAWER ── */
+  .nav-drawer {
+    display:none;
+    position:fixed; top:64px; left:0; right:0; z-index:850;
+    background:var(--brown);
+    border-bottom:3px solid var(--red);
+    flex-direction:column;
+  }
+  .nav-drawer.open { display:flex; }
+  .nav-drawer a {
+    padding:0.9rem 2rem;
+    font-family:'Oswald', sans-serif; font-size:0.8rem;
+    letter-spacing:0.15em; text-transform:uppercase;
+    color:rgba(245,239,226,0.75); text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    transition:background 0.15s, color 0.15s;
+  }
+  .nav-drawer a:hover { background:rgba(255,255,255,0.05); color:var(--gold-lt); }
+  .nav-drawer a.drawer-cta {
+    background:var(--red); color:var(--white);
+    text-align:center; letter-spacing:0.15em;
+  }
+  .nav-drawer a.drawer-cta:hover { background:var(--red-dim); }
+
+  /* ── PAGE LAYOUT ── */
+  body { padding-top:64px; background:var(--cream); color:var(--text); }
+
+  .legal-hero {
+    background:var(--dark);
+    border-bottom:3px solid var(--red);
+    padding:3.5rem 2rem 3rem;
+    text-align:center;
+  }
+  .legal-hero h1 {
+    font-family:'Abril Fatface', serif;
+    font-size:2.4rem; color:var(--cream);
+    margin-bottom:0.5rem;
+  }
+  .legal-hero p {
+    color:rgba(245,239,226,0.5);
+    font-size:0.88rem; font-style:italic;
+  }
+
+  .legal-nav {
+    background:var(--brown);
+    border-bottom:1px solid rgba(245,239,226,0.1);
+    position:sticky; top:64px; z-index:800;
+    padding:0 2rem;
+    display:flex; gap:0; justify-content:center;
+    overflow-x:auto;
+  }
+  .legal-nav a {
+    font-family:'Oswald', sans-serif;
+    font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase;
+    color:rgba(245,239,226,0.6); text-decoration:none;
+    padding:0.75rem 1.25rem;
+    border-bottom:2px solid transparent;
+    white-space:nowrap;
+    transition:color 0.2s, border-color 0.2s;
+  }
+  .legal-nav a:hover { color:var(--gold-lt); border-color:var(--gold-lt); }
+
+  .legal-wrap {
+    max-width:780px;
+    margin:0 auto;
+    padding:3rem 2rem 5rem;
+  }
+
+  .legal-section {
+    margin-bottom:4rem;
+    scroll-margin-top:120px;
+  }
+  .legal-section h2 {
+    font-family:'Abril Fatface', serif;
+    font-size:1.6rem; color:var(--mahogany);
+    margin-bottom:0.4rem;
+    padding-bottom:0.6rem;
+    border-bottom:2px solid var(--gold);
+  }
+  .legal-section .section-date {
+    font-size:0.78rem; color:var(--muted);
+    font-style:italic; margin-bottom:1.5rem; display:block;
+  }
+  .legal-section h3 {
+    font-family:'Oswald', sans-serif;
+    font-size:0.78rem; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--mahogany); margin:1.75rem 0 0.5rem;
+  }
+  .legal-section p {
+    font-size:0.95rem; line-height:1.8;
+    color:var(--text); margin-bottom:1rem;
+  }
+  .legal-section ul {
+    margin:0.5rem 0 1rem 1.25rem;
+    font-size:0.95rem; line-height:1.8; color:var(--text);
+  }
+  .legal-section ul li { margin-bottom:0.35rem; }
+  .legal-section a { color:var(--red); text-decoration:underline; }
+
+  .legal-contact-box {
+    background:var(--dark);
+    border-left:4px solid var(--gold);
+    border-radius:4px;
+    padding:1.25rem 1.5rem;
+    margin-top:2rem;
+  }
+  .legal-contact-box p {
+    color:rgba(245,239,226,0.75);
+    font-size:0.9rem; margin-bottom:0.35rem;
+  }
+  .legal-contact-box p:last-child { margin-bottom:0; }
+  .legal-contact-box a { color:var(--gold-lt); }
+
+  /* ── FOOTER ── */
+  footer { background:var(--dark); border-top:3px solid var(--red); }
+  .footer-inner { max-width:1100px; margin:0 auto; padding:3rem 2rem; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; }
+  .footer-brand-name { font-family:'Abril Fatface',serif; font-size:1.6rem; color:var(--cream); margin-bottom:0.25rem; }
+  .footer-brand-name span { color:var(--gold-lt); }
+  .footer-brand-est { font-family:'Oswald',sans-serif; font-size:0.6rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--muted); margin-bottom:1rem; display:block; }
+  .footer-brand-desc { color:rgba(245,239,226,0.5); font-size:0.9rem; line-height:1.7; font-style:italic; }
+  .footer-col-title { font-family:'Oswald',sans-serif; font-size:0.65rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold-lt); margin-bottom:1rem; display:block; }
+  .footer-col ul { list-style:none; }
+  .footer-col ul li { margin-bottom:0.5rem; }
+  .footer-col ul li a { color:rgba(245,239,226,0.55); text-decoration:none; font-size:0.9rem; transition:color 0.2s; }
+  .footer-col ul li a:hover { color:var(--gold-lt); }
+  .footer-col p { color:rgba(245,239,226,0.55); font-size:0.9rem; line-height:1.7; }
+  .footer-bottom { border-top:1px solid rgba(245,239,226,0.08); padding:1.25rem 2rem; text-align:center; display:flex; justify-content:space-between; align-items:center; max-width:1100px; margin:0 auto; }
+  .footer-bottom p { font-size:0.78rem; color:rgba(245,239,226,0.3); font-family:'Oswald',sans-serif; letter-spacing:0.1em; }
+  .footer-bottom a { color:rgba(245,239,226,0.3); text-decoration:none; transition:color 0.2s; }
+  .footer-bottom a:hover { color:var(--gold-lt); }
+
+  @media (max-width:680px) {
+    .nav-links { display:none; }
+    .nav-hamburger { display:block; }
+    .legal-hero h1 { font-size:1.8rem; }
+    .footer-inner { grid-template-columns:1fr; gap:2rem; }
+    .footer-bottom { flex-direction:column; gap:0.5rem; }
+    .legal-wrap { padding:2rem 1.25rem 4rem; }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-brand">Frieda's <span>Cafe</span></a>
+  <ul class="nav-links">
+    <li><a href="/#about">Our Story</a></li>
+    <li><a href="/menu.html">Menu</a></li>
+    <li><a href="/#testimonials">Reviews</a></li>
+    <li><a href="/#video">PBS Feature</a></li>
+    <li><a href="/merch.html">Merch</a></li>
+    <li><a href="/#visit">Find Us</a></li>
+    <li><a href="/merch.html" class="nav-cta">Shop Now</a></li>
+  </ul>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+</nav>
+
+<div class="nav-drawer" id="navDrawer" aria-hidden="true">
+  <a href="/#about">Our Story</a>
+  <a href="/menu.html">Menu</a>
+  <a href="/#testimonials">Reviews</a>
+  <a href="/#video">PBS Feature</a>
+  <a href="/merch.html">Merch</a>
+  <a href="/#visit">Find Us</a>
+  <a href="/merch.html" class="drawer-cta">Shop Now &#8594;</a>
+</div>
+
+<div class="legal-hero">
+  <h1>Legal</h1>
+  <p>Privacy Policy &nbsp;&middot;&nbsp; Refund Policy &nbsp;&middot;&nbsp; Terms of Service</p>
+</div>
+
+<nav class="legal-nav" aria-label="Legal sections">
+  <a href="#privacy">Privacy Policy</a>
+  <a href="#refunds">Refund Policy</a>
+  <a href="#terms">Terms of Service</a>
+</nav>
+
+<div class="legal-wrap">
+
+  <!-- ── PRIVACY POLICY ── -->
+  <section class="legal-section" id="privacy">
+    <h2>Privacy Policy</h2>
+    <span class="section-date">Effective date: April 2, 2026</span>
+
+    <p>Frieda's Cafe ("we," "us," or "our") operates the website at friedascafe.com. This policy explains what information we collect when you shop for merchandise on our site, how we use it, and who we share it with.</p>
+
+    <h3>Information We Collect</h3>
+    <p>When you make a purchase, our payment processor Stripe collects your name, email address, shipping address, and payment information. We do not store your credit card details — that information is handled entirely by Stripe and never touches our servers.</p>
+    <p>We do not use tracking cookies, analytics software, or advertising pixels on this website.</p>
+
+    <h3>How We Use Your Information</h3>
+    <p>The personal information collected at checkout is used solely to:</p>
+    <ul>
+      <li>Process and fulfill your order through our print-on-demand partner, Printify</li>
+      <li>Send you order confirmation and shipping notifications</li>
+      <li>Respond to questions or concerns about your order</li>
+    </ul>
+
+    <h3>Who We Share Your Information With</h3>
+    <p>We share your order information with the following third-party services only as necessary to fulfill your purchase:</p>
+    <ul>
+      <li><strong>Stripe</strong> — payment processing (<a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>)</li>
+      <li><strong>Printify</strong> — print-on-demand production and shipping (<a href="https://printify.com/privacy-policy/" target="_blank" rel="noopener">printify.com/privacy-policy</a>)</li>
+    </ul>
+    <p>We do not sell, rent, or share your personal information with any other third parties.</p>
+
+    <h3>Data Retention</h3>
+    <p>Order records are retained by Stripe and Printify according to their own policies. We do not maintain a separate customer database.</p>
+
+    <h3>Your Rights</h3>
+    <p>You may contact us at any time to ask about the personal information associated with your order or to request its deletion. See the contact information below.</p>
+
+    <h3>Changes to This Policy</h3>
+    <p>We may update this policy from time to time. Changes will be posted on this page with an updated effective date.</p>
+
+    <div class="legal-contact-box">
+      <p><strong style="color:var(--gold-lt);">Questions about your privacy?</strong></p>
+      <p>Frieda's Cafe &nbsp;&middot;&nbsp; 511 Benson Ave SW, Willmar, MN 56201</p>
+      <p><a href="tel:3202352865">(320) 235-2865</a></p>
+    </div>
+  </section>
+
+  <!-- ── REFUND POLICY ── -->
+  <section class="legal-section" id="refunds">
+    <h2>Refund Policy</h2>
+    <span class="section-date">Effective date: April 2, 2026</span>
+
+    <p>All merchandise sold through friedascafe.com is printed on demand specifically for each order. Because of this, we do not accept returns or exchanges for buyer's remorse, incorrect size selection, or change of mind.</p>
+
+    <h3>Damaged or Defective Items</h3>
+    <p>If your order arrives damaged, defective, or with a printing error, we will make it right. Please contact us within 30 days of delivery with:</p>
+    <ul>
+      <li>Your order number</li>
+      <li>A photo of the damaged or defective item</li>
+    </ul>
+    <p>We will arrange a replacement or full refund at no cost to you.</p>
+
+    <h3>Lost or Undelivered Orders</h3>
+    <p>If your order is lost in transit, contact us and we will work with Printify to investigate and resolve the issue, including sending a replacement if necessary.</p>
+
+    <h3>Wrong Address</h3>
+    <p>Please double-check your shipping address at checkout. We are not responsible for orders shipped to an incorrectly entered address. If you catch a mistake before the order ships, contact us immediately and we will do our best to correct it.</p>
+
+    <h3>Refund Processing</h3>
+    <p>Approved refunds are issued to the original payment method and typically appear within 5–10 business days depending on your bank or card issuer.</p>
+
+    <div class="legal-contact-box">
+      <p><strong style="color:var(--gold-lt);">Order issues? We'll make it right.</strong></p>
+      <p>Frieda's Cafe &nbsp;&middot;&nbsp; 511 Benson Ave SW, Willmar, MN 56201</p>
+      <p><a href="tel:3202352865">(320) 235-2865</a></p>
+    </div>
+  </section>
+
+  <!-- ── TERMS OF SERVICE ── -->
+  <section class="legal-section" id="terms">
+    <h2>Terms of Service</h2>
+    <span class="section-date">Effective date: April 2, 2026</span>
+
+    <p>By using friedascafe.com and placing an order, you agree to the following terms.</p>
+
+    <h3>The Merchandise Store</h3>
+    <p>The online store at friedascafe.com sells branded merchandise produced and shipped by Printify, a third-party print-on-demand fulfillment service. Frieda's Cafe is not a clothing manufacturer. Product quality and delivery timelines are subject to Printify's production and shipping processes.</p>
+
+    <h3>Orders and Payment</h3>
+    <p>All prices are listed in US dollars. Payment is processed securely through Stripe. By completing a purchase you authorize the charge to your provided payment method. We reserve the right to cancel or refund any order at our discretion.</p>
+
+    <h3>Shipping and Delivery</h3>
+    <p>Orders are fulfilled and shipped by Printify, typically within 2–7 business days of order placement. Shipping times vary by destination. We are not responsible for delays caused by carriers or circumstances outside our control.</p>
+
+    <h3>Intellectual Property</h3>
+    <p>All artwork, branding, logos, and design elements on this website and on merchandise are the property of Frieda's Cafe. You may not reproduce or use them without written permission.</p>
+
+    <h3>Limitation of Liability</h3>
+    <p>Frieda's Cafe's liability for any claim arising from a merchandise purchase is limited to the amount paid for that order. We are not liable for indirect, incidental, or consequential damages.</p>
+
+    <h3>Governing Law</h3>
+    <p>These terms are governed by the laws of the State of Minnesota. Any disputes shall be resolved in the courts of Kandiyohi County, Minnesota.</p>
+
+    <h3>Changes to These Terms</h3>
+    <p>We may update these terms at any time. Continued use of the site after changes are posted constitutes acceptance of the updated terms.</p>
+
+    <div class="legal-contact-box">
+      <p><strong style="color:var(--gold-lt);">Questions about these terms?</strong></p>
+      <p>Frieda's Cafe &nbsp;&middot;&nbsp; 511 Benson Ave SW, Willmar, MN 56201</p>
+      <p><a href="tel:3202352865">(320) 235-2865</a></p>
+    </div>
+  </section>
+
+</div><!-- /legal-wrap -->
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-brand-name">Frieda's <span>Cafe</span></p>
+      <span class="footer-brand-est">Serving Willmar Since 1970</span>
+      <p class="footer-brand-desc">"Come in as a guest and leave as family." Homemade food, cheap coffee, and a warm welcome — right in downtown Willmar, Minnesota.</p>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Navigate</span>
+      <ul>
+        <li><a href="/#about">Our Story</a></li>
+        <li><a href="/menu.html">Menu</a></li>
+        <li><a href="/#testimonials">Reviews</a></li>
+        <li><a href="/#video">PBS Feature</a></li>
+        <li><a href="/merch.html">Merch Shop</a></li>
+        <li><a href="/#visit">Find Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <span class="footer-col-title">Contact</span>
+      <p>511 Benson Ave SW<br>Willmar, MN 56201</p>
+      <p style="margin-top:0.5rem;"><a href="tel:3202352865" style="color:rgba(245,239,226,0.55);text-decoration:none;">(320) 235-2865</a></p>
+      <p style="margin-top:1rem;"><a href="https://www.facebook.com/friedascafe/" target="_blank" style="color:rgba(245,239,226,0.55);text-decoration:none;">&#128152; Facebook</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Frieda's Cafe &nbsp;&middot;&nbsp; Willmar, Minnesota</p>
+    <p>Web design by <a href="https://dreadpiratestudio.com" target="_blank">Dread Pirate Studio</a></p>
+    <p><a href="/admin.html" style="color:rgba(245,239,226,0.15);font-size:0.7rem;text-decoration:none;letter-spacing:0.05em;">&#9679;</a></p>
+  </div>
+</footer>
+
+<script>
+  var hamburger = document.getElementById('navHamburger');
+  var drawer = document.getElementById('navDrawer');
+  var drawerOpen = false;
+
+  hamburger.addEventListener('click', function() {
+    drawerOpen = !drawerOpen;
+    drawer.classList.toggle('open', drawerOpen);
+    hamburger.setAttribute('aria-expanded', String(drawerOpen));
+    drawer.setAttribute('aria-hidden', String(!drawerOpen));
+    hamburger.innerHTML = drawerOpen ? '&#10005;' : '&#9776;';
+  });
+
+  function closeDrawer() {
+    drawerOpen = false;
+    drawer.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    drawer.setAttribute('aria-hidden', 'true');
+    hamburger.innerHTML = '&#9776;';
+  }
+
+  document.addEventListener('click', function(e) {
+    if (drawerOpen && !drawer.contains(e.target) && e.target !== hamburger) {
+      closeDrawer();
+    }
+  });
+</script>
+
+</body>
+</html>
