@@ -920,7 +920,7 @@
         if (c.hours_sunday) document.getElementById('hours-sunday').textContent = c.hours_sunday;
 
         // Announcement banner
-        if (c.holiday_notice_active === 'true' && c.holiday_notice_text) {
+        if ((c.holiday_notice_active === 'true' || c.holiday_notice_active === true) && c.holiday_notice_text) {
           var banner = document.getElementById('announcementBanner');
           if (banner) {
             banner.textContent = c.holiday_notice_text;

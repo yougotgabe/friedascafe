@@ -578,7 +578,7 @@
             document.getElementById('hoursBanner').innerHTML =
               '<strong>Mon&ndash;Fri</strong> ' + wd + ' &nbsp;&middot;&nbsp; <strong>Saturday</strong> ' + sat + ' &nbsp;&middot;&nbsp; <strong>Sunday</strong> ' + sun;
           }
-          if (content.holiday_notice_active === 'true' && content.holiday_notice_text) {
+          if ((content.holiday_notice_active === 'true' || content.holiday_notice_active === true) && content.holiday_notice_text) {
             var notice = document.getElementById('holidayNotice');
             notice.textContent = content.holiday_notice_text;
             notice.classList.add('visible');
