@@ -464,8 +464,8 @@
     if (toggle && content.holiday_notice_active !== undefined) toggle.checked = (content.holiday_notice_active === 'true');
     ['story','menu'].forEach(function(type) {
       var key = type + '_image_url';
-      if (content[key] && content[key] !== '') {
-        var preview = document.getElementById('preview-' + type);
+      var preview = document.getElementById('preview-' + type);
+      if (preview && content[key] && content[key] !== '') {
         preview.innerHTML = '<img src="' + content[key] + '" alt="Current image" />';
       }
     });
@@ -615,14 +615,12 @@
   function removeGallerySlot(n) {
     if (!confirm('Remove Photo ' + n + ' from the slideshow?')) return;
     // Clear from site_content by setting empty value
+    var u = {};
+    u['gallery_image_' + n] = '';
     fetch('/api/update-content', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: (function() {
-          var u = {};
-          u['gallery_image_' + n] = '';
-          return JSON.stringify({  updates: u });
-        }())
+      headers: { 'Content-Type': 'application/json', 'x-google-token': googleToken },
+      body: JSON.stringify(u)
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
