@@ -35,9 +35,16 @@
   .btn-outline:hover { background: var(--red); color: white; }
   /* ADMIN PANEL */
   #admin-panel { display: none; width: 100%; max-width: 700px; }
-  .admin-header { text-align: center; margin-bottom: 2rem; }
+  .admin-header { text-align: center; margin-bottom: 2rem; position: relative; }
   .admin-header .logo { font-family: 'Abril Fatface', serif; font-size: 2.2rem; color: var(--cream); }
   .admin-header .subtitle { font-size: 0.85rem; color: var(--gold); font-style: italic; letter-spacing: 0.08em; margin-top: 0.25rem; }
+  .back-to-site-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    color: var(--cream-dark); font-size: 0.8rem; font-family: 'Lora', serif;
+    text-decoration: none; letter-spacing: 0.05em; opacity: 0.7;
+    margin-top: 0.75rem; transition: opacity 0.2s;
+  }
+  .back-to-site-btn:hover { opacity: 1; color: var(--gold); }
   /* CARDS */
   .card { background: var(--cream); border-radius: 4px; padding: 2rem; margin-bottom: 1.25rem; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border-top: 4px solid var(--gold); }
   .card h2 { font-family: 'Abril Fatface', serif; font-size: 1.25rem; color: var(--mahogany); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--cream-dark); }
@@ -95,6 +102,59 @@
   .logout-btn { background: none; border: none; color: var(--gold); font-family: 'Lora', serif; font-size: 0.8rem; cursor: pointer; letter-spacing: 0.05em; padding: 0.25rem; opacity: 0.8; transition: opacity 0.2s; }
   .logout-btn:hover { opacity: 1; }
   .admin-footer { text-align: center; margin-top: 1rem; }
+
+  /* ── ORDERS ── */
+  .order-item {
+    border: 1px solid var(--cream-dark);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .order-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.1rem;
+    background: var(--cream);
+    gap: 1rem;
+    flex-wrap: wrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  .order-header:hover { background: var(--cream-dark); }
+  .order-meta { display: flex; flex-direction: column; gap: 0.15rem; }
+  .order-customer { font-weight: 600; font-size: 0.95rem; color: var(--mahogany); }
+  .order-date { font-size: 0.78rem; color: var(--muted); font-style: italic; }
+  .order-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+  .order-total { font-weight: 600; font-size: 1rem; color: var(--mahogany); }
+  .order-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+  }
+  .badge-pending  { background: #fef3c7; color: #92400e; }
+  .badge-in-production { background: #dbeafe; color: #1e40af; }
+  .badge-shipped  { background: #d1fae5; color: #065f46; }
+  .badge-cancelled { background: #fee2e2; color: #991b1b; }
+  .order-body {
+    padding: 1rem 1.1rem;
+    border-top: 1px solid var(--cream-dark);
+    display: none;
+    background: white;
+  }
+  .order-body.open { display: block; }
+  .order-items-list { margin-bottom: 0.75rem; }
+  .order-line { display: flex; justify-content: space-between; font-size: 0.88rem; padding: 0.3rem 0; border-bottom: 1px solid var(--cream-dark); color: var(--text); }
+  .order-line:last-child { border-bottom: none; }
+  .order-email { font-size: 0.82rem; color: var(--muted); font-style: italic; margin-bottom: 0.5rem; }
+  .order-address { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .order-tracking a { font-size: 0.82rem; color: var(--red); text-decoration: underline; }
+  .orders-loading { text-align: center; padding: 2rem; color: var(--muted); font-style: italic; }
+  .orders-empty { text-align: center; padding: 2rem; color: var(--muted); font-style: italic; }
+  .orders-error { text-align: center; padding: 1.5rem; color: var(--red); font-size: 0.88rem; }
   .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 0.4rem; vertical-align: middle; }
   .spinner-dark { border-color: rgba(0,0,0,0.2); border-top-color: var(--muted); }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -124,6 +184,7 @@
   <div class="admin-header">
     <div class="logo">Frieda's Cafe</div>
     <div class="subtitle">Site Admin Panel</div>
+    <a href="/" class="back-to-site-btn">&#8592; Back to Site</a>
   </div>
 
   <div id="status-bar"></div>
@@ -151,13 +212,13 @@
     </div>
   </div>
 
-  <!-- HOLIDAY NOTICE -->
+  <!-- ANNOUNCEMENT BANNER -->
   <div class="card">
-    <h2>&#128226; Holiday Notice</h2>
+    <h2>&#128226; Announcement Banner</h2>
     <div class="toggle-row">
       <div class="toggle-label">
-        Show Holiday Notice
-        <small>Displays a banner on the homepage and menu page</small>
+        Show Announcement Banner
+        <small>Displays a banner at the top of every page on your site</small>
       </div>
       <label class="toggle">
         <input type="checkbox" id="holiday_notice_active" />
@@ -165,8 +226,8 @@
       </label>
     </div>
     <div class="field-group" style="margin-top: 1rem;">
-      <label>Notice Message</label>
-      <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday!"></textarea>
+      <label>Banner Message</label>
+      <textarea id="holiday_notice_text" rows="3" placeholder="e.g. We will be closed Friday, May 24th for the holiday weekend. See you Monday! — or — New mugs just dropped, shop the merch page!"></textarea>
     </div>
   </div>
 
@@ -268,6 +329,15 @@
     </div>
   </div>
 
+  <!-- ORDERS -->
+  <div class="card" id="orders-card">
+    <h2>&#128230; Recent Orders</h2>
+    <p style="font-size:0.85rem;color:var(--muted);font-style:italic;margin-bottom:1.5rem;">Live from Stripe &amp; Printify — no data is stored on this site.</p>
+    <div id="orders-list">
+      <div style="text-align:center;padding:1.5rem;color:var(--muted);font-style:italic;font-size:0.85rem;">Sign in to view orders.</div>
+    </div>
+  </div>
+
   <!-- SAVE -->
   <div class="save-row">
     <button class="btn" id="save-btn">Save Changes</button>
@@ -313,6 +383,7 @@
         prefillFields(data);
         initGallery(data);
         loadMenuItems();
+        loadOrders();
       } else {
         loginError.textContent = 'Could not connect. Please try again.';
         loginError.style.display = 'block';
@@ -568,6 +639,76 @@
     if (type === 'success') setTimeout(function() { statusBar.style.display = 'none'; }, 5000);
   }
 
+  // ── ORDERS ──
+  function loadOrders() {
+    var list = document.getElementById('orders-list');
+    list.innerHTML = '<div class="orders-loading">Loading orders…</div>';
+
+    fetch('/api/get-orders', {
+      headers: { 'x-admin-password': adminPassword }
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error) {
+        list.innerHTML = '<div class="orders-error">Could not load orders: ' + data.error + '</div>';
+        return;
+      }
+      var orders = data.orders || [];
+      if (orders.length === 0) {
+        list.innerHTML = '<div class="orders-empty">No orders yet.</div>';
+        return;
+      }
+      list.innerHTML = orders.map(function(order) {
+        var date = new Date(order.created * 1000).toLocaleDateString('en-US', {
+          month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        var total = '$' + (order.total_cents / 100).toFixed(2);
+        var status = order.fulfillment.status;
+        var badgeClass = 'badge-' + status;
+        var badgeLabel = {
+          'pending': 'Pending',
+          'in-production': 'In Production',
+          'shipped': 'Shipped',
+          'cancelled': 'Cancelled'
+        }[status] || status;
+
+        var itemsHtml = (order.items || []).map(function(item) {
+          var price = item.price_cents ? ' — $' + (item.price_cents / 100).toFixed(2) : '';
+          return '<div class="order-line"><span>' + (item.name || 'Item') + ' × ' + (item.quantity || 1) + '</span><span>' + price + '</span></div>';
+        }).join('');
+
+        var trackingHtml = '';
+        if (order.fulfillment.tracking_url) {
+          trackingHtml = '<div class="order-tracking"><a href="' + order.fulfillment.tracking_url + '" target="_blank">Track shipment →</a></div>';
+        } else if (order.fulfillment.tracking_number) {
+          trackingHtml = '<div class="order-tracking">Tracking #: ' + order.fulfillment.tracking_number + '</div>';
+        }
+
+        return '<div class="order-item">' +
+          '<div class="order-header" onclick="this.nextElementSibling.classList.toggle(\'open\')">' +
+            '<div class="order-meta">' +
+              '<div class="order-customer">' + order.customer.name + '</div>' +
+              '<div class="order-date">' + date + '</div>' +
+            '</div>' +
+            '<div class="order-right">' +
+              '<span class="order-total">' + total + '</span>' +
+              '<span class="order-badge ' + badgeClass + '">' + badgeLabel + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="order-body">' +
+            '<div class="order-email">' + order.customer.email + '</div>' +
+            (order.customer.address ? '<div class="order-address">Ship to: ' + order.customer.address + '</div>' : '') +
+            '<div class="order-items-list">' + (itemsHtml || '<div class="order-line"><span>Item details unavailable</span></div>') + '</div>' +
+            trackingHtml +
+          '</div>' +
+        '</div>';
+      }).join('');
+    })
+    .catch(function() {
+      list.innerHTML = '<div class="orders-error">Network error — could not load orders.</div>';
+    });
+  }
+
   logoutBtn.addEventListener('click', function() {
     adminPassword = '';
     allMenuItems = [];
@@ -711,6 +852,7 @@
         prefillFields(data);
         initGallery(data);
         loadMenuItems();
+        loadOrders();
       } else {
         sessionStorage.removeItem('fc_admin_pw');
         pwInput.value = '';
