@@ -314,6 +314,32 @@
   .about-img-placeholder { font-size:3rem; opacity:0.3; }
 
   /* ── STATS ────────────────────────────────────── */
+  /* ── JINGLE BAR ── */
+  .jingle-bar {
+    background:var(--brown);
+    border-top:3px solid var(--gold);
+    border-bottom:3px solid var(--gold);
+    padding:1rem 2rem;
+    display:flex; align-items:center; justify-content:center; gap:1.2rem;
+  }
+  .jingle-label {
+    font-family:'Oswald', sans-serif;
+    font-size:0.8rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--gold-lt);
+  }
+  .jingle-note {
+    font-size:1rem; color:var(--gold-lt); opacity:0.7;
+  }
+  .jingle-btn {
+    width:42px; height:42px; border-radius:50%;
+    background:var(--red); border:2px solid var(--gold);
+    color:var(--cream); font-size:1rem;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background 0.2s, transform 0.15s;
+    flex-shrink:0;
+  }
+  .jingle-btn:hover { background:var(--red-dim); transform:scale(1.08); }
+
   .stats-bar { background:var(--red); }
   .stats-inner { max-width:1100px; margin:0 auto; padding:2.5rem 2rem; display:flex; gap:0; justify-content:center; }
   .stat { text-align:center; padding:0 3rem; border-right:1px solid rgba(255,255,255,0.2); }
@@ -501,6 +527,14 @@
     </div>
   </div>
 </section>
+
+<!-- JINGLE BAR -->
+<div class="jingle-bar">
+  <span class="jingle-note">&#9835;</span>
+  <span class="jingle-label">Hear Our Jingle</span>
+  <button class="jingle-btn" id="jingleBtn" aria-label="Play jingle">&#9654;</button>
+  <audio id="jingleAudio" src="https://bhokimstqlnysyypivbp.supabase.co/storage/v1/object/public/site-images/FriedasBigStacks.mp3" preload="none"></audio>
+</div>
 
 <!-- STATS BAR -->
 <div class="stats-bar">
@@ -966,6 +1000,29 @@
 
   // Load merch preview
   loadMerchPreview();
+
+  // Jingle play/pause
+  (function() {
+    var btn = document.getElementById('jingleBtn');
+    var audio = document.getElementById('jingleAudio');
+    if (!btn || !audio) return;
+    btn.addEventListener('click', function() {
+      if (audio.paused) {
+        audio.play();
+        btn.innerHTML = '&#9646;&#9646;';
+        btn.setAttribute('aria-label', 'Pause jingle');
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
+        btn.innerHTML = '&#9654;';
+        btn.setAttribute('aria-label', 'Play jingle');
+      }
+    });
+    audio.addEventListener('ended', function() {
+      btn.innerHTML = '&#9654;';
+      btn.setAttribute('aria-label', 'Play jingle');
+    });
+  })();
 </script>
 </body>
 </html>
