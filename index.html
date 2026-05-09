@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/brand.css">
 <style>
 
-  /* ── NAV ──────────────────────────────────────── */
+  /* — NAV ————————————————————————————————— */
   nav {
     position:fixed; top:0; left:0; right:0; z-index:900;
     background:var(--brown);
@@ -42,7 +42,7 @@
     color:var(--cream); font-size:1.3rem; cursor:pointer; padding:0.25rem;
   }
 
-  /* ── MOBILE NAV DRAWER ── */
+  /* — MOBILE NAV DRAWER — */
   .nav-drawer {
     display:none;
     position:fixed; top:64px; left:0; right:0; z-index:850;
@@ -66,7 +66,7 @@
   }
   .nav-drawer a.drawer-cta:hover { background:var(--red-dim); }
 
-  /* ── ANNOUNCEMENT BANNER ── */
+  /* — ANNOUNCEMENT BANNER — */
   .announcement-banner {
     background: var(--red);
     color: var(--white);
@@ -74,18 +74,17 @@
     padding: 0.75rem 2rem;
     font-size: 0.9rem;
     position: fixed;
-    top: 64px; /* sits flush below the fixed nav */
+    top: 64px;
     left: 0; right: 0;
-    z-index: 850; /* below nav (900) but above everything else */
+    z-index: 850;
     font-style: italic;
   }
 
-  /* When banner is active, push hero content down so it's not hidden behind it */
   body.banner-active .hero {
     padding-top: 130px;
   }
 
-  /* ── HERO ── */
+  /* — HERO — */
   .hero {
     min-height:100vh; position:relative;
     display:flex; flex-direction:column;
@@ -206,7 +205,7 @@
     to   { opacity:1; transform:translateY(0); }
   }
 
-  /* ── SECTION SHARED ───────────────────────────── */
+  /* — SECTION SHARED ————————————————————————————— */
   section { position:relative; z-index:1; }
   .section-inner { max-width:1100px; margin:0 auto; padding:5rem 2rem; }
   .section-label {
@@ -221,7 +220,7 @@
   .section-rule { width:60px; height:3px; background:var(--red); margin:1rem 0 1.5rem; }
   .section-rule.centered { margin:1rem auto 1.5rem; }
 
-  /* ── ABOUT ────────────────────────────────────── */
+  /* — ABOUT ——————————————————————————————————— */
   .about-strip { background:var(--parchment); border-top:3px solid var(--border); border-bottom:3px solid var(--border); }
   .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
   .about-text p { color:var(--brown); line-height:1.85; margin-bottom:1rem; font-size:1rem; }
@@ -230,91 +229,21 @@
     font-family:'Playfair Display', serif; font-size:1.2rem; font-style:italic;
     color:var(--red); border-left:3px solid var(--red); padding-left:1rem; margin:1.5rem 0; line-height:1.5;
   }
-  /* ── SLIDESHOW ── */
-  .slideshow-wrap {
-    position: relative;
-    border-radius: 4px;
-    overflow: visible;
-  }
-  .slideshow {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4/3;
-    overflow: hidden;
-    border-radius: 4px;
-    background: var(--brown);
-  }
-  .slide {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.7s ease;
-  }
-  .slide.active { opacity: 1; }
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .slide-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    opacity: 0.2;
-  }
-  .slide-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(28,18,8,0.65);
-    color: var(--cream);
-    border: 2px solid rgba(245,239,226,0.25);
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    font-size: 1.1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
-    z-index: 10;
-    line-height: 1;
-  }
-  .slide-btn:hover {
-    background: rgba(192,57,43,0.85);
-    border-color: var(--red);
-  }
-  .slide-prev { left: -18px; }
-  .slide-next { right: -18px; }
-  .slide-dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-  .slide-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.2s, transform 0.2s;
-  }
-  .slide-dot.active {
-    background: var(--red);
-    transform: scale(1.3);
-  }
-  .about-img-placeholder { font-size:3rem; opacity:0.3; }
 
-  /* ── STATS ────────────────────────────────────── */
-  /* ── JINGLE BAR ── */
+  /* — STOREFRONT PHOTO — */
+  .about-photo {
+    border-radius:4px;
+    overflow:hidden;
+    border:3px solid var(--border);
+    box-shadow:0 8px 40px rgba(59,36,16,0.18);
+  }
+  .about-photo img {
+    width:100%;
+    display:block;
+    object-fit:cover;
+  }
+
+  /* — JINGLE BAR — */
   .jingle-bar {
     background:var(--brown);
     border-top:3px solid var(--gold);
@@ -347,7 +276,7 @@
   .stat-num { font-family:'Abril Fatface', serif; font-size:2.4rem; color:var(--white); display:block; line-height:1; }
   .stat-label { font-family:'Oswald', sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(255,249,240,0.75); margin-top:0.3rem; display:block; }
 
-  /* ── MENU SECTION ─────────────────────────────── */
+  /* — MENU SECTION ————————————————————————————— */
   .menu-section { background:var(--cream); }
   .menu-section .section-inner { text-align:center; }
   .menu-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:2.5rem; text-align:left; }
@@ -362,7 +291,7 @@
   .menu-note { margin-top:2rem; font-style:italic; color:var(--muted); font-size:0.95rem; }
   .menu-note strong { color:var(--brown); }
 
-  /* ── TESTIMONIALS ─────────────────────────────── */
+  /* — TESTIMONIALS ————————————————————————————— */
   .testimonials-section { background:var(--brown); }
   .testimonials-section .section-label { color:var(--gold-lt); }
   .testimonials-section .section-title { color:var(--cream); }
@@ -379,7 +308,7 @@
   .testi-award-badge span:last-child { font-family:'Abril Fatface',serif; font-size:1.2rem; color:var(--gold-lt); }
   .testi-award p { color:rgba(245,239,226,0.65); font-size:0.9rem; font-style:italic; max-width:300px; }
 
-  /* ── MERCH PREVIEW ────────────────────────────── */
+  /* — MERCH PREVIEW —————————————————————————— */
   .merch-section { background:var(--parchment); }
   .merch-section .section-inner { text-align:center; }
   .merch-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-top:2.5rem; }
@@ -395,7 +324,7 @@
   .merch-cta:hover { background:var(--red); color:var(--white); }
   .merch-loading { text-align:center; padding:3rem; color:var(--muted); font-style:italic; }
 
-  /* ── VISIT ────────────────────────────────────── */
+  /* — VISIT ——————————————————————————————————— */
   .visit-section { background:var(--cream); }
   .visit-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:start; }
   .visit-detail { display:flex; gap:1rem; margin-bottom:1.5rem; align-items:flex-start; }
@@ -406,7 +335,7 @@
   .visit-cash-note { margin-top:2rem; padding:1rem 1.25rem; background:rgba(192,57,43,0.06); border-left:3px solid var(--red); }
   .visit-cash-note p { font-size:0.9rem; color:var(--brown); font-style:italic; line-height:1.5; }
 
-  /* ── FOOTER ───────────────────────────────────── */
+  /* — FOOTER ————————————————————————————————— */
   footer { background:var(--dark); border-top:3px solid var(--red); }
   .footer-inner { max-width:1100px; margin:0 auto; padding:3rem 2rem; display:grid; grid-template-columns:2fr 1fr 1fr; gap:3rem; }
   .footer-brand-name { font-family:'Abril Fatface',serif; font-size:1.6rem; color:var(--cream); margin-bottom:0.25rem; }
@@ -424,12 +353,12 @@
   .footer-bottom a { color:rgba(245,239,226,0.3); text-decoration:none; transition:color 0.2s; }
   .footer-bottom a:hover { color:var(--gold-lt); }
 
-  /* ── ORNAMENT ─────────────────────────────────── */
+  /* — ORNAMENT ————————————————————————————————— */
   .ornament { text-align:center; font-size:1.4rem; color:var(--red); opacity:0.5; margin:0; line-height:1; display:flex; align-items:center; gap:0.75rem; justify-content:center; }
   .ornament::before, .ornament::after { content:''; flex:1; height:1px; background:linear-gradient(to right, transparent, var(--border)); }
   .ornament::after { background:linear-gradient(to left, transparent, var(--border)); }
 
-  /* ── RESPONSIVE ───────────────────────────────── */
+  /* — RESPONSIVE ————————————————————————————————— */
   @media (max-width:700px) {
     .video-grid { grid-template-columns:1fr !important; }
   }
@@ -533,7 +462,7 @@
   <span class="jingle-note">&#9835;</span>
   <span class="jingle-label">Hear Our Jingle</span>
   <button class="jingle-btn" id="jingleBtn" aria-label="Play jingle">&#9654;</button>
-  <audio id="jingleAudio" src="https://bhokimstqlnysyypivbp.supabase.co/storage/v1/object/public/site-images/FriedasBigStacks.mp3" preload="none"></audio>
+  <audio id="jingleAudio" src="/images/FriedasBigStacks.mp3" preload="none"></audio>
 </div>
 
 <!-- STATS BAR -->
@@ -559,15 +488,8 @@
         <p>Our menu is a nod to the good ol' days. Whether you're craving grandma's pie, a classic grilled cheese, or pancakes so big they hang off the plate — you'll find it here. Every dish is made with love and the finest ingredients.</p>
         <p style="margin-top:1rem;"><em>— Steve and Amy</em></p>
       </div>
-      <div class="slideshow-wrap">
-        <div class="slideshow" id="about-slideshow">
-          <div class="slide active">
-            <div class="slide-placeholder">&#9749;</div>
-          </div>
-        </div>
-        <button class="slide-btn slide-prev" onclick="slidePrev()" aria-label="Previous photo">&#8592;</button>
-        <button class="slide-btn slide-next" onclick="slideNext()" aria-label="Next photo">&#8594;</button>
-        <div class="slide-dots" id="slide-dots"></div>
+      <div class="about-photo">
+        <img src="/images/storefront.png" alt="Frieda's Cafe storefront in downtown Willmar, Minnesota" loading="lazy" />
       </div>
     </div>
   </div>
@@ -803,7 +725,7 @@
 </footer>
 
 <script>
-  // ── HAMBURGER NAV ─────────────────────────────────────
+  // — HAMBURGER NAV ——————————————————————————————————————
   var hamburger = document.getElementById('navHamburger');
   var drawer = document.getElementById('navDrawer');
   var drawerOpen = false;
@@ -824,79 +746,13 @@
     hamburger.innerHTML = '&#9776;';
   }
 
-  // Close drawer when clicking outside
   document.addEventListener('click', function(e) {
     if (drawerOpen && !drawer.contains(e.target) && e.target !== hamburger) {
       closeDrawer();
     }
   });
 
-  // ── SLIDESHOW ──────────────────────────────────────────
-  var slides = [];
-  var currentSlide = 0;
-  var slideshowTimer = null;
-
-  function buildSlideshow(imageUrls) {
-    var container = document.getElementById('about-slideshow');
-    var dotsContainer = document.getElementById('slide-dots');
-    if (!imageUrls || imageUrls.length === 0) return;
-    container.innerHTML = imageUrls.map(function(url, i) {
-      return '<div class="slide' + (i === 0 ? ' active' : '') + '">'
-        + '<img src="' + url + '" alt="Frieda\'s Cafe photo ' + (i+1) + '" loading="' + (i === 0 ? 'eager' : 'lazy') + '" />'
-        + '</div>';
-    }).join('');
-    dotsContainer.innerHTML = imageUrls.map(function(_, i) {
-      return '<button class="slide-dot' + (i === 0 ? ' active' : '') + '" onclick="goToSlide(' + i + ')" aria-label="Photo ' + (i+1) + '"></button>';
-    }).join('');
-    slides = container.querySelectorAll('.slide');
-    if (imageUrls.length <= 1) {
-      document.querySelector('.slide-prev').style.display = 'none';
-      document.querySelector('.slide-next').style.display = 'none';
-      dotsContainer.style.display = 'none';
-      return;
-    }
-    startSlideshow();
-  }
-
-  function goToSlide(n) {
-    if (!slides.length) return;
-    slides[currentSlide].classList.remove('active');
-    document.querySelectorAll('.slide-dot')[currentSlide].classList.remove('active');
-    currentSlide = (n + slides.length) % slides.length;
-    slides[currentSlide].classList.add('active');
-    document.querySelectorAll('.slide-dot')[currentSlide].classList.add('active');
-    restartSlideshow();
-  }
-
-  function slideNext() { goToSlide(currentSlide + 1); }
-  function slidePrev() { goToSlide(currentSlide - 1); }
-
-  function startSlideshow() {
-    slideshowTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
-  }
-
-  function restartSlideshow() {
-    clearInterval(slideshowTimer);
-    startSlideshow();
-  }
-
-  var wrap = document.querySelector('.slideshow-wrap');
-  if (wrap) {
-    wrap.addEventListener('mouseenter', function() { clearInterval(slideshowTimer); });
-    wrap.addEventListener('mouseleave', function() { if (slides.length > 1) startSlideshow(); });
-  }
-
-  var touchStartX = 0;
-  var slideshowEl = document.getElementById('about-slideshow');
-  if (slideshowEl) {
-    slideshowEl.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-    slideshowEl.addEventListener('touchend', function(e) {
-      var diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) { diff > 0 ? slideNext() : slidePrev(); }
-    }, { passive: true });
-  }
-
-  // ── MERCH PREVIEW ─────────────────────────────────────
+  // — MERCH PREVIEW ——————————————————————————————————————
   function formatPrice(cents) {
     return '$' + (cents / 100).toFixed(2);
   }
@@ -911,7 +767,6 @@
           grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-style:italic;">Merch coming soon — check back!</div>';
           return;
         }
-        // Show up to 4 products
         var preview = products.slice(0, 4);
         grid.innerHTML = preview.map(function(p) {
           var img = (p.images && p.images.length > 0)
@@ -929,79 +784,16 @@
         }).join('');
       })
       .catch(function() {
-        // Silently fail — fallback static cards shown below if this block is swapped
         var grid = document.getElementById('merchPreviewGrid');
         grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--muted);font-style:italic;">Shop our merch at the link below.</div>';
       });
   }
 
-  // ── LIVE CONTENT FROM SUPABASE ────────────────────────
-  (function() {
-    fetch('/api/get-public-content')
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        var c = data || {};
-
-        // Gallery slideshow
-        var galleryImages = [];
-        var i = 1;
-        while (c['gallery_image_' + i]) {
-          galleryImages.push(c['gallery_image_' + i]);
-          i++;
-        }
-        if (galleryImages.length === 0) {
-          if (c.story_image_url) galleryImages.push(c.story_image_url);
-          if (c.menu_image_url) galleryImages.push(c.menu_image_url);
-          if (c.staff_image_url) galleryImages.push(c.staff_image_url);
-        }
-        buildSlideshow(galleryImages);
-
-        // Hours
-        if (c.hours_weekday) document.getElementById('hours-weekday').textContent = c.hours_weekday;
-        if (c.hours_saturday) document.getElementById('hours-saturday').textContent = c.hours_saturday;
-        if (c.hours_sunday) document.getElementById('hours-sunday').textContent = c.hours_sunday;
-
-        // Announcement banner
-        if ((c.holiday_notice_active === 'true' || c.holiday_notice_active === true) && c.holiday_notice_text) {
-          var banner = document.getElementById('announcementBanner');
-          if (banner) {
-            banner.textContent = c.holiday_notice_text;
-            banner.style.display = 'block';
-            document.body.classList.add('banner-active');
-          }
-        }
-
-        // Reviews — replace static cards if we have live data
-        var hasReviews = c.review_1 || c.review_2 || c.review_3;
-        if (hasReviews) {
-          var reviewHtml = '';
-          [1, 2, 3].forEach(function(n) {
-            var raw = c['review_' + n];
-            if (!raw) return;
-            try {
-              var r = JSON.parse(raw);
-              if (!r.text) return;
-              var stars = '';
-              for (var s = 0; s < (r.stars || 5); s++) stars += '&#9733;';
-              reviewHtml += '<div class="testi-card">'
-                + '<div class="testi-stars">' + stars + '</div>'
-                + '<p class="testi-text">"' + r.text + '"</p>'
-                + '<span class="testi-author">&mdash; ' + (r.name || 'Guest') + '</span>'
-                + '</div>';
-            } catch(e) {}
-          });
-          if (reviewHtml) {
-            document.getElementById('testiGrid').innerHTML = reviewHtml;
-          }
-        }
-      })
-      .catch(function() {});
-  })();
-
-  // Load merch preview
+  // — ANNOUNCEMENT BANNER (static fallback) ———————————————
+  // Dynamic content from Supabase removed; banner only shows if manually enabled
   loadMerchPreview();
 
-  // Jingle play/pause
+  // — JINGLE PLAY/PAUSE ——————————————————————————————————
   (function() {
     var btn = document.getElementById('jingleBtn');
     var audio = document.getElementById('jingleAudio');
